@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Плавная смена изображений</title>
+    <style>
+        .container {
+            margin: 100px auto 0px auto;
+            position: relative;
+            width: 600px; /* Ширина контейнера */
+            height: 400px; /* Высота контейнера */
+            overflow: hidden;
+            border: 1px solid black;
+            display: flex;
+            justify-content: center;
+
+            transform: translateY(-100%); /* Сдвинут вверх */
+            animation: slideIn 3s forwards; /* Анимация при загрузке */
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1; /* Конечное состояние (видимый) */
+                transform: translateY(0); /* Возвращаем на место */
+            }
+        }
+
+        .image {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            transition: opacity 1s ease; /* Плавный переход */
+            
+        }
+
+        .image.hidden {
+            opacity: 0; /* Скрываем изображение */
+        }
+
+        .openned {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<button onclick="toggleImages()">Сменить изображение</button>
+
+<div class="container">
+    <img src="UI books & more 2.png" alt="Закрытая книга" class="image" id="image1">
+    <img src="UI books & more 1.png" alt="Открытая книга" class="image hidden openned" id="image2">
+</div>
+
+
+
+<script>
+    function toggleImages() {
+        const img1 = document.getElementById('image1');
+        const img2 = document.getElementById('image2');
+
+        img1.classList.toggle('hidden');
+        img2.classList.toggle('hidden');
+    }
+</script>
+
+</body>
+</html>
