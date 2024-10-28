@@ -1,0 +1,14 @@
+.welcome-button {
+    text-transform: uppercase;
+    font-family: 'UnformitalBlack';
+    background-image: linear-gradient(#E3C080 21%, #CCA04E 50%, #C79230 71%, #C58309 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -webkit-text-stroke: 3px black;
+
+    display: block;
+    margin-bottom: 10px;
+    font-size: 90px;
+    justify-self: center;
+    border: none;
+}

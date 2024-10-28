@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+  
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+
+@font-face {
+    font-family: "Caveat"; 
+    src: url("../fonts/Caveat.ttf") format("truetype"); 
+    font-style: normal; 
+    font-weight: bold; 
+  } 
+  
+  @font-face {
+    font-family: "UnformitalBlack"; 
+    src: url("../fonts/UnformitalBlack.ttf") format("truetype"); 
+    font-style: normal; 
+    font-weight: bold; 
+  } 
+  
+  @font-face {
+    font-family: "UnformitalRegular"; 
+    src: url("../fonts/UnformitalRegula.ttf") format("truetype"); 
+    font-style: normal; 
+    font-weight: normal; 
+  } 
+

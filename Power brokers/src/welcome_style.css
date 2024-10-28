@@ -1,0 +1,76 @@
+html, body {
+    width: auto;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+}
+
+img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+h1, button {
+    text-transform: uppercase;
+    font-family: 'UnformitalBlack';
+    background-image: linear-gradient(#E3C080 21%, #CCA04E 50%, #C79230 71%, #C58309 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -webkit-text-stroke: 3px black;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 150px;
+}
+
+button {
+    display: block;
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 90px;
+    justify-self: center;
+    border: none;
+}
+
+.welcome_section {
+    margin-top: 10em;
+    text-align: center;
+    
+
+    /* animation: sailAway 5s forwards; */
+}
+
+
+
+@keyframes sailAway {
+    from {
+        transform: translateX(0); /* Начальная позиция */
+    }
+    to {
+        transform: translateX(-100vw); /* Конечная позиция за пределами экрана */
+    }
+}
+
+
+
+@font-face {
+    font-family: "UnformitalBlack"; 
+    src: url("../fonts/UnformitalBlack.ttf") format("truetype"); 
+    font-style: normal; 
+    font-weight: bold; 
+} 
+
+@font-face {
+    font-family: "UnformitalRegular"; 
+    src: url("../fonts/UnformitalRegula.ttf") format("truetype"); 
+    font-style: normal; 
+    font-weight: normal; 
+} 

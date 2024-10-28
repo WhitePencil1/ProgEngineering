@@ -1,0 +1,159 @@
+.close-book {
+    width: 30em;
+    height: 30em;
+    min-width: 30em;
+
+    transform: translateY(-100%); /* Сдвинут вверх */
+    animation: slideIn 2s forwards; /* Анимация при загрузке */
+}
+
+
+.book-background {
+    padding: 20px;
+    width: 60em;
+    height: 30em;
+    min-width: 60em; /*Далой аддаптивность!*/
+    background-image: url("/img/backgroundBook.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 8em;
+}
+
+.book-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+}
+
+.avatar-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1em;
+    margin-left: 2em;
+}
+
+.avatar-box {
+    background-size: contain;
+    background-image: url("/img/Avatars/AvatarBox.png");
+    background-repeat: no-repeat;
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.avatar-icon {
+    width: 54px;
+    height: 54px;
+}
+
+.book-btn {
+    background-image: url("/img/backBookBtn.png");
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-size: contain;
+    border: none;
+    width: 70px;
+    height: 70px;
+    margin-bottom: 1em;
+}
+
+.book-btn:hover {
+    opacity: 0.8;
+}
+
+.book-btn:active {
+    transform: scale(0.95);
+}
+
+.book-back-btn {
+    background-image: url("/img/backBookBtn.png");
+    align-self: flex-start;
+    margin-left: 5px;
+}
+
+.book-next-btn {
+    background-image: url("/img/nextBookBtn.png");
+    align-self: flex-end;
+    margin-right: 5px;
+}
+
+.book-start-btn {
+    background-image: url("/img/startBookBtn.png");
+    align-self: flex-end;
+    margin-right: 5px;
+    width: 60px;
+    height: 110px;
+    position: relative;
+    top: 30px;
+    margin-bottom: 0;
+}
+
+.book-content {
+    margin-right: 15px;
+    font: 2em "Caveat", sans-serif;
+    justify-self: center;
+}
+
+.player-nickname {
+    font: 1em "Caveat", sans-serif;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid black;
+    margin-top: 8px;
+}
+
+.room-key {
+    font-size: 4em;
+}
+
+.players-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+}
+
+.player-avatar-container {
+    background-image: url('/img/playerAvatarContainer.png');
+    background-repeat: no-repeat;
+    width: 115px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.player-avatar-container img {
+    width: 42px;
+    height: 32px;
+   
+    margin-bottom: 2px;
+    margin-left: 3px;
+}
+
+.main-player {
+    background-image: url('/img/mainPlayerAvatarContainer.png');
+}
+
+
+.players-list .player-nickname {
+    margin: 0;
+    margin-left: 10px;
+    border-bottom: none;
+    font-size: 1.8rem;
+    display: inline;
+}
+
+
+
