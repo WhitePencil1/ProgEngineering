@@ -21,7 +21,7 @@ function App() {
 
       {(stage == "roomActivity" && playerRole == "create") && <CreateStage setStage={setStage}/>}
 
-      {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage />}
+      {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage setStage={setStage} />}
 
     </>
   )

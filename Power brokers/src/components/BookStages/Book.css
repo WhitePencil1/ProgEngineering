@@ -93,6 +93,10 @@
     margin-bottom: 0;
 }
 
+.book-loading {
+    background-image: url("/BrokenCircle.gif");
+}
+
 .book-content {
     margin-right: 15px;
     font: 2em "Caveat", sans-serif;
@@ -108,7 +112,7 @@
 }
 
 .room-key {
-    font-size: 4em;
+    font-size: 3em;
 }
 
 .players-list {
@@ -153,6 +157,19 @@
     border-bottom: none;
     font-size: 1.8rem;
     display: inline;
+}
+
+#room-key-input {
+    font-size: 3em;
+    text-transform: uppercase;
+    font-family: 'UnformitalBlack';
+    background-image: linear-gradient(#E3C080 21%, #CCA04E 50%, #C79230 71%, #C58309 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -webkit-text-stroke: 1px black;
+    width: 40%;
+    align-self: center;
+    text-align: center;
 }
 
 
