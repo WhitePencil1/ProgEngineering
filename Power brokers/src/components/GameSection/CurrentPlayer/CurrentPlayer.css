@@ -1,0 +1,52 @@
+.current-player {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    
+
+    grid-column: span 3;
+    background-color: #6BBA9D;
+}
+
+.game-turn {
+    grid-column: span 2;
+    justify-self: center;
+    background-image: url("./img/gameTurnBanner.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    width: 10vw;
+    height: 16%;
+    min-width: 166px;
+    min-height: 80px;
+    font-size: 1.6em;
+
+    padding-top: 15px;
+}
+
+.game-info {
+    grid-column: span 2;
+    justify-self: end;
+    background-image: url("./img/gameInfoBackground.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: end;
+
+    padding: 0 20px;
+
+    width: 310px;
+    height: 153px;
+}
+
+.game-info > li {
+    font-size: 25px;
+    margin-bottom: 4px;
+    text-align: center;
+}
