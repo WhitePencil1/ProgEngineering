@@ -21,7 +21,7 @@
 
 /*ANOTHER PLAYER OPTIONS */
 .player-icon.another-player-icon {
-    justify-self: last baseline;
+    justify-self: end;
     align-self: flex-start;
     margin-top: 8px;
     margin-right: 8px;

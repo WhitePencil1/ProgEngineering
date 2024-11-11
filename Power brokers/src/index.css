@@ -31,3 +31,10 @@ html, body {
     font-weight: normal; 
   } 
 
+  @font-face {
+    font-family: "Unformital"; 
+    src: url("../fonts/Unformital.ttf") format("truetype"); 
+    font-style: normal; 
+    font-weight: normal; 
+  } 
+
