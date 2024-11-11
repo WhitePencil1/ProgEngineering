@@ -9,16 +9,12 @@ import GameSection from './components/GameSection/GameSection'
 
 
 function App() {
-  const [stage, setStage] = useState("game")
+  const [stage, setStage] = useState("welcome")
   const [isRegistered, setIsRegistered] = useState(false) /*Кастыль для секции регистрации*/ 
   const [playerRole, setPlayerRole] = useState("")
 
-  const players = {
-    1: {nickname: "Kiner", avatar: ""},
-    2: {nickname: "Oxotnik22012", avatar: ""},
-    3: {nickname: "Sfinkterion", avatar: ""},
-    4: {nickname: "Erik Penisov", avatar: ""}
-  };
+
+  const [players, setPlayers] = useState([]);
 
   return (
     <>
@@ -26,9 +22,9 @@ function App() {
 
       {stage == "welcome" && <WelcomeSection setNextStage = {setStage} setRole={setPlayerRole}/>}
 
-      {stage == "registration" && <RegistrationStage setStage={setStage} isRegistered={isRegistered} setIsRegistered={setIsRegistered}/>}
+      {stage == "registration" && <RegistrationStage playerRole={playerRole} setStage={setStage} isRegistered={isRegistered} setIsRegistered={setIsRegistered} players={players} setPlayers={setPlayers}/>}
 
-      {(stage == "roomActivity" && playerRole == "create") && <CreateStage setStage={setStage}/>}
+      {(stage == "roomActivity" && playerRole == "create") && <CreateStage setStage={setStage} players={players} setPlayers={setPlayers}/>}
 
       {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage setStage={setStage} />}
 

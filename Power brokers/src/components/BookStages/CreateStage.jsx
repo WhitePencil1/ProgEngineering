@@ -1,10 +1,9 @@
+/* eslint-disable react/prop-types */
 import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
 
 
-// eslint-disable-next-line react/prop-types
-export default function CreateStage({setStage}) {
-
+export default function CreateStage({setStage, players, setPlayers}) {
     return(
         <>
             <div className="book-background">
@@ -15,10 +14,10 @@ export default function CreateStage({setStage}) {
                 </div>
                 <div className="book-page">
                     <div>
-                        <BookHeader>Players list</BookHeader>
-                        <p className="book-content">Competitors ? of 4</p>
+                        <BookHeader isCreateRole = {true}>Players list</BookHeader>
+                        <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
-                    <PlayersList />
+                    <PlayersList playersData={players}/>
                     <button className="book-btn book-start-btn"></button>
                 </div>
             </div>

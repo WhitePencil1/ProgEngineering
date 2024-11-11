@@ -44,7 +44,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    transition: 0.2s linear;
 }
+
+.avatar-box:hover {
+    -webkit-transform: rotateZ(7deg);
+    -ms-transform: rotateZ(7deg);
+    transform: rotateZ(7deg);
+}
+
+.avatar-active {
+    -webkit-transform: rotateZ(7deg);
+    -ms-transform: rotateZ(7deg);
+    transform: rotateZ(7deg);
+
+    opacity: 0.9;
+}
+
 
 .avatar-icon {
     width: 54px;
@@ -109,6 +126,8 @@
     border: none;
     border-bottom: 1px solid black;
     margin-top: 8px;
+
+    width: 150px;
 }
 
 .room-key {
@@ -136,6 +155,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    
 }
 
 .player-avatar-container img {
@@ -145,6 +166,8 @@
     margin-bottom: 2px;
     margin-left: 3px;
 }
+
+
 
 .main-player {
     background-image: url('/img/mainPlayerAvatarContainer.png');
