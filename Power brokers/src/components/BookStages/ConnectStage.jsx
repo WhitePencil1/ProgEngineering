@@ -1,19 +1,21 @@
+/* eslint-disable react/prop-types */
 import { useState } from "react"
 import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
-import PlayersListEmpty from "./PlayersListEmpty"
 import "./GameLoader.css"
 
 
-// eslint-disable-next-line react/prop-types
-export default function ConnectStage({setStage}) {
+export default function ConnectStage({setStage, players, setPlayers}) {
     const [connectStage, setConnectStage] = useState("KeyEntering");
 
+
+    //TEST FUNCTION
     function StartLoading() {
         setConnectStage("RoomSearch");
-        setTimeout(() => setConnectStage("GameWaiting"), 4000)
+        setTimeout(() => {
+            setPlayers([players[0], {nickname: "CoolBoy", avatar: 3, isMainPlayer: true}, {nickname: "CoolMan", avatar: 7, isMainPlayer: false}]);
+            setConnectStage("GameWaiting")}, 4000);
     }
-
     return(
         <>
             <div className="book-background">
@@ -25,11 +27,10 @@ export default function ConnectStage({setStage}) {
                 <div className="book-page">
                     <div>
                         <BookHeader>Players list</BookHeader>
-                        <p className="book-content">Competitors 0 of 4</p>
+                        <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
-                    {connectStage == "GameWaiting" ? <PlayersList/> : <PlayersListEmpty />}
+                    <PlayersList playersData={players}/>
                     <button className= {connectStage == "RoomSearch" ? "loader book-btn book-next-btn" : "book-btn book-next-btn"} onClick={StartLoading}></button>
-
                 </div>
             </div>
         </>
