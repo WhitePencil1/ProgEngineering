@@ -11,7 +11,7 @@
             Rooms.Add(code, room);
             return room;
         }
-        public (bool success, string message, string playerId) JoinRoom(string roomCode, string playerName, string avatar)
+        public (bool success, string message, string playerId) JoinRoom(string roomCode, string playerName, int avatar)
         {
             if (Rooms.ContainsKey(roomCode))
             {

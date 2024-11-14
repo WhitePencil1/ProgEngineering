@@ -23,29 +23,30 @@ namespace WebApplication2
         }
 
         [HttpPost("join")]
-        public IActionResult JoinRoom([FromBody] Dictionary<string, string> data)
+        public IActionResult JoinRoom([FromBody] JoinRoomRequest data)
         {
-            if (data.TryGetValue("roomCode", out var roomCode) &&
-                data.TryGetValue("playerName", out var playerName) &&
-                data.TryGetValue("avatar", out var avatar))
+            if (data != null && !string.IsNullOrEmpty(data.RoomCode) && !string.IsNullOrEmpty(data.PlayerName))
             {
-                var o = game.JoinRoom(roomCode, playerName, avatar);
+                var o = game.JoinRoom(data.RoomCode, data.PlayerName, data.Avatar);
                 if (o.success)
                 {
                     // Сохранение ID комнаты и ID игрока в куки
-                    Response.Cookies.Append("roomId", roomCode, new CookieOptions
+                    Response.Cookies.Append("roomId", data.RoomCode, new CookieOptions
                     {
                         HttpOnly = true,
-                        SameSite = SameSiteMode.Strict,
-                        Expires = DateTimeOffset.Now.AddHours(1) // Время жизни куки - 1 час
+                        SameSite = SameSiteMode.None,  // Разрешает кросс-доменные запросы
+                        Secure = true,  // Требуется для SameSite.None
+                        Expires = DateTimeOffset.Now.AddHours(1)
                     });
 
                     Response.Cookies.Append("playerId", o.playerId.ToString(), new CookieOptions
                     {
                         HttpOnly = true,
-                        SameSite = SameSiteMode.Strict,
+                        SameSite = SameSiteMode.None,  // Разрешает кросс-доменные запросы
+                        Secure = true,  // Требуется для SameSite.None
                         Expires = DateTimeOffset.Now.AddHours(1)
                     });
+
 
                     return Ok(o.message);
                 }
@@ -55,7 +56,7 @@ namespace WebApplication2
         }
 
         [HttpDelete("delete")]
-        public IActionResult DeletePlayer([FromBody] Dictionary<string, string> data)
+        public IActionResult DeletePlayer([FromBody] Dictionary<string, string> data)//заменить на объект класса
         {
             if (data.TryGetValue("roomCode", out var roomCode) &&
                 data.TryGetValue("playerName", out var playerName))

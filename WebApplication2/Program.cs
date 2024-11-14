@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using WebApplication2;
 
 internal class Program
@@ -14,7 +12,17 @@ internal class Program
         // Добавляем IGameService как singleton
         builder.Services.AddSingleton<GameService>();
 
-        builder.Services.AddCors(); // добавляем сервисы CORS
+        // Добавляем поддержку CORS
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.WithOrigins("http://localhost:5173") // Разрешаем доступ только с этого источника
+                      .AllowAnyMethod() // Разрешаем любые методы (GET, POST и т. д.)
+                      .AllowAnyHeader() // Разрешаем любые заголовки
+                      .AllowCredentials(); // Если тебе нужны куки (по желанию)
+            });
+        });
 
         // Создаем и настраиваем приложение
         var app = builder.Build();
@@ -25,7 +33,7 @@ internal class Program
             app.UseDeveloperExceptionPage();
         }
 
-        app.UseCors(builder => builder.AllowAnyOrigin());
+        app.UseCors();
 
         app.UseHttpsRedirection();
         app.UseRouting();

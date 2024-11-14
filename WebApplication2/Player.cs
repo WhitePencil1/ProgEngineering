@@ -5,7 +5,7 @@ namespace WebApplication2
 {
     public class Player
     {
-        public string Avatar { get; set; }
+        public int Avatar { get; set; }
         public string Id { get; private set; }
         public string Name { get; set; }
         public int Capital
@@ -35,7 +35,7 @@ namespace WebApplication2
         public List<Factory> Factories { get; set; }
         public List<(Factory factory, int sum, int turn)> Credits { get; set; }
         public bool Defaulter { get; set; }
-        public Player(string name, string avatar, Room room)//ну типо
+        public Player(string name, int avatar, Room room)//ну типо
         {
             Id = Guid.NewGuid().ToString();
             Name = name;

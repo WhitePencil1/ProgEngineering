@@ -15,7 +15,7 @@
             Turn = 0;
         }
         public Dictionary<string, (int esm, int egp)> ResDistribution {  get; set; }
-        public (bool success, string message, string playerId) Join(string playerName, string avatar) //проверка на уникальность имени
+        public (bool success, string message, string playerId) Join(string playerName, int avatar) //проверка на уникальность имени
         {
             Player player = new(playerName, avatar, this);
             Players.Add(player);
