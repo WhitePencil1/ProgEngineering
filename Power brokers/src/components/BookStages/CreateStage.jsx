@@ -3,13 +3,13 @@ import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
 
 
-export default function CreateStage({setStage, players, setPlayers}) {
+export default function CreateStage({setStage, players, setPlayers, roomCode}) {
     return(
         <>
             <div className="book-background">
                 <div className="book-page">
                     <BookHeader>Your room key</BookHeader>
-                    <h2 className="room-key centered">Y2PHJK3</h2>
+                    <h2 className="room-key centered">{roomCode}</h2>
                     <button className="book-btn book-back-btn" onClick={() => {setStage("registration")}}></button>
                 </div>
                 <div className="book-page">

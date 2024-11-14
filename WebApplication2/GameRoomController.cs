@@ -19,7 +19,7 @@ namespace WebApplication2
         public IActionResult CreateRoom()
         {
             var room = game.CreateRoom();
-            return Ok(room.Code);
+            return new OkObjectResult(new { code = room.Code });
         }
 
         [HttpPost("join")]

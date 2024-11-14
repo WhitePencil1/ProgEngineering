@@ -9,3 +9,6 @@ export const avatarsWays = [
     "/img/Avatars/avatarNaruto.jpg",
     "/img/Avatars/avatarPirat.jpeg",
 ]
+
+
+export const address = "https://localhost:7269";

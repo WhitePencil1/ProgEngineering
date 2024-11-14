@@ -12,7 +12,10 @@ internal class Program
         builder.Services.AddControllers();
 
         // Добавляем IGameService как singleton
-        builder.Services.AddSingleton<GameService>(); 
+        builder.Services.AddSingleton<GameService>();
+
+        builder.Services.AddCors(); // добавляем сервисы CORS
+
         // Создаем и настраиваем приложение
         var app = builder.Build();
 
@@ -21,6 +24,8 @@ internal class Program
         {
             app.UseDeveloperExceptionPage();
         }
+
+        app.UseCors(builder => builder.AllowAnyOrigin());
 
         app.UseHttpsRedirection();
         app.UseRouting();
