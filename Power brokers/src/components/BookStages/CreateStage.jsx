@@ -8,20 +8,23 @@ export default function CreateStage({setStage, players, setPlayers, roomCode}) {
     
     const getRoom = async () => {
         try {
-            const response = await instance.get(`room`);
+            const response = await instance.get(`room/players`);
+            setPlayers(response.data);
             console.log(response.data);
+            return response
         } catch (error) {
           console.error('Ошибка при получении комнаты', error);
         }
     }
-    const { data } = useQuery(
-          ['room'], // Ключ для кэширования
-          getRoom, // Функция для получения данных
-          {
-            refetchInterval: 5000, // Интервал в миллисекундах (например, 5 секунд)
-            //refetchOnWindowFocus: true, // Опционально: повторный запрос при возврате к вкладке
-          }
-        );
+
+    useQuery(
+        ['room/players'], // Ключ для кэширования
+        getRoom, // Функция для получения данных
+        {
+            refetchInterval: 2000, // Интервал в миллисекундах (например, 5 секунд)
+            refetchOnWindowFocus: true // Опционально: повторный запрос при возврате к вкладке
+        }
+    );
 
     return(
         <>

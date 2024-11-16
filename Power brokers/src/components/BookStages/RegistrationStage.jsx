@@ -7,13 +7,14 @@ import { instance } from '../../utils/axios';
 
 
 // eslint-disable-next-line react/prop-types
-export default function RegistrationStage({setStage, isRegistered, setIsRegistered, playerRole, setRoomCode}) {
+export default function RegistrationStage({setStage, isRegistered, setIsRegistered, playerRole, setRoomCode, setPlayers}) {
     const [bookState, setBookState] = useState(isRegistered ? "open" : "close");
     const [playAnimation, setPlayAnimation] = useState(false);
 
     const [avatar, setAvatar] = useState(-1);
     const [nickname, setNickname] = useState("");
 
+    //Функция для возврата в главное меню
     function handleChangeWelcomeStage() {
         setPlayAnimation(true)
         setIsRegistered(false)
@@ -75,7 +76,9 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
                         </div>
                         <button className="book-btn book-next-btn" onClick={() => {
                             setIsRegistered(true);
-                            {playerRole == "create" ? сreateAndJoin() : joinRoom()};
+                            // сreateAndJoin();
+                            //if(playerRole == "create") сreateAndJoin()
+                            {playerRole == "create" ? сreateAndJoin() : setPlayers([{name: nickname, avatar: avatar, isMainPlayer: false}])};
                             setStage("roomActivity");
                         }}></button>
                     </div>

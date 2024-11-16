@@ -92,5 +92,15 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplication2.Controllers.RoomController",
+    "Method": "GetPlayers",
+    "RelativePath": "api/room/players",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

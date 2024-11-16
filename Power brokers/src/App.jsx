@@ -29,7 +29,7 @@ function App() {
 
       {(stage == "roomActivity" && playerRole == "create") && <CreateStage setStage={setStage} players={players} setPlayers={setPlayers} roomCode={roomCode}/>}
 
-      {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage setStage={setStage} setPlayers={setPlayers} players={players} />}
+      {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage setStage={setStage} setPlayers={setPlayers} players={players} roomCode={roomCode} setRoomCode={setRoomCode} />}
 
     </QueryClientProvider>
   )
