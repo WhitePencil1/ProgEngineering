@@ -1,4 +1,4 @@
-﻿namespace WebApplication2
+﻿namespace WebApplication2.Models
 {
     public class Room
     {
@@ -14,21 +14,21 @@
             Bank = new Bank(this);
             Turn = 0;
         }
-        public Dictionary<string, (int esm, int egp)> ResDistribution {  get; set; }
-        public (bool success, string message, string playerId) Join(string playerName, int avatar) //проверка на уникальность имени
+        public Dictionary<string, (int esm, int egp)> ResDistribution { get; set; }
+        public (bool success, string message, string playerId) Join(string playerName, int avatar)
         {
             Player player = new(playerName, avatar, this);
             Players.Add(player);
             return new(true, $"игрок {playerName} добавлен", player.Id);
         }
-        public (bool success, string message) Leave(string playerName)
+        public (bool success, string message) Leave(string playerId)
         {
-            Player? player = Players.Find(item => item.Name == playerName);
+            Player? player = Players.Find(item => item.Id == playerId);
             return player != null
-                ? (Players.Remove(player)
-                    ? (true, $"игрок {playerName} удалён")
-                    : (false, $"ошибка удаления игрока {playerName}"))
-                : (false, $"игрок {playerName} не найден");
+                ? Players.Remove(player)
+                    ? (true, $"игрок {playerId} удалён")
+                    : (false, $"ошибка удаления игрока {playerId}")
+                : (false, $"игрок {playerId} не найден");
         }
         public Player GetPlayer(string playerId)
         {
@@ -56,7 +56,7 @@
                 {
                     factory.CheckLevel(Turn);
                 }
-                
+
             }
         }
     }

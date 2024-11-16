@@ -1,9 +1,28 @@
 /* eslint-disable react/prop-types */
 import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
-
+import { instance } from '../../utils/axios';
+import { useQuery } from '@tanstack/react-query';
 
 export default function CreateStage({setStage, players, setPlayers, roomCode}) {
+    
+    const getRoom = async () => {
+        try {
+            const response = await instance.get(`room`);
+            console.log(response.data);
+        } catch (error) {
+          console.error('Ошибка при получении комнаты', error);
+        }
+    }
+    const { data } = useQuery(
+          ['room'], // Ключ для кэширования
+          getRoom, // Функция для получения данных
+          {
+            refetchInterval: 5000, // Интервал в миллисекундах (например, 5 секунд)
+            //refetchOnWindowFocus: true, // Опционально: повторный запрос при возврате к вкладке
+          }
+        );
+
     return(
         <>
             <div className="book-background">

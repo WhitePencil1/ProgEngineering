@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using static WebApplication2.GameSettings;
 
-namespace WebApplication2
+namespace WebApplication2.Models
 {
     public class Player
     {
@@ -62,7 +62,7 @@ namespace WebApplication2
         }
         public (bool success, int cost) BuildFactory(int factoryId, bool auto)
         {
-            if ((auto && Money > BUILD_COST_AUTO_FACTORY) || ((!auto && Money > BUILD_COST_FACTORY)))
+            if (auto && Money > BUILD_COST_AUTO_FACTORY || !auto && Money > BUILD_COST_FACTORY)
             {
                 if (Factories[factoryId].Build(Room.Turn, auto))
                 {
@@ -107,7 +107,7 @@ namespace WebApplication2
         }
         public bool BuyESM(int count, int price)
         {
-            if ((count > Room.Bank.ESMCount) || (price < Room.Bank.ESMPrice))
+            if (count > Room.Bank.ESMCount || price < Room.Bank.ESMPrice)
             {
                 EGPDesired = (0, 0);
                 return false;
@@ -117,7 +117,7 @@ namespace WebApplication2
         }
         public bool SellEGP(int count, int price)
         {
-            if ((count > Room.Bank.EGPCount) || (price > Room.Bank.EGPPrice))
+            if (count > Room.Bank.EGPCount || price > Room.Bank.EGPPrice)
             {
                 EGPDesired = (0, 0);
                 return false;
@@ -134,7 +134,7 @@ namespace WebApplication2
         public (bool success, string message) GetCredit(int factoryId, int sum)
         {
             if (Capital / 2 < sum) return (false, "недостаточно средств для заёмов");
-            if ((Factories[factoryId].Cost) < sum) return (false, "недостаточная ценность залога");
+            if (Factories[factoryId].Cost < sum) return (false, "недостаточная ценность залога");
             if (Factories[factoryId].IsCredit) return (false, "фабрика уже заложена");
             Factories[factoryId].IsCredit = true;
             Money += sum;
@@ -175,7 +175,7 @@ namespace WebApplication2
             {
                 sum += credit.sum;
             }
-            sum = (int)(sum * (CREDIT_PROCENT / 100));
+            sum = sum * (CREDIT_PROCENT / 100);
             Money -= sum;
             if (Money < 0)
             {

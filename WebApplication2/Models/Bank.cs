@@ -1,17 +1,21 @@
-﻿namespace WebApplication2
+﻿namespace WebApplication2.Models
 {
     public class Bank
     {
         public int Id { get; set; }
         public int Level { get; set; }
-        public int ActivePlayers { get {
+        public int ActivePlayers
+        {
+            get
+            {
                 int active = 0;
                 foreach (Player player in Room.Players)
                 {
                     if (!player.Defaulter) active++;
                 }
                 return active;
-            } }
+            }
+        }
         private Room Room { get; set; }
         public Bank(Room room)
         {
@@ -108,7 +112,7 @@
             SortPlayers(Room.Players, Room.KingPlayerID, x => x.ESMDesired.count);
 
             // Обрабатываем заявки на ESM
-            esmCountPairs = ProcessBidsOf( Room.Players, ref esmC, esmP, 
+            esmCountPairs = ProcessBidsOf(Room.Players, ref esmC, esmP,
                 player => (player.ESMDesired.count, player.ESMDesired.price),
                 (player, amount) => player.ESM += amount);
 
@@ -150,7 +154,7 @@
                 return result;
             });
         }
-        private static Dictionary<string, int> ProcessBidsOf( List<Player> players,
+        private static Dictionary<string, int> ProcessBidsOf(List<Player> players,
                                                               ref int esmC,
                                                               int esmP,
                                                               Func<Player, (int count, int price)> selector,

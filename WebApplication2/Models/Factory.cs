@@ -1,5 +1,5 @@
 ﻿using static WebApplication2.GameSettings;
-namespace WebApplication2
+namespace WebApplication2.Models
 {
     public class Factory
     {
@@ -44,9 +44,9 @@ namespace WebApplication2
         }
         public bool Build(int currentTurn, bool toAuto)
         {
-            if (Level == -1) 
+            if (Level == -1)
                 switch (toAuto)
-                    {
+                {
                     case false:
                         Level = 0;
                         return true;
@@ -71,15 +71,15 @@ namespace WebApplication2
         public int ProcessESM(int ESM)
         {
             if (Level < 2) this.ESM = 0;
-            if ((ESM > 1) && (Level == 4)) this.ESM = 2;
+            if (ESM > 1 && Level == 4) this.ESM = 2;
             else this.ESM = 1;
 
             return this.ESM;
         }
         public int GetEGP()
         {
-            int result = this.ESM;
-            this.ESM = 0;
+            int result = ESM;
+            ESM = 0;
             return result;
         }
         public int Cost => Level switch

@@ -1,24 +1,18 @@
-import {address} from '/src/data.js'
 import AvatarList from "./AvatarList"
 import BookHeader from "./BookHeader"
 import "./Book.css"
-import {useState} from "react"
-import axios from 'axios'
+import { useState } from 'react';
+import { instance } from '../../utils/axios';
+// import { useEffect } from "react";
 
 
 // eslint-disable-next-line react/prop-types
-export default function RegistrationStage({setStage, isRegistered, setIsRegistered, setRoomCode, playerRole}) {
+export default function RegistrationStage({setStage, isRegistered, setIsRegistered, playerRole, setRoomCode}) {
     const [bookState, setBookState] = useState(isRegistered ? "open" : "close");
     const [playAnimation, setPlayAnimation] = useState(false);
 
     const [avatar, setAvatar] = useState(-1);
     const [nickname, setNickname] = useState("");
-
-    const roomData = {
-        roomCode: '',
-        playerName: nickname,
-        avatar: avatar
-    }
 
     function handleChangeWelcomeStage() {
         setPlayAnimation(true)
@@ -28,31 +22,38 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
 
     const createRoom = async () => {
         try {
-          await axios
-          .post(`${address}/room/create`)
-          .then(data => {
-            roomData.roomCode = data.data.code; 
-            setRoomCode(roomData.roomCode); 
-            joinRoom()
-        });
-
+            const response = await instance.post(`room`);
+            console.log("Код комнаты из ответа:", response.data.code);
+            setRoomCode(response.data.code);
+            return response.data.code;
         } catch (error) {
           console.error('Ошибка при создании комнаты', error);
         }
     };
 
-
-      // Функция для присоединения к комнате
-    const joinRoom = async () => {
+      const joinRoom = async (roomCode) => {
         try {
-            await axios.post(`${address}/room/join`, roomData).then(data => {console.log('Ответ от сервера:', data.data);});
-            //await axios.get(`${address}/room/getplayer`).then(data => {console.log('Инфа о игроке: ', data);});
-
+            const roomData = {
+                roomCode: roomCode,
+                playerName: nickname,
+                avatar: avatar
+            }
+            console.log("Присоединение с данными:", roomData);
+            const response = await instance.post(`player`, roomData);
+            console.log(response);
         } catch (error) {
             console.error('Ошибка при присоединении к комнате:', error);
         }
     };
 
+    const сreateAndJoin = async () => {
+        try {
+            const roomCode = await createRoom();
+            await joinRoom(roomCode);
+        } catch (error) {
+            console.error("Ошибка при создании или присоединении:", error);
+        }
+    };
 
     return(
         <>
@@ -74,7 +75,7 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
                         </div>
                         <button className="book-btn book-next-btn" onClick={() => {
                             setIsRegistered(true);
-                            {playerRole == "create" ? createRoom() : joinRoom()};
+                            {playerRole == "create" ? сreateAndJoin() : joinRoom()};
                             setStage("roomActivity");
                         }}></button>
                     </div>

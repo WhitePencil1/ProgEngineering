@@ -6,6 +6,9 @@ import CreateStage from './components/BookStages/CreateStage'
 import WelcomeSection from './components/WelcomeSection/WelcomeSection'
 import RegistrationStage from './components/BookStages/RegistrationStage'
 import GameSection from './components/GameSection/GameSection'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 
 function App() {
@@ -17,7 +20,7 @@ function App() {
   const [players, setPlayers] = useState([]);
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       {stage != "game" ? <Background /> : <GameSection players={players}/>}
 
       {stage == "welcome" && <WelcomeSection setNextStage = {setStage} setRole={setPlayerRole}/>}
@@ -28,7 +31,7 @@ function App() {
 
       {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage setStage={setStage} setPlayers={setPlayers} players={players} />}
 
-    </>
+    </QueryClientProvider>
   )
 }
 
