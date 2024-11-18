@@ -2,6 +2,7 @@ import "./CurrentPlayer.css"
 import PlayerResourcesBox from "../PlayerResourcesBox/PlayerResourcesBox"
 import PlayerIcon from "../PlayerIcon/PlayerIcon"
 import FactoriesBox from "../FactoriesBox/FactoriesBox"
+import GameInfo from "../GameInfo/GameInfo"
 
 
 // eslint-disable-next-line react/prop-types
@@ -10,12 +11,7 @@ export default function CurrentPlayer({player}) {
         <div className="current-player">
             <PlayerResourcesBox isMainPlayer={true}/>
             <div className="game-turn">5 month</div>
-            <ul className="game-info">
-                <li>Bank buy 8 pu for 1000</li>
-                <li>Bank sell 6 mu for 500</li>
-                <li>Upgrade your factory</li>
-                <li>Time left: 30s</li>
-            </ul>
+            <GameInfo />
             <PlayerIcon isMainPlayer={true}/>
             <FactoriesBox isMainPlayer={true}/>
         </div>

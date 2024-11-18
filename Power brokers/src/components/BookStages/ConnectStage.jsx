@@ -9,7 +9,7 @@ import "./GameLoader.css"
 
 export default function ConnectStage({setStage, players, setPlayers, roomCode, setRoomCode}) {
     const [connectStage, setConnectStage] = useState("KeyEntering");
-
+            
 
     const getRoom = async () => {
         try {

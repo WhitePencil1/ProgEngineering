@@ -27,26 +27,4 @@
     padding-top: 15px;
 }
 
-.game-info {
-    grid-column: span 2;
-    justify-self: end;
-    background-image: url("./img/gameInfoBackground.png");
-    background-repeat: no-repeat;
-    background-size: contain;
 
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    justify-content: center;
-    align-items: end;
-
-    padding: 0 20px;
-
-    width: 310px;
-    height: 153px;
-}
-
-.game-info > li {
-    font-size: 25px;
-    margin-bottom: 4px;
-    text-align: center;
-}

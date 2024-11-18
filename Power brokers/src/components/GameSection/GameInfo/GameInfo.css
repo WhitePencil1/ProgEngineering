@@ -1,0 +1,98 @@
+.game-info-box {
+    grid-column: span 2;
+}
+
+
+.game-info {
+    justify-self: end;
+    background-image: url("./img/gameInfoBackground.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: end;
+
+    padding: 0 20px;
+
+    width: 310px;
+    height: 153px;
+}
+
+.game-info > li {
+    font-size: 25px;
+    margin-bottom: 4px;
+    text-align: center;
+}
+
+.player-requests-input-box {
+    justify-self: end;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+
+    row-gap: 10px;
+    
+    background-image: url("./img/RequestInput.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    width: 300px;
+    height: 130px;
+    color: white;
+}
+
+
+.player-request-input-container {
+    display: grid;
+    grid-template-columns: 0.7fr 0.3fr;
+    align-items: center;
+    padding: 0 42px;
+}
+
+
+.request-stage-info-btn {
+    background-image: url("./img/info.png");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+
+    justify-self: end;
+    
+    width: 20px;
+    height: 28px;
+}
+
+/* input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+opacity: 1;
+} */
+
+
+#resources-number {
+    width: 70px;
+    background-color: transparent;
+    color: white;
+}
+
+#price {
+    width: 70px;
+    background-color: transparent;
+    color: white;
+}
+
+#player-request-submit {
+    background-image: url("./img/submit.png");
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+    justify-self: end;
+    
+    width: 25px;
+    height: 28px;
+}
