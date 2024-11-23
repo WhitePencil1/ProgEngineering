@@ -35,20 +35,26 @@ namespace WebApplication2.Controllers
         }
 
         [HttpDelete]
-        public IActionResult DeletePlayer([FromBody] DeletePlayerRequest data)
+        public IActionResult DeletePlayer()
         {
-            if (data == null || string.IsNullOrEmpty(data.RoomCode) || string.IsNullOrEmpty(data.PlayerId))
+            // Попытка получить значения roomId и playerId из куки
+            if (Request.Cookies.TryGetValue("roomCode", out var roomCode) &&
+                Request.Cookies.TryGetValue("playerId", out var playerId))
             {
-                return BadRequest("Неправильные параметры");
+                var result = _game.DeletePlayerFromRoom(roomCode, playerId);
+                if (result.success)
+                {
+                    Response.Cookies.Delete("roomCode");
+                    Response.Cookies.Delete("playerId");
+                    return NoContent();
+                }
+
+                return NotFound(result.message);
             }
 
-            var result = _game.DeletePlayerFromRoom(data.RoomCode, data.PlayerId);
-            if (result.success)
-            {
-                return Ok(result.message);
-            }
+            return BadRequest("Куки не найдены или неверные данные");
 
-            return NotFound(result.message);
+
         }
 
         [HttpGet]
