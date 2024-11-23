@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 
 
 function App() {
-  const [stage, setStage] = useState("welcome")
+  const [stage, setStage] = useState("registration")
   const [isRegistered, setIsRegistered] = useState(false) /*Кастыль для секции регистрации*/ 
   const [playerRole, setPlayerRole] = useState("create")
 

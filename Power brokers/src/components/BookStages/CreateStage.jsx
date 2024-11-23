@@ -40,7 +40,7 @@ export default function CreateStage({setStage, players, setPlayers, roomCode}) {
                         <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
                     <PlayersList playersData={players}/>
-                    <button className="book-btn book-start-btn"></button>
+                    {players.length > 2 ? <button className="book-btn book-start-btn"></button> : <button style={{visibility: "hidden"}} className="book-btn book-start-btn"></button> }
                 </div>
             </div>
         </>

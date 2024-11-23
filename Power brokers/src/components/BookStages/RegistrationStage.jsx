@@ -1,9 +1,9 @@
 import AvatarList from "./AvatarList"
 import BookHeader from "./BookHeader"
 import "./Book.css"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { instance } from '../../utils/axios';
-// import { useEffect } from "react";
+import Tooltip from "../Tooltip/Tooltip";
 
 
 // eslint-disable-next-line react/prop-types
@@ -14,6 +14,9 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
     const [avatar, setAvatar] = useState(-1);
     const [nickname, setNickname] = useState("");
 
+    //Подсказки для выбора ника и аватара
+    const [showTooltip, setShowTooltip] = useState(false);
+    
     //Функция для возврата в главное меню
     function handleChangeWelcomeStage() {
         setPlayAnimation(true)
@@ -56,6 +59,11 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
         }
     };
 
+    useEffect(() => {
+        setNickname("");
+        setAvatar(-1)
+    }, []);
+
     return(
         <>
             {bookState === 'close' &&
@@ -65,21 +73,35 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
                 <div className={playAnimation ? "book-background sailAway" : "book-background"}>
                     <div className="book-page">
                         <BookHeader>Choose your avatar</BookHeader>
-                        <AvatarList setCurPlayerAvatar= {setAvatar}/>
+                        {/* <BookHeader>Choose your avatar</BookHeader> */}
+                        <Tooltip text={"Вам необходимо выбрать аватар"} isVisible={avatar == -1 && showTooltip}>
+                            <AvatarList setCurPlayerAvatar= {setAvatar}/>
+                        </Tooltip>
+                        
                         <button className="book-btn book-back-btn" onClick={() => handleChangeWelcomeStage()}></button>
                     </div>
                     <div className="book-page">
                         <BookHeader>Enter your nickname</BookHeader>
+
                         <div className="book-content">
                             <p>As of today, my business is being placed in the hands of the most reliable and suitable person I know. I believe this is just the beginning of your journey,</p>
-                            <input type="text" className="player-nickname" maxLength={12} placeholder="Your name" onChange={(evt) => setNickname(evt.target.value)}/>
+                            <Tooltip text={"Введите ник игрока"} isVisible={nickname == "" && showTooltip}>
+                                <input type="text" id="nickname" className="player-nickname" maxLength={12} placeholder="Your name" onChange={(evt) => setNickname(evt.target.value)}/>
+                            </Tooltip>
+                            
                         </div>
+
+
                         <button className="book-btn book-next-btn" onClick={() => {
-                            setIsRegistered(true);
-                            // сreateAndJoin();
-                            //if(playerRole == "create") сreateAndJoin()
-                            {playerRole == "create" ? сreateAndJoin() : setPlayers([{name: nickname, avatar: avatar, isMainPlayer: false}])};
-                            setStage("roomActivity");
+                            if (nickname != "" && avatar != -1) {
+                                setIsRegistered(true);
+
+                                {playerRole == "create" ? сreateAndJoin() : setPlayers([{name: nickname, avatar: avatar, isMainPlayer: false}])};
+                                setStage("roomActivity");
+                            }
+                            else {
+                                setShowTooltip(true);
+                            }
                         }}></button>
                     </div>
                 </div>
