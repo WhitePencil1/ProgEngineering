@@ -4,7 +4,7 @@ using WebApplication2.Models;
 
 namespace WebApplication2
 {
-    public class CodeGenerator
+    public static class CodeGenerator
     {
         private static readonly Random random = new Random();
         private static readonly string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -34,5 +34,4 @@ namespace WebApplication2
             return new string(codeArray);
         }
     }
-
 }

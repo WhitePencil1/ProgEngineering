@@ -1,6 +1,4 @@
-﻿using WebApplication2.Models;
-
-namespace WebApplication2
+﻿namespace WebApplication2.Models
 {
     public class GameService
     {
@@ -13,19 +11,19 @@ namespace WebApplication2
             Rooms.Add(code, room);
             return room;
         }
-        public (bool success, string message, string playerId) JoinRoom(string roomCode, string playerName, int avatar)
+        public (bool success, string message, int playerId) JoinRoom(string roomCode, string playerName, int avatar)
         {
             if (Rooms.ContainsKey(roomCode))
             {
                 return Rooms[roomCode].Join(playerName, avatar);
             }
-            else return (false, $"комната {roomCode} не найдена", "");
+            else return (false, $"комната {roomCode} не найдена", -1);
         }
-        public (bool success, string message) DeletePlayerFromRoom(string roomCode, string playerName)
+        public (bool success, string message) DeletePlayerFromRoom(string roomCode, int playerId)
         {
             if (Rooms.ContainsKey(roomCode))
             {
-                return Rooms[roomCode].Leave(playerName);
+                return Rooms[roomCode].Leave(playerId);
             }
             else return (false, $"комната {roomCode} не найдена");
         }

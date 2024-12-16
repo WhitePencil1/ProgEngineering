@@ -13,6 +13,13 @@ namespace WebApplication2.Models
         public int TurnForNext { get; private set; }  // Ход, на котором завод получит новый уровень
         public int ESM { get; private set; }
         public bool IsCredit { get; set; } // под залогом?
+        public int Cost => Level switch
+        {
+            -1 => 0,
+            0 or 1 or 2 or 3 => COST_FACTORY,
+            4 => COST_AUTO_FACTORY,
+            _ => throw new NotImplementedException()
+        };
         public Factory()
         {
             Level = -1;
@@ -82,12 +89,6 @@ namespace WebApplication2.Models
             ESM = 0;
             return result;
         }
-        public int Cost => Level switch
-        {
-            -1 => 0,
-            0 or 1 or 2 or 3 => COST_FACTORY,
-            4 => COST_AUTO_FACTORY,
-            _ => throw new NotImplementedException()
-        };
+
     }
 }

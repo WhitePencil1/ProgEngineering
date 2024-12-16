@@ -1,4 +1,4 @@
-using WebApplication2;
+using WebApplication2.Models;
 
 internal class Program
 {

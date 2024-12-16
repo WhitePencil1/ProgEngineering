@@ -1,4 +1,6 @@
-﻿namespace WebApplication2.Models
+﻿using System;
+
+namespace WebApplication2.Models
 {
     public class Bank
     {
@@ -65,72 +67,99 @@
             { 1.0 / 12,    1.0 / 12,   1.0 / 4,    1.0 / 3,    1.0 / 4  }, // Уровень 4
             { 1.0 / 12,    1.0 / 12,   1.0 / 12,   1.0 / 3,    1.0 / 3  }  // Уровень 5
         };
-        public static int GetNextPriceLevel(int currentLevel)
+        public void NewPriceLevel()
         {
-            if (currentLevel < 1 || currentLevel > 5)
+            if (Level < 1 || Level > 5)
             {
                 throw new ArgumentException("Уровень должен быть в диапазоне от 1 до 5.");
             }
 
-            double[] probabilities = new double[5];
-            for (int i = 0; i < 5; i++)
-            {
-                probabilities[i] = transitionMatrix[currentLevel - 1, i];
-            }
-
-            return GetRandomLevelBasedOnProbabilities(probabilities) + 1;
-        }
-        private static int GetRandomLevelBasedOnProbabilities(double[] probabilities)
-        {
-            double randomValue = new Random().NextDouble();
+            double randomValue = new Random().NextDouble(); // Генерируем случайное число [0, 1)
             double cumulativeProbability = 0.0;
 
-            for (int i = 0; i < probabilities.Length; i++)
+            // Используем цикл с накоплением вероятностей
+            for (int i = 0; i < 5; i++)
             {
-                cumulativeProbability += probabilities[i];
+                cumulativeProbability += transitionMatrix[Level - 1, i];
                 if (randomValue <= cumulativeProbability)
                 {
-                    return i;
+                    Level =  i + 1; // Уровни начинаются с 1
+                    return;
                 }
             }
 
-            return probabilities.Length - 1; // Вернем последний уровень, если не попали в предыдущие
+            throw new InvalidOperationException("Invalid transition matrix or probabilities.");
+
         }
-        public Dictionary<string, (int, int)> ProcessBids()
+        public Dictionary<Player, (int, int)> ProcessESMRequests()
         {
-            int esmP = ESMPrice;
-            int esmC = ESMCount;
-            int egpP = EGPPrice;
-            int egpC = EGPCount;
-
-            Dictionary<string, int> esmCountPairs = new Dictionary<string, int>();
-            Dictionary<string, int> egpCountPairs = new Dictionary<string, int>();
-
-            Dictionary<string, (int esm, int egp)> resCountPairs = new Dictionary<string, (int, int)>();
+            int eSMCount = ESMCount;
 
             // Сортируем игроков по ESMDesired.count
-            SortPlayers(Room.Players, Room.KingPlayerID, x => x.ESMDesired.count);
+            SortPlayers(Room.Players, Room.MainPlayerId, x => x.actions.RequestedESM.price);
 
             // Обрабатываем заявки на ESM
-            esmCountPairs = ProcessBidsOf(Room.Players, ref esmC, esmP,
-                player => (player.ESMDesired.count, player.ESMDesired.price),
-                (player, amount) => player.ESM += amount);
-
-            // Сортируем игроков по EGPDesired.price
-            SortPlayers(Room.Players, Room.KingPlayerID, x => x.EGPDesired.price);
-
-            // Обрабатываем заявки на EGP
-            egpCountPairs = ProcessBidsOf(Room.Players, ref egpC, egpP,
-                player => (player.EGPDesired.count, player.EGPDesired.price),
-                (player, amount) => player.EGP += amount);
+            Dictionary<Player, (int, int)> result = new Dictionary<Player, (int, int)>();
 
             foreach (Player player in Room.Players)
             {
-                resCountPairs.Add(player.Id, (esmCountPairs[player.Id], egpCountPairs[player.Id]));
+                if ((player.actions.RequestedESM.count > ESMCount) || (player.actions.RequestedESM.price >= ESMPrice) || (player.actions.RequestedESM.price * player.actions.RequestedESM.count > player.Money))
+                {
+                    continue;
+                }
+                int receiveCount = Math.Min(player.actions.RequestedESM.count, eSMCount);
+                int resPrice = 0;
+
+                if (receiveCount > 0)
+                {
+                    player.ESM += receiveCount;
+                    player.Money -= receiveCount * player.actions.RequestedESM.price;
+                    player.Money -= resPrice;
+                    eSMCount -= receiveCount;
+                }
+
+                result.Add(player, (receiveCount, resPrice));
+
+                if (eSMCount <= 0) break;
             }
-            return resCountPairs;
+
+            return result;
         }
-        private void SortPlayers(List<Player> players, string kingPlayerId, Func<Player, int> keySelector)
+        public Dictionary<Player, (int, int)> ProcessEGPRequests()
+        {
+            int eGPCount = EGPCount;
+
+            // Сортируем игроков по ESMDesired.count
+            SortPlayers(Room.Players, Room.MainPlayerId, x => x.actions.RequestedEGP.price);
+
+            // Обрабатываем заявки на ESM
+            Dictionary<Player, (int, int)> result = new Dictionary<Player, (int, int)>();
+
+            foreach (Player player in Room.Players)
+            {
+                if ((player.actions.RequestedEGP.count > EGPCount) || (player.actions.RequestedEGP.price <= EGPPrice))
+                {
+                    continue;
+                }
+                int receiveCount = Math.Min(player.actions.RequestedEGP.count, eGPCount);
+                int resPrice = 0;
+
+                if (receiveCount > 0)
+                {
+                    player.EGP -= receiveCount;
+                    resPrice = receiveCount * player.actions.RequestedEGP.price;
+                    player.Money += resPrice;
+                    eGPCount -= receiveCount;
+                }
+
+                result.Add(player, (receiveCount, resPrice));
+
+                if (eGPCount <= 0) break;
+            }
+
+            return result;
+        }
+        private void SortPlayers(List<Player> players, int mainPlayerId, Func<Player, int> keySelector)
         {
             Random random = new Random();
             players.Sort((x, y) =>
@@ -139,11 +168,11 @@
 
                 if (result == 0)
                 {
-                    if (x.Id == kingPlayerId && y.Id != kingPlayerId)
+                    if (x.Id == mainPlayerId && y.Id != mainPlayerId)
                     {
                         return -1;
                     }
-                    if (y.Id == kingPlayerId && x.Id != kingPlayerId)
+                    if (y.Id == mainPlayerId && x.Id != mainPlayerId)
                     {
                         return 1;
                     }
@@ -154,35 +183,6 @@
                 return result;
             });
         }
-        private static Dictionary<string, int> ProcessBidsOf(List<Player> players,
-                                                              ref int esmC,
-                                                              int esmP,
-                                                              Func<Player, (int count, int price)> selector,
-                                                              Action<Player, int> updateProperty)
-        {
-            Dictionary<string, int> idCountPairs = new Dictionary<string, int>();
-
-            foreach (Player player in players)
-            {
-                int canReceive = Math.Min(selector(player).count, esmC);
-                int affordableCount = player.Money / esmP;
-                int receiveCount = Math.Min(canReceive, affordableCount);
-
-                if (receiveCount > 0)
-                {
-                    updateProperty(player, receiveCount); // Обновляем либо ESM, либо EGP
-                    player.Money -= receiveCount * esmP;
-                    esmC -= receiveCount;
-                }
-
-                idCountPairs.Add(player.Id, receiveCount);
-
-                //if (esmC <= 0) break;
-            }
-
-            return idCountPairs;
-        }
-
 
     }
 }

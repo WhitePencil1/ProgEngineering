@@ -6,7 +6,7 @@ namespace WebApplication2.Models
     public class Player
     {
         public int Avatar { get; set; }
-        public string Id { get; private set; }
+        public int Id { get; private set; }
         public string Name { get; set; }
         public int Capital
         {
@@ -28,22 +28,22 @@ namespace WebApplication2.Models
         }
         public int ESM { get; set; }
         public int EGP { get; set; }
-        [JsonIgnore] public (int count, int price) ESMDesired { get; set; }
-        [JsonIgnore] public (int count, int price) EGPDesired { get; set; }
         public int Money { get; set; }
-        [JsonIgnore] private Room Room { get; set; }
+        private Room Room { get; set; }
         public List<Factory> Factories { get; set; }
         public List<(Factory factory, int sum, int turn)> Credits { get; set; }
         public bool Defaulter { get; set; }
-        public Player(string name, int avatar, Room room)//ну типо
+        public Actions actions;
+        public Player(string name, int avatar, int id, Room room)//ну типо
         {
-            Id = Guid.NewGuid().ToString();
+            Id = id;
             Name = name;
             Avatar = avatar;
             Defaulter = false;
             Factories = new List<Factory>();
             Credits = new List<(Factory factory, int summ, int turn)>();
             Room = room;
+            GiveStartKit();
         }
         public void GiveStartKit()
         {
@@ -109,20 +109,20 @@ namespace WebApplication2.Models
         {
             if (count > Room.Bank.ESMCount || price < Room.Bank.ESMPrice)
             {
-                EGPDesired = (0, 0);
+                actions.RequestedEGP = (0, 0);
                 return false;
             }
-            ESMDesired = (count, price);
+            actions.RequestedESM = (count, price);
             return true;
         }
         public bool SellEGP(int count, int price)
         {
             if (count > Room.Bank.EGPCount || price > Room.Bank.EGPPrice)
             {
-                EGPDesired = (0, 0);
+                actions.RequestedEGP = (0, 0);
                 return false;
             }
-            EGPDesired = (count, price);
+            actions.RequestedEGP = (count, price);
             return true;
         }
         public (bool success, string message) Surrend()
@@ -131,14 +131,13 @@ namespace WebApplication2.Models
             Defaulter = true;
             return (true, $"игрок {Name} сдался");
         }
-        public (bool success, string message) GetCredit(int factoryId, int sum)
+        public (bool success, string message) GetCredit(int factoryId)
         {
-            if (Capital / 2 < sum) return (false, "недостаточно средств для заёмов");
-            if (Factories[factoryId].Cost < sum) return (false, "недостаточная ценность залога");
+            if (Capital / 2 < Factories[factoryId].Cost) return (false, "недостаточно средств для заёмов");
             if (Factories[factoryId].IsCredit) return (false, "фабрика уже заложена");
             Factories[factoryId].IsCredit = true;
-            Money += sum;
-            Credits.Add((Factories[factoryId], sum, Room.Turn + CREDIT_TURNS));
+            Money += Factories[factoryId].Cost;
+            Credits.Add((Factories[factoryId], Factories[factoryId].Cost, Room.Turn + CREDIT_TURNS));
             return (true, "кредит успешно взят");
         }
         public (bool success, int sum) PayCredits()//сейчас при невыплате - сразу поражение
