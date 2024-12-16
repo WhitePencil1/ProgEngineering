@@ -29,7 +29,7 @@ namespace WebApplication2.Models
         public int ESM { get; set; }
         public int EGP { get; set; }
         public int Money { get; set; }
-        private Room Room { get; set; }
+        [JsonIgnore] public Room Room { get; set; }
         public List<Factory> Factories { get; set; }
         public List<(Factory factory, int sum, int turn)> Credits { get; set; }
         public bool Defaulter { get; set; }
@@ -182,6 +182,13 @@ namespace WebApplication2.Models
                 return (false, sum);
             }
             return (true, sum);
+        }
+        public bool IsStageCompleted { get; set; } = false; // Флаг завершения стадии
+
+        // Сбрасываем флаг после обработки стадии
+        public void ResetStage()
+        {
+            IsStageCompleted = false;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace WebApplication2.Models
+﻿namespace WebApplication2.Models
 {
     public class Room
     {
@@ -8,9 +6,23 @@ namespace WebApplication2.Models
         public string Code { get; set; }
         public List<Player> Players = new();
         public Bank Bank { get; set; }
-        public int MainPlayerId { get { return (Turn % Players.Count) + 1; } }
+        public int MainPlayerId { get { return (Turn % Players.Count); } }
         public int Turn { get; set; }
-        public int Stage { get; set; }
+        public enum Stage
+        {
+            Stage1,
+            Stage2,
+            Stage3,
+            Stage4,
+            Stage5,
+            Stage6,
+            Stage7,
+            Stage8,
+            Stage90,
+            Stage91
+        }
+        private bool _isProcessingStage;
+        private TaskCompletionSource<bool> _stageCompletionSource = new();
         public Room(string code)
         {
             Code = code;
@@ -39,9 +51,90 @@ namespace WebApplication2.Models
             Player? player = Players.Find(item => item.Id == playerId);
             return player;
         }
-        public void Stage1() //Постоянные издержки.
+        // Проверяем, завершили ли все игроки текущую стадию
+        public bool IsStageComplete()
         {
-            foreach (var player in Players) {
+            return Players.All(player => player.IsStageCompleted);
+        }
+
+        // Уведомляем, что стадия завершена
+        public void NotifyStageCompletion()
+        {
+            if (IsStageComplete() && !_isProcessingStage)
+            {
+                _isProcessingStage = true;
+                _stageCompletionSource.TrySetResult(true); // Уведомляем о завершении
+            }
+        }
+
+        // Асинхронное ожидание завершения стадии
+        public async Task WaitForStageCompletion()
+        {
+            await _stageCompletionSource.Task;
+        }
+
+        // Сбрасываем состояние всех игроков и флаг стадии
+        public void ResetStage()
+        {
+            foreach (var player in Players)
+            {
+                player.ResetStage();
+            }
+
+            _isProcessingStage = false; // Сбрасываем флаг обработки
+            _stageCompletionSource = new TaskCompletionSource<bool>(); // Новый барьер
+        }
+        public async Task ProcessStage(Stage stage)
+        {
+            // Ждем завершения всех действий игроков
+            await WaitForStageCompletion();
+
+            // Выполняем конкретную логику стадии
+            switch (stage)
+            {
+                case Stage.Stage1:
+                    Stage1();
+                    break;
+                case Stage.Stage2:
+                    Stage2();
+                    break;
+                case Stage.Stage3:
+                    Stage3();
+                    break;
+                case Stage.Stage4:
+                    Stage4();
+                    break;
+                case Stage.Stage5:
+                    Stage5();
+                    break;
+                case Stage.Stage6:
+                    Stage6();
+                    break;
+                case Stage.Stage7:
+                    Stage7();
+                    break;
+                case Stage.Stage8:
+                    Stage8();
+                    break;
+                case Stage.Stage90:
+                    Stage90();
+                    break;
+                case Stage.Stage91:
+                    Stage91();
+                    break;
+                default:
+                    throw new InvalidOperationException("Unknown stage");
+            }
+
+            // После обработки можно сбросить состояние для следующей стадии
+            ResetStage(); // Подготовка к следующей стадии
+        }
+
+
+        public void Stage1()//Постоянные издержки.
+        {
+            foreach (var player in Players)
+            {
                 player.PayTheCosts();
             }
         }
@@ -71,20 +164,14 @@ namespace WebApplication2.Models
         {
             foreach (var player in Players)
             {
-                foreach (var f in player.actions.FactoriesProcess)
-                {
-                    player.PayProcent();
-                }
+                player.PayProcent();
             }
         }
         public void Stage7()//Погашение ссуд.
         {
             foreach (var player in Players)
             {
-                foreach (var f in player.actions.FactoriesProcess)
-                {
-                    player.PayCredits();
-                }
+                player.PayCredits();
             }
         }
         public void Stage8()//Получение ссуд.
@@ -94,7 +181,7 @@ namespace WebApplication2.Models
                 player.GetCredit(player.actions.FactoryCredit);
             }
         }
-        public void Stage9()//Заявки на строительство. 
+        public void Stage90()//Заявки на строительство. 
         {
             foreach (var player in Players)
             {
@@ -102,10 +189,25 @@ namespace WebApplication2.Models
                 {
                     player.BuildFactory(f.id, f.auto);
                 }
+            }
+        }
+        public void Stage91()//Заявки на строительство. 
+        {
+            foreach (var player in Players)
+            {
                 foreach (var f in player.actions.FactoriesUpgrade)
                 {
                     player.UpgradeFactory(f);
                 }
+            }
+            FinalStage();
+        }
+        public void FinalStage()
+        {
+            Turn++;
+            foreach (var player in Players)
+            {
+                player.actions.ClearActions();
             }
         }
     }
