@@ -2,7 +2,7 @@ import "./GameSection.css"
 import CurrentPlayer from "./CurrentPlayer/CurrentPlayer"
 import AnotherPlayer from "./AnotherPlayer/AnotherPlayer"
 import { instance } from "../../utils/axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 
 
@@ -15,6 +15,7 @@ const stages = ["Expenses Payment", "Getting a market environment", "Requests fo
 // eslint-disable-next-line react/prop-types
 export default function GameSection({players, setPlayers}) {
     const [gameData, setGameData] = useState([]);
+    const [stage, setStage] = useState(stages[0]);
 
     const getRoom = async () => {
             try {
@@ -31,6 +32,7 @@ export default function GameSection({players, setPlayers}) {
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
+        
         {
             refetchInterval: 20000, // Интервал в миллисекундах (например, 5 секунд)
             refetchOnWindowFocus: true // Опционально: повторный запрос при возврате к вкладке

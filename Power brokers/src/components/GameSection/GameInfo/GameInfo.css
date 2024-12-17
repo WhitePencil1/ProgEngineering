@@ -34,7 +34,6 @@
     flex-direction: column;
     justify-content: center;
     
-
     row-gap: 10px;
     
     background-image: url("./img/RequestInput.png");
@@ -44,6 +43,19 @@
     width: 300px;
     height: 130px;
     color: white;
+
+}
+
+/* Начальное состояние блока (скрыт за пределами экрана) */
+.hidden {
+    position: fixed; /* Фиксируем позицию блока */       
+    right: -100%;    /* Блок полностью скрыт за правой стороной экрана */
+    transform: translateY(-50%); /* Для точного центрирования */
+    transition: all 0.3s ease;   /* Анимация перехода */
+}
+
+.visible {
+    right: 0px; /* Блок смещается на 10% от правого края экрана */
 }
 
 

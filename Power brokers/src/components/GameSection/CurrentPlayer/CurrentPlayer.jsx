@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./CurrentPlayer.css"
 import PlayerResourcesBox from "../PlayerResourcesBox/PlayerResourcesBox"
 import PlayerIcon from "../PlayerIcon/PlayerIcon"
@@ -7,18 +8,13 @@ import GameInfo from "../GameInfo/GameInfo"
 
 // eslint-disable-next-line react/prop-types
 export default function CurrentPlayer({player, gameData}) {
-    
-
-
     return (
         <div className="current-player">
-            {console.log(gameData)}
-            
-            <PlayerResourcesBox isMainPlayer={true}/>
-            <div className="game-turn">5 month</div>
-            <GameInfo />
-            <PlayerIcon isMainPlayer={true}/>
-            <FactoriesBox isMainPlayer={true}/>
+            <PlayerResourcesBox isMainPlayer={true} resources={player}/>
+            <div className="game-turn">{gameData.turn} month</div>
+            <GameInfo bankData={gameData.bank}/>
+            <PlayerIcon isMainPlayer={true} avatar={player == null ? null : player.avatar}/>
+            {player && <FactoriesBox isMainPlayer={true} factories={player.factories}/>}
         </div>
     )
 }

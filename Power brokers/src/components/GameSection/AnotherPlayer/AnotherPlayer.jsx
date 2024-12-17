@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import "./AnotherPlayer.css"
 import PlayerResourcesBox from "../PlayerResourcesBox/PlayerResourcesBox"
 import PlayerIcon from "../PlayerIcon/PlayerIcon"
@@ -9,9 +10,9 @@ export default function AnotherPlayer({player, position}) {
 
     return (
         <div className="another-player" style={{backgroundColor: positionColors[position-1]}}>
-            <PlayerResourcesBox isMainPlayer={false}/>
-            <PlayerIcon isMainPlayer={false}/>
-            <FactoriesBox isMainPlayer = {false}/>
+            <PlayerResourcesBox isMainPlayer={false} resources={player}/>
+            <PlayerIcon isMainPlayer={false} avatar={player == null ? null : player.avatar}/>
+            {player && <FactoriesBox isMainPlayer = {false} factories={player.factories}/>}
         </div>
     )
 }
