@@ -8,28 +8,12 @@
         public Bank Bank { get; set; }
         public int MainPlayerId { get { return (Turn % Players.Count); } }
         public int Turn { get; set; }
-        public enum Stage
-        {
-            Stage1,
-            Stage2,
-            Stage3,
-            Stage4,
-            Stage5,
-            Stage6,
-            Stage7,
-            Stage8,
-            Stage90,
-            Stage91
-        }
-        private bool _isProcessingStage;
-        private TaskCompletionSource<bool> _stageCompletionSource = new();
         public Room(string code)
         {
             Code = code;
             Bank = new Bank(this);
             Turn = 1;
         }
-        public Dictionary<string, (int esm, int egp)> ResDistribution { get; set; }
         public (bool success, string message, int playerId) Join(string playerName, int avatar)
         {
             int newId = _nextPlayerId++;
@@ -51,6 +35,29 @@
             Player? player = Players.Find(item => item.Id == playerId);
             return player;
         }
+
+
+
+
+        public enum Stage
+        {
+            Stage1,
+            Stage2,
+            Stage3,
+            Stage4,
+            Stage5,
+            Stage6,
+            Stage7,
+            Stage8,
+            Stage90,
+            Stage91
+        }
+        //private bool _isProcessingStage;
+
+        private SemaphoreSlim _stageLock = new SemaphoreSlim(1, 1); // Блокировка для одиночного выполнения стадии
+
+        private TaskCompletionSource<bool> _stageCompletionSource = new();
+
         // Проверяем, завершили ли все игроки текущую стадию
         public bool IsStageComplete()
         {
@@ -58,13 +65,16 @@
         }
 
         // Уведомляем, что стадия завершена
-        public void NotifyStageCompletion()
+        public bool NotifyStageCompletion(Stage stage)
         {
-            if (IsStageComplete() && !_isProcessingStage)
+            bool res = IsStageComplete();
+            if (res)// && !_isProcessingStage)
             {
-                _isProcessingStage = true;
-                _stageCompletionSource.TrySetResult(true); // Уведомляем о завершении
+                //_isProcessingStage = true;
+                ProcessStage(stage); // CurrentStage — текущая стадия игры
+                //_stageCompletionSource.TrySetResult(true); // Уведомляем о завершении
             }
+            return res;
         }
 
         // Асинхронное ожидание завершения стадии
@@ -80,14 +90,18 @@
             {
                 player.ResetStage();
             }
-
-            _isProcessingStage = false; // Сбрасываем флаг обработки
+            //_isProcessingStage = false; // Сбрасываем флаг обработки
             _stageCompletionSource = new TaskCompletionSource<bool>(); // Новый барьер
         }
-        public async Task ProcessStage(Stage stage)
+        public void ProcessStage(Stage stage)
         {
-            // Ждем завершения всех действий игроков
-            await WaitForStageCompletion();
+            // Ожидаем завершения всех действий игроков
+            //await WaitForStageCompletion();
+
+            // Используем блокировку, чтобы гарантировать одиночный вызов стадии
+            //if (!_isProcessingStage) // Проверка, что стадия еще не обработана
+            //{
+            //_isProcessingStage = true;
 
             // Выполняем конкретную логику стадии
             switch (stage)
@@ -125,9 +139,8 @@
                 default:
                     throw new InvalidOperationException("Unknown stage");
             }
-
-            // После обработки можно сбросить состояние для следующей стадии
-            ResetStage(); // Подготовка к следующей стадии
+            _stageCompletionSource.TrySetResult(true); // Уведомляем о завершении
+            //ResetStage(); // Подготовка к следующей стадии
         }
 
 

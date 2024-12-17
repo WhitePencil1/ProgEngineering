@@ -5,8 +5,8 @@ namespace WebApplication2
     {
         //start
         public const int START_MONEY = 1000;
-        public const int START_EGP = 2000;
-        public const int START_ESM = 2000;
+        public const int START_EGP = 3;
+        public const int START_ESM = 3;
         public const int START_MAX_FACTORIES = 5;
         public const int START_FACTORIES = 2;
         //player

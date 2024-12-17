@@ -10,14 +10,11 @@ namespace WebApplication2.Controllers
     public class PlayerController : ControllerBase
     {
         private readonly GameService _game;
-
         public PlayerController(GameService gameService)
         {
             _game = gameService; // Внедрение зависимости
         }
-
-        [HttpPost]
-        public IActionResult JoinRoom([FromBody] JoinRoomRequest data)
+        [HttpPost] public IActionResult JoinRoom([FromBody] JoinRoomRequest data)
         {
             if (data == null || string.IsNullOrEmpty(data.RoomCode) || string.IsNullOrEmpty(data.PlayerName))
             {
@@ -35,9 +32,7 @@ namespace WebApplication2.Controllers
 
             return NotFound(result.message);
         }
-
-        [HttpDelete]
-        public IActionResult DeletePlayer()
+        [HttpDelete] public IActionResult DeletePlayer()
         {
             // Попытка получить значения roomId и playerId из куки
             if (Request.Cookies.TryGetValue("roomCode", out var roomCode) &&
@@ -59,8 +54,7 @@ namespace WebApplication2.Controllers
 
         }
 
-        [HttpGet]
-        public IActionResult GetPlayer()
+        [HttpGet] public IActionResult GetPlayer()
         {
             // Попытка получить значения roomId и playerId из куки
             if (Request.Cookies.TryGetValue("roomCode", out var roomCode) &&
@@ -83,7 +77,6 @@ namespace WebApplication2.Controllers
 
             return BadRequest("Куки не найдены или неверные данные");
         }
-
         private void SetRoomCookies(string roomCode, int playerId)
         {
             Response.Cookies.Append("roomCode", roomCode, new CookieOptions
@@ -102,25 +95,7 @@ namespace WebApplication2.Controllers
                 Expires = DateTimeOffset.Now.AddHours(1)
             });
         }
-        ////PlayerActions
-        //[HttpPost("RequestESM")]
-        //public IActionResult RequestESM([FromBody] ResourceRequest data)
-        //{
-        //    return UpdatePlayerAction(
-        //        (actions, requestData) =>
-        //            actions.RequestedESM = (requestData.Count, requestData.Price),
-        //            data
-        //        );
-        //}
-        //[HttpPost("RequestEGP")]
-        //public IActionResult RequestEGP([FromBody] ResourceRequest data)
-        //{
-        //    return UpdatePlayerAction(
-        //        (actions, requestData) =>
-        //            actions.RequestedEGP = (requestData.Count, requestData.Price),
-        //            data
-        //        );
-        //}
+
         [HttpPost("Stage1")]
         public async Task<IActionResult> Stage1()//[FromBody] ResourceRequest data)
         {
@@ -129,24 +104,19 @@ namespace WebApplication2.Controllers
 
             var room = GetPlayerFromCookies().player.Room; // Получаем комнату текущего игрока
 
-            //player.actions.RequestedEGP = (data.Count, data.Price);
-
             // Отмечаем, что игрок завершил стадию
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage1);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            // После того как все игроки завершили свои действия, вызываем обработку стадии
-            
-            await room.ProcessStage(Stage.Stage1); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
-        [HttpPost("Stage2")]
-        public async Task<IActionResult> Stage2()//[FromBody] ResourceRequest data)
+        [HttpPost("Stage2")] public async Task<IActionResult> Stage2()
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
@@ -157,14 +127,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage2);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            // После того как все игроки завершили свои действия, вызываем обработку стадии
-
-            await room.ProcessStage(Stage.Stage2); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage3")]
@@ -181,14 +149,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage3);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            // После того как все игроки завершили свои действия, вызываем обработку стадии
-
-            await room.ProcessStage(Stage.Stage3); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage4")]
@@ -205,14 +171,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage4);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            // После того как все игроки завершили свои действия, вызываем обработку стадии
-
-            await room.ProcessStage(Stage.Stage4); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage5")]
@@ -229,12 +193,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage5);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            await room.ProcessStage(Stage.Stage5); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage6")]
@@ -249,12 +213,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage6);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            await room.ProcessStage(Stage.Stage6); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage7")]
@@ -269,12 +233,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage7);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            await room.ProcessStage(Stage.Stage7); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage8")]
@@ -291,12 +255,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage8);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            await room.ProcessStage(Stage.Stage8); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage90")]
@@ -313,12 +277,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage90);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            await room.ProcessStage(Stage.Stage90); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         [HttpPost("Stage91")]
@@ -335,12 +299,12 @@ namespace WebApplication2.Controllers
             player.IsStageCompleted = true;
 
             // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Stage91);
 
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
 
-            await room.ProcessStage(Stage.Stage91); // Вызываем метод для обработки стадии
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
         private (Player player, IActionResult error) GetPlayerFromCookies()
@@ -364,23 +328,6 @@ namespace WebApplication2.Controllers
             }
 
             return (player, null);
-        }
-        private async Task<IActionResult> UpdatePlayerAction<T>(Action<Actions, T> updateAction, T data)
-        {
-            var (player, error) = GetPlayerFromCookies();
-            if (error != null) return error;
-
-            if (data != null) updateAction(player.actions, data);
-
-            // Отмечаем, что игрок завершил стадию
-            player.IsStageCompleted = true;
-
-            // Уведомляем комнату, если стадия завершена
-            player.Room.NotifyStageCompletion();
-
-            // Ждем завершения обработки стадии
-            await player.Room.WaitForStageCompletion();
-            return Ok();
         }
     }
     public class JoinRoomRequest
