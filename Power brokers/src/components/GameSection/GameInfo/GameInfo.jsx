@@ -1,14 +1,19 @@
+/* eslint-disable react/prop-types */
 import "./GameInfo.css"
+import Timer from "./Timer"
 
-export default function GameInfo() {
-
+export default function GameInfo({bankData = {}}) {
+    function testTimer() {
+        console.log("Никита ЛОХ!");
+    }
+    
     return(
         <div className="game-info-box">
                 <ul className="game-info">
-                    <li>Bank buy 8 pu for 1000</li>
-                    <li>Bank sell 6 mu for 500</li>
+                    <li>Bank buy {bankData.egpCount} pu for {bankData.egpPrice}</li>
+                    <li>Bank sell {bankData.esmCount} mu for {bankData.esmPrice}</li>
                     <li>Upgrade your factory</li>
-                    <li>Time left: 30s</li>
+                    <Timer initialTime={5} onTimeEnd={() => testTimer()}></Timer>
                 </ul>
                 
                 <form action="" className="player-requests-input-box">

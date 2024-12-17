@@ -7,7 +7,6 @@ import WelcomeSection from './components/WelcomeSection/WelcomeSection'
 import RegistrationStage from './components/BookStages/RegistrationStage'
 import GameSection from './components/GameSection/GameSection'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { instance } from './utils/axios'
 
 const queryClient = new QueryClient();
 
