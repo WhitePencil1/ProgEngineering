@@ -27,7 +27,7 @@
         {
             Code = code;
             Bank = new Bank(this);
-            Turn = 0;
+            Turn = 1;
         }
         public Dictionary<string, (int esm, int egp)> ResDistribution { get; set; }
         public (bool success, string message, int playerId) Join(string playerName, int avatar)

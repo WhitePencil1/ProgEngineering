@@ -7,21 +7,24 @@ import WelcomeSection from './components/WelcomeSection/WelcomeSection'
 import RegistrationStage from './components/BookStages/RegistrationStage'
 import GameSection from './components/GameSection/GameSection'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { instance } from './utils/axios'
 
 const queryClient = new QueryClient();
 
 
 function App() {
-  const [stage, setStage] = useState("registration")
+  const [stage, setStage] = useState("game")
   const [isRegistered, setIsRegistered] = useState(false) /*Кастыль для секции регистрации*/ 
   const [playerRole, setPlayerRole] = useState("create")
 
   const [roomCode, setRoomCode] = useState("");
+
   const [players, setPlayers] = useState([]);
+
 
   return (
     <QueryClientProvider client={queryClient}>
-      {stage != "game" ? <Background /> : <GameSection players={players}/>}
+      {stage != "game" ? <Background /> : <GameSection players={players} setPlayers={setPlayers}/>}
 
       {stage == "welcome" && <WelcomeSection setNextStage = {setStage} setRole={setPlayerRole}/>}
 

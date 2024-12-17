@@ -4,7 +4,7 @@ namespace WebApplication2.Models
 {
     public class Bank
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public int Level { get; set; }
         public int ActivePlayers
         {
