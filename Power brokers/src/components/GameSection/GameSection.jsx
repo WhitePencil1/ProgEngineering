@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import "./GameSection.css"
 import CurrentPlayer from "./CurrentPlayer/CurrentPlayer"
 import AnotherPlayer from "./AnotherPlayer/AnotherPlayer"
 import { instance } from "../../utils/axios";
 import { useState } from "react";
 import { useQuery } from '@tanstack/react-query';
+import BlankPicture from "./BlankPicture/BlankPicture";
 
 
 const stages = ["Expenses Payment", "Getting a market environment", "Requests for materials", 
@@ -35,16 +37,31 @@ export default function GameSection({players, setPlayers}) {
         
         {
             refetchInterval: 20000, // Интервал в миллисекундах (например, 5 секунд)
-            refetchOnWindowFocus: true // Опционально: повторный запрос при возврате к вкладке
+            refetchOnWindowFocus: false, // Опционально: повторный запрос при возврате к вкладке
+            keepPreviousData: true
         }
     );
+
+
+    if(players.length == 4) {
+        return (
+            <section className="players-box">
+                <CurrentPlayer player={players[0]} gameData={gameData}/>
+                <AnotherPlayer player={players[1]} position={2}/>
+                <AnotherPlayer player={players[2]} position={3}/>
+                <AnotherPlayer player={players[3]} position={4}/>
+            </section>
+        )
+    }
     
-    return (
-        <section className="players-box">
-            <CurrentPlayer player={players[0]} gameData={gameData}/>
-            <AnotherPlayer player={players[1]} position={2}/>
-            <AnotherPlayer player={players[2]} position={3}/>
-            <AnotherPlayer player={players[3]} position={4}/>
-        </section>
-    )
+    else if(players.length == 2) {
+        return (
+            <section className="players-box">
+                <CurrentPlayer player={players[0]} gameData={gameData}/>
+                <BlankPicture pictureNum={1}/>
+                <AnotherPlayer player={players[1]} position={2}/>
+                <BlankPicture pictureNum={2}/>
+            </section>
+        )
+    }
 }
