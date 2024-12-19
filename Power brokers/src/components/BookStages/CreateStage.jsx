@@ -10,7 +10,7 @@ export default function CreateStage({setStage, players, setPlayers, roomCode}) {
         try {
             const response = await instance.get(`room/players`);
             setPlayers(response.data);
-            console.log(response.data);
+            // console.log(response.data);
             return response
         } catch (error) {
           console.error('Ошибка при получении комнаты', error);
@@ -40,7 +40,7 @@ export default function CreateStage({setStage, players, setPlayers, roomCode}) {
                         <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
                     <PlayersList playersData={players}/>
-                    {players.length > 2 ? <button className="book-btn book-start-btn" onClick={() => {setStage("game")}}></button> : <button style={{visibility: "hidden"}} className="book-btn book-start-btn"></button> }
+                    {players.length >= 2 ? <button className="book-btn book-start-btn" onClick={() => {setStage("game")}}></button> : <button style={{visibility: "hidden"}} className="book-btn book-start-btn"></button> }
                 </div>
             </div>
         </>

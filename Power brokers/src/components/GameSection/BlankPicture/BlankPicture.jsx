@@ -9,6 +9,6 @@ export default function BlankPicture({pictureNum}) {
     }
 
     return(
-        <img src={"/public/img/InGamePictures/" + pictures[pictureNum]} style={{width: "100%", height:"100%", objectFit: "cover"}} alt="" />
+        <img src={"/public/img/InGamePictures/" + pictures[pictureNum]} style={{width: "100%", height: "100%", objectFit: "cover"}} alt="" />
     )
 }

@@ -7,12 +7,12 @@ import GameInfo from "../GameInfo/GameInfo"
 
 
 // eslint-disable-next-line react/prop-types
-export default function CurrentPlayer({player, gameData}) {
+export default function CurrentPlayer({player, gameData, setGameStage}) {
     return (
         <div className="current-player">
             <PlayerResourcesBox isMainPlayer={true} resources={player}/>
             <div className="game-turn">{gameData.turn} month</div>
-            <GameInfo bankData={gameData.bank}/>
+            <GameInfo bankData={gameData.bank} setGameStage={setGameStage}/>
             <PlayerIcon isMainPlayer={true} avatar={player == null ? null : player.avatar}/>
             {player && <FactoriesBox isMainPlayer={true} factories={player.factories}/>}
         </div>

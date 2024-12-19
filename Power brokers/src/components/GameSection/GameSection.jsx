@@ -3,13 +3,14 @@ import "./GameSection.css"
 import CurrentPlayer from "./CurrentPlayer/CurrentPlayer"
 import AnotherPlayer from "./AnotherPlayer/AnotherPlayer"
 import { instance } from "../../utils/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import BlankPicture from "./BlankPicture/BlankPicture";
+import { stages } from "../../data";
 
 
-const stages = ["Expenses Payment", "Getting a market environment", "Requests for materials", 
-    "Production of products", "Sale of products", "Payment of loan interest", "Obtaining loans", "Construction of factories"];
+// const stages = ["Expenses Payment", "Getting a market environment", "Requests for materials", 
+//     "Production of products", "Sale of products", "Payment of loan interest", "Obtaining loans", "Construction of factories"];
 
 
 
@@ -17,24 +18,26 @@ const stages = ["Expenses Payment", "Getting a market environment", "Requests fo
 // eslint-disable-next-line react/prop-types
 export default function GameSection({players, setPlayers}) {
     const [gameData, setGameData] = useState([]);
-    const [stage, setStage] = useState(stages[0]);
+    const [gameStage, setGameStage] = useState(stages.Stage1);
 
     const getRoom = async () => {
             try {
                 const players = await instance.get(`room/players`);
                 const room = await instance.get(`room`);
-                // eslint-disable-next-line react/prop-types
                 setPlayers(players.data);
                 setGameData(room.data);
+                return 0;
             } catch (error) {
               console.error('Ошибка при получении комнаты', error);
             }
         }
+
+
     
+
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
-        
         {
             refetchInterval: 20000, // Интервал в миллисекундах (например, 5 секунд)
             refetchOnWindowFocus: false, // Опционально: повторный запрос при возврате к вкладке
@@ -46,7 +49,7 @@ export default function GameSection({players, setPlayers}) {
     if(players.length == 4) {
         return (
             <section className="players-box">
-                <CurrentPlayer player={players[0]} gameData={gameData}/>
+                <CurrentPlayer player={players[0]} gameData={gameData} setGameStage={() => instance.get(stages.Stage1)}/>
                 <AnotherPlayer player={players[1]} position={2}/>
                 <AnotherPlayer player={players[2]} position={3}/>
                 <AnotherPlayer player={players[3]} position={4}/>
@@ -59,8 +62,8 @@ export default function GameSection({players, setPlayers}) {
             <section className="players-box">
                 <CurrentPlayer player={players[0]} gameData={gameData}/>
                 <BlankPicture pictureNum={1}/>
-                <AnotherPlayer player={players[1]} position={2}/>
-                <BlankPicture pictureNum={2}/>
+                <AnotherPlayer player={players[1]} position={3}/>
+                <BlankPicture pictureNum={1}/>
             </section>
         )
     }

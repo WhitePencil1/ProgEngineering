@@ -1,19 +1,20 @@
 /* eslint-disable react/prop-types */
+import { stages } from "../../../data"
 import "./GameInfo.css"
 import Timer from "./Timer"
 
-export default function GameInfo({bankData = {}}) {
-    function testTimer() {
-        console.log("Никита ЛОХ!");
-    }
+export default function GameInfo({bankData = {}, setGameStage}) {
     
+    
+
+
     return(
         <div className="game-info-box">
                 <ul className="game-info">
                     <li>Bank buy {bankData.egpCount} pu for {bankData.egpPrice}</li>
                     <li>Bank sell {bankData.esmCount} mu for {bankData.esmPrice}</li>
                     <li>Upgrade your factory</li>
-                    <Timer initialTime={5} onTimeEnd={() => testTimer()}></Timer>
+                    <Timer initialTime={5} onTimeEnd={setGameStage}></Timer>
                 </ul>
                 
                 <form action="" className="player-requests-input-box">

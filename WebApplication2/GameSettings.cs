@@ -4,7 +4,7 @@ namespace WebApplication2
     public static class GameSettings
     {
         //start
-        public const int START_MONEY = 10000;
+        public const int START_MONEY = 1000;
         public const int START_EGP = 3;
         public const int START_ESM = 3;
         public const int START_MAX_FACTORIES = 5;
@@ -13,7 +13,7 @@ namespace WebApplication2
         public const int COST_ESM = 100;
         public const int COST_EGP = 200;
         public const int COST_AUTO_FACTORY = 30;
-        public const int COST_FACTORY = 4000;
+        public const int COST_FACTORY = 15;
         public const int BUILD_COST_AUTO_FACTORY = 3000;
         public const int BUILD_COST_FACTORY = 4000;
         public const int UPGRADE_COST_FACTORY = 4000;
