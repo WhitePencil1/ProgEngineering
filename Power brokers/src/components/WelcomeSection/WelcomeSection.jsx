@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useEffect } from "react";
 import "./WelcomeSection.css"
 
 
 // eslint-disable-next-line react/prop-types
-export default function WelcomeSection({setNextStage, setRole}) {
+export default function WelcomeSection({setNextStage, setRole, setPlayers, setRoomCode}) {
     const [playAnimation, setPlayAnimation] = useState(false)
 
     async function handleNextClick (role) {
@@ -11,6 +12,10 @@ export default function WelcomeSection({setNextStage, setRole}) {
         setRole(role)
         setTimeout(() => setNextStage("registration"), 2000)
     }
+
+
+
+
     return (
         
         <section className = {playAnimation === false ? "welcome-section" : "welcome-section sailAway"} >

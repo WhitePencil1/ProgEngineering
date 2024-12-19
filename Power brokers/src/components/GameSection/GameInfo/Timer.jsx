@@ -2,19 +2,17 @@
 import { useEffect, useState } from "react";
 import { instance } from "../../../utils/axios";
 
-
-export default function Timer ({ initialTime, onTimeEnd }) {
+export default function Timer ({ initialTime, nextStage }) {
     const [time, setTime] = useState(initialTime); // Устанавливаем начальное время из пропса
 
-
-    instance.defaults.timeout = 10000;
+    instance.defaults.timeout = 0;
 
     async function changeStage() {
         try {
-            console.log("Запрос начат");
-            await instance.post("player/Stage1", {timeout: 3000})
+            console.log("Запрос " + nextStage + " начат");
+            await instance.post(nextStage)
                 .then(response => console.log(response));
-            await instance.get("players");
+            //await instance.get("players");
             console.log("Запрос выполнен");
         } catch(error) {
             console.error(error);
@@ -25,7 +23,7 @@ export default function Timer ({ initialTime, onTimeEnd }) {
 
     useEffect(() => {
         if (time <= 0) {
-            changeStage();
+            changeStage()
             return; // Прекращаем выполнение, чтобы не запускать таймер
         }
         // Запускаем таймер
@@ -35,7 +33,7 @@ export default function Timer ({ initialTime, onTimeEnd }) {
 
         // Очищаем таймер при размонтировании компонента
         return () => clearInterval(timerId);
-    }, [time, onTimeEnd]);
+    }, [time]);
 
 
     return (

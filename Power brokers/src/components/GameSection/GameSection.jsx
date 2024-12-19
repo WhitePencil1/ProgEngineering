@@ -19,7 +19,10 @@ import { stages } from "../../data";
 export default function GameSection({players, setPlayers}) {
     const [gameData, setGameData] = useState([]);
     const [gameStage, setGameStage] = useState(stages.Stage1);
+    const [myId, setMyId] = useState();
 
+
+    //ФУНКЦИЯ ПОЛУЧЕНИЯ ДАННЫХ
     const getRoom = async () => {
             try {
                 const players = await instance.get(`room/players`);
@@ -30,11 +33,8 @@ export default function GameSection({players, setPlayers}) {
             } catch (error) {
               console.error('Ошибка при получении комнаты', error);
             }
-        }
-
-
-    
-
+    }
+    //ЗАПРОС ДЛЯ ПОЛУЧЕНИЯ АКТУАЛЬНЫХ ДАННЫХ
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
@@ -44,6 +44,10 @@ export default function GameSection({players, setPlayers}) {
             keepPreviousData: true
         }
     );
+
+    useEffect(() => {
+        instance.get("player").then(response => setMyId(response.data.id));
+    }, [])
 
 
     if(players.length == 4) {
@@ -56,13 +60,13 @@ export default function GameSection({players, setPlayers}) {
             </section>
         )
     }
-    
+
     else if(players.length == 2) {
         return (
             <section className="players-box">
-                <CurrentPlayer player={players[0]} gameData={gameData}/>
+                <CurrentPlayer player={players.find(player => player.id === myId)} gameData={gameData} stageTime={10} nextStage={gameStage}/>
                 <BlankPicture pictureNum={1}/>
-                <AnotherPlayer player={players[1]} position={3}/>
+                <AnotherPlayer player={players.find(player => player.id !== myId)} position={3}/>
                 <BlankPicture pictureNum={1}/>
             </section>
         )

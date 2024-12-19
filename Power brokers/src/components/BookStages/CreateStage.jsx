@@ -4,10 +4,11 @@ import PlayersList from "./PlayersList"
 import { instance } from '../../utils/axios';
 import { useQuery } from '@tanstack/react-query';
 
-export default function CreateStage({setStage, players, setPlayers, roomCode}) {
+export default function CreateStage({setStage, players, setPlayers, roomCode, myId, setMyId}) {
     
     const getRoom = async () => {
         try {
+            setMyId(0);
             const response = await instance.get(`room/players`);
             setPlayers(response.data);
             // console.log(response.data);

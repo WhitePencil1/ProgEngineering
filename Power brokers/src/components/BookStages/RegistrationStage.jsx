@@ -3,6 +3,7 @@ import BookHeader from "./BookHeader"
 import "./Book.css"
 import { useEffect, useState } from 'react';
 import { instance } from '../../utils/axios';
+import Cookies from "js-cookie";
 import Tooltip from "../Tooltip/Tooltip";
 
 
@@ -35,7 +36,7 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
         }
     };
 
-      const joinRoom = async (roomCode) => {
+    const joinRoom = async (roomCode) => {
         try {
             const roomData = {
                 roomCode: roomCode,
@@ -59,10 +60,10 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
         }
     };
 
-    useEffect(() => {
-        setNickname("");
-        setAvatar(-1)
-    }, []);
+    // useEffect(() => {
+    //     console.log("Сработала отчистка");
+    //     Object.keys(Cookies.get()).forEach((cookie) => Cookies.remove(cookie));
+    // }, [setPlayers, setRoomCode]);
 
     return(
         <>

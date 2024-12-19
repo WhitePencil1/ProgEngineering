@@ -1,33 +1,38 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
 import { instance } from "../../utils/axios"
 import { useQuery } from '@tanstack/react-query';
+import Cookies from "js-cookie";
 import "./GameLoader.css"
 
 
-export default function ConnectStage({setStage, players, setPlayers, roomCode, setRoomCode}) {
+export default function ConnectStage({setStage, players, setPlayers, roomCode, setRoomCode, myId, setMyId}) {
+
     const [connectStage, setConnectStage] = useState("KeyEntering");
-            
+
 
     const getRoom = async () => {
         try {
             const response = await instance.get(`room/players`);
+            
             setPlayers(response.data);
-            console.log(response.data);
             return response
         } catch (error) {
           console.error('Ошибка при получении комнаты', error);
         }
     }
 
+
+
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
         {
             refetchInterval: 2000, // Интервал в миллисекундах (например, 5 секунд)
-            refetchOnWindowFocus: true // Опционально: повторный запрос при возврате к вкладке
+            refetchOnWindowFocus: true, // Опционально: повторный запрос при возврате к вкладке,
+            keepPreviousData: false
         }
     );
 
@@ -41,7 +46,7 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
             }
             console.log("Присоединение с данными:", roomData);
             const response = await instance.post(`player`, roomData);
-            console.log(response);
+            console.log(response);;
         } catch (error) {
             console.error('Ошибка при присоединении к комнате:', error);
         }
@@ -62,7 +67,7 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
                 <div className="book-page">
                     <BookHeader>Enter room key</BookHeader>
                     <input type="text" id="room-key-input" className="player-nickname" maxLength={5} onChange={(evt) => setRoomCode(evt.target.value)}/>
-                    <button className="book-btn book-back-btn" onClick={() => {setStage("registration")}}></button>
+                    <button className="book-btn book-back-btn" onClick={() => {setStage("registration"); instance.delete("player")}}></button>
                 </div>
                 <div className="book-page">
                     <div>
@@ -70,7 +75,9 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
                         <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
                     <PlayersList playersData={players}/>
-                    <button className= {connectStage == "RoomSearch" ? "loader book-btn book-next-btn" : "book-btn book-next-btn"} onClick={() => {
+                    <button className= {
+                        connectStage == "RoomSearch" ? "loader book-btn book-next-btn" : "book-btn book-next-btn"
+                    } onClick={() => {
                         console.log(players);
                         joinRoom()
                     }}></button>

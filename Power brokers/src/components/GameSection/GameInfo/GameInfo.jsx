@@ -3,10 +3,8 @@ import { stages } from "../../../data"
 import "./GameInfo.css"
 import Timer from "./Timer"
 
-export default function GameInfo({bankData = {}, setGameStage}) {
+export default function GameInfo({bankData = {}, stageTime, nextStage}) {
     
-    
-
 
     return(
         <div className="game-info-box">
@@ -14,7 +12,7 @@ export default function GameInfo({bankData = {}, setGameStage}) {
                     <li>Bank buy {bankData.egpCount} pu for {bankData.egpPrice}</li>
                     <li>Bank sell {bankData.esmCount} mu for {bankData.esmPrice}</li>
                     <li>Upgrade your factory</li>
-                    <Timer initialTime={5} onTimeEnd={setGameStage}></Timer>
+                    <Timer initialTime={stageTime} nextStage={nextStage}></Timer>
                 </ul>
                 
                 <form action="" className="player-requests-input-box">
