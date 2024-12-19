@@ -41,6 +41,7 @@
 
         public enum Stage
         {
+            Start,
             Stage1,
             Stage2,
             Stage3,
@@ -53,6 +54,8 @@
             Stage91
         }
         //private bool _isProcessingStage;
+
+        public bool _MainPlayerStart = false;
 
         private SemaphoreSlim _stageLock = new SemaphoreSlim(1, 1); // Блокировка для одиночного выполнения стадии
 
@@ -68,11 +71,11 @@
         public bool NotifyStageCompletion(Stage stage)
         {
             bool res = IsStageComplete();
-            if (res)// && !_isProcessingStage)
+            
+            if (res)
             {
-                //_isProcessingStage = true;
-                ProcessStage(stage); // CurrentStage — текущая стадия игры
-                //_stageCompletionSource.TrySetResult(true); // Уведомляем о завершении
+                if ((stage == Stage.Start) && (!_MainPlayerStart)) return res;
+                ProcessStage(stage); 
             }
             return res;
         }
@@ -106,6 +109,9 @@
             // Выполняем конкретную логику стадии
             switch (stage)
             {
+                case Stage.Start:
+                    Start();
+                    break;
                 case Stage.Stage1:
                     Stage1();
                     break;
@@ -143,7 +149,10 @@
             //ResetStage(); // Подготовка к следующей стадии
         }
 
-
+        public void Start()
+        {
+            //логика начала игры
+        }
         public void Stage1()//Постоянные издержки.
         {
             foreach (var player in Players)

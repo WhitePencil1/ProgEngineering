@@ -96,6 +96,29 @@ namespace WebApplication2.Controllers
             });
         }
 
+        [HttpPost("Start")]
+        public async Task<IActionResult> Start()
+        {
+            var (player, error) = GetPlayerFromCookies();
+            if (error != null) return error;
+
+            var room = GetPlayerFromCookies().player.Room; // Получаем комнату текущего игрока
+
+            // Отмечаем, что игрок завершил стадию
+            player.IsStageCompleted = true;
+
+            if (player.Id == 0) room._MainPlayerStart = true; //если мэйн, то готовы начать игру
+
+            // Уведомляем комнату, если стадия завершена
+            bool resetLock = player.Room.NotifyStageCompletion(Stage.Start);
+
+            // Дожидаемся обработки стадии
+            await room.WaitForStageCompletion();
+
+            if (resetLock) room.ResetStage(); // Подготовка к следующей стадии. _MainPlayerStart не сбрасывается для комнаты, если игра началась.
+            return Ok();
+        }
+
         [HttpPost("Stage1")]
         public async Task<IActionResult> Stage1()//[FromBody] ResourceRequest data)
         {
