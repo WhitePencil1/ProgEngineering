@@ -13,12 +13,10 @@ import { stages } from "../../data";
 //     "Production of products", "Sale of products", "Payment of loan interest", "Obtaining loans", "Construction of factories"];
 
 
-
-
 // eslint-disable-next-line react/prop-types
 export default function GameSection({players, setPlayers}) {
     const [gameData, setGameData] = useState([]);
-    const [gameStage, setGameStage] = useState(stages.Stage1);
+    const [curStage, setCurStage] = useState(0);
     const [myId, setMyId] = useState();
 
 
@@ -39,7 +37,7 @@ export default function GameSection({players, setPlayers}) {
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
         {
-            refetchInterval: 20000, // Интервал в миллисекундах (например, 5 секунд)
+            refetchInterval: 5000, // Интервал в миллисекундах (например, 5 секунд)
             refetchOnWindowFocus: false, // Опционально: повторный запрос при возврате к вкладке
             keepPreviousData: true
         }
@@ -48,6 +46,11 @@ export default function GameSection({players, setPlayers}) {
     useEffect(() => {
         instance.get("player").then(response => setMyId(response.data.id));
     }, [])
+
+
+    
+
+
 
 
     if(players.length == 4) {
@@ -64,7 +67,7 @@ export default function GameSection({players, setPlayers}) {
     else if(players.length == 2) {
         return (
             <section className="players-box">
-                <CurrentPlayer player={players.find(player => player.id === myId)} gameData={gameData} stageTime={10} nextStage={gameStage}/>
+                <CurrentPlayer player={players.find(player => player.id === myId)} gameData={gameData} stageTime={10} curStage={curStage} setCurStage={setCurStage}/>
                 <BlankPicture pictureNum={1}/>
                 <AnotherPlayer player={players.find(player => player.id !== myId)} position={3}/>
                 <BlankPicture pictureNum={1}/>

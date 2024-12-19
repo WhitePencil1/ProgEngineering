@@ -1,25 +1,58 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { instance } from "../../../utils/axios";
+import { stages } from "../../../data";
 
-export default function Timer ({ initialTime, nextStage }) {
-    const [time, setTime] = useState(initialTime); // Устанавливаем начальное время из пропса
-
+export default function Timer ({ curStage, setCurStage}) {
+    
     instance.defaults.timeout = 0;
+
 
     async function changeStage() {
         try {
-            console.log("Запрос " + nextStage + " начат");
-            await instance.post(nextStage)
-                .then(response => console.log(response));
-            //await instance.get("players");
-            console.log("Запрос выполнен");
+            switch(curStage) {
+                case 0:
+                case 1:
+                    console.log("Запрос " + stages[curStage].api + " отправлен");
+                    await instance.post(stages[curStage].api).then(response => console.log(response));
+                    await instance.get("room/players");
+                    console.log("Запрос выполнен");
+                    break;
+
+
+                //Покупка ЕСМ
+                case 2:
+                    console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
+                    await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
+                    console.log("Запрос выполнен");
+                    break;
+                
+
+            }
         } catch(error) {
             console.error(error);
-        }finally {
-            setTime(initialTime); // Сбрасываем таймер
+        } finally {
+            setCurStage(curStage + 1)
+            setTime(stages[curStage+1].stageTime); // Сбрасываем таймер
         }
+
+
+
+
+        //     console.log("Запрос " + stages[curStage].api + " отправлен");
+        //     await instance.post(stages[curStage].api)
+        //         .then(response => console.log(response));
+        //     await instance.get("players");
+        //     console.log("Запрос выполнен");
+        // } catch(error) {
+        //     console.error(error);
+        // }finally {
+        //     setTime(stages[curStage].stageTime); // Сбрасываем таймер
+        // }
     }
+    
+
+    const [time, setTime] = useState(stages[curStage].stageTime); // Устанавливаем начальное время из пропса
 
     useEffect(() => {
         if (time <= 0) {

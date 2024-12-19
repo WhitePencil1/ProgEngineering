@@ -11,15 +11,116 @@ export const avatarsWays = [
 ]
 
 
-export const stages = {
-    Stage1: "player/Stage1",
-    Stage2: "player/Stage2",
-    Stage3: "player/Stage3",
-    Stage4: "player/Stage4",
-    Stage5: "player/Stage5",
-    Stage6: "player/Stage6",
-    Stage7: "player/Stage7",
-    Stage8: "player/Stage8",
-    Stage90: "player/Stage90",
-    Stage91: "player/Stage91",
-}
+// export const stages = {
+//     Stage1: "player/Stage1",
+//     Stage2: "player/Stage2",
+//     Stage3: "player/Stage3",
+//     Stage4: "player/Stage4",
+//     Stage5: "player/Stage5",
+//     Stage6: "player/Stage6",
+//     Stage7: "player/Stage7",
+//     Stage8: "player/Stage8",
+//     Stage90: "player/Stage90",
+//     Stage91: "player/Stage91",
+// }
+
+
+const playersAction = ["none", "upgrade", "build", "getLoan", "buyMu", "sellPu", "muDistribution"];
+
+
+// const stageObject = {
+//     stageIndex: 0,
+//     curStage: stages[this.stageIndex],
+
+//     setNextStage: async function() {
+//         try {
+//             this.stageIndex += 1;
+//             console.log("Запрос " + this.curStage.api + " отправлен");
+//             await instance.post(this.curStage.api)
+//                 .then(response => console.log(response));
+//             //await instance.get("players");
+//             console.log("Запрос выполнен");
+//         } catch(error) {
+//             console.error(error);
+//         }finally {
+//             setTime(this.curStage.stageTime); // Сбрасываем таймер
+//         }
+//     }
+// }
+
+// const stageObject = {
+//         stageIndex: 0,
+//         curStage: stages[this.stageIndex],
+    
+//         setNextStage: async function() {
+//             try {
+//                 this.stageIndex += 1;
+//                 console.log("Запрос " + this.curStage.api + " отправлен");
+//                 await instance.get(this.curStage.api)
+//                     .then(response => console.log(response));
+//                 //await instance.get("players");
+//                 console.log("Запрос выполнен");
+//             } catch(error) {
+//                 console.error(error);
+//             }finally {
+//                 setTime(this.curStage.stageTime); // Сбрасываем таймер
+//             }
+//         }
+//     }
+
+export const stages = [
+    {
+        api: "player/Stage1",
+        stageTime: 10,
+        playersAction: playersAction[0]
+    },
+    {
+        api: "player/Stage2",
+        stageTime: 10,
+        playersAction: playersAction[0]
+    },
+    {
+        api: "player/Stage3",
+        stageTime: 30,
+        playersAction: playersAction[6]
+    },
+    "player/Stage4",
+    "player/Stage5",
+    "player/Stage6",
+    "player/Stage7",
+    "player/Stage8",
+    "player/Stage90",
+    "player/Stage91"
+]
+
+
+
+
+// export const stages = {
+//     Stage1: {
+//         api: "player/Stage1",
+//         stageTime: 10,
+//         playersAction: playersAction[0]
+//     },
+//     Stage2: {
+//         api: "player/Stage2",
+//         stageTime: 10,
+//         playersAction: playersAction[0]
+//     },
+//     Stage3: {
+//         api: "player/Stage3",
+//         stageTime: 10,
+//         playersAction: playersAction[6]
+//     },
+//     Stage4: {
+//         api: "player/Stage4",
+//         stageTime: 10,
+//         playersAction: playersAction[1]
+//     },
+//     Stage5: "player/Stage5",
+//     Stage6: "player/Stage6",
+//     Stage7: "player/Stage7",
+//     Stage8: "player/Stage8",
+//     Stage90: "player/Stage90",
+//     Stage91: "player/Stage91",
+// }
