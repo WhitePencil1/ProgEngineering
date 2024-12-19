@@ -5,7 +5,7 @@ import { instance } from '../../utils/axios';
 import { useQuery } from '@tanstack/react-query';
 
 export default function CreateStage({setStage, players, setPlayers, roomCode, myId, setMyId}) {
-    
+    instance.defaults.timeout = 0;
     const getRoom = async () => {
         try {
             setMyId(0);
@@ -27,6 +27,17 @@ export default function CreateStage({setStage, players, setPlayers, roomCode, my
         }
     );
 
+    async function startGame() {
+        try{
+            await instance.post("player/Start").then(request => console.log(request));
+        } catch(error) {
+            console.error(error)
+        } finally {
+            console.log("ЗАПУСКАЮ");
+            setStage("game")
+        }
+    }
+
     return(
         <>
             <div className="book-background">
@@ -41,7 +52,11 @@ export default function CreateStage({setStage, players, setPlayers, roomCode, my
                         <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
                     <PlayersList playersData={players}/>
-                    {players.length >= 2 ? <button className="book-btn book-start-btn" onClick={() => {setStage("game")}}></button> : <button style={{visibility: "hidden"}} className="book-btn book-start-btn"></button> }
+                    {players.length >= 2 ? <button className="book-btn book-start-btn" onClick={() => {
+                        // await instance.post("player/Start");
+                        // setStage("game")
+                        startGame()
+                    }}></button> : <button style={{visibility: "hidden"}} className="book-btn book-start-btn"></button> }
                 </div>
             </div>
         </>

@@ -21,6 +21,11 @@
     column-gap: 8em;
 }
 
+.hide {
+    visibility: hidden;
+
+}
+
 .book-page {
     display: flex;
     flex-direction: column;

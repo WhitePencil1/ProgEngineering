@@ -4,14 +4,12 @@ import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
 import { instance } from "../../utils/axios"
 import { useQuery } from '@tanstack/react-query';
-import Cookies from "js-cookie";
 import "./GameLoader.css"
 
 
 export default function ConnectStage({setStage, players, setPlayers, roomCode, setRoomCode, myId, setMyId}) {
-
-    const [connectStage, setConnectStage] = useState("KeyEntering");
-
+    instance.defaults.timeout = 0;
+    const [connectStage, setConnectStage] = useState("Search");
 
     const getRoom = async () => {
         try {
@@ -25,7 +23,6 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
     }
 
 
-
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
@@ -36,6 +33,16 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
         }
     );
 
+    async function startGame() {
+        try{
+            await instance.post("player/Start").then(request => console.log(request));
+        } catch(error) {
+            console.error(error)
+        } finally {
+            setStage("game")
+        }
+    }
+
 
     const joinRoom = async () => {
         try {
@@ -45,10 +52,14 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
                 avatar: players[0].avatar
             }
             console.log("Присоединение с данными:", roomData);
-            const response = await instance.post(`player`, roomData);
-            console.log(response);;
+            const response = await instance.post(`player`, roomData).then(getRoom());
+            setConnectStage("Waiting");
+            console.log(response);
         } catch (error) {
             console.error('Ошибка при присоединении к комнате:', error);
+        }
+        finally {
+            startGame()
         }
     };
 
@@ -76,10 +87,9 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
                     </div>
                     <PlayersList playersData={players}/>
                     <button className= {
-                        connectStage == "RoomSearch" ? "loader book-btn book-next-btn" : "book-btn book-next-btn"
+                        connectStage === "Waiting" ? "book-btn book-next-btn hide" : "book-btn book-next-btn"
                     } onClick={() => {
-                        console.log(players);
-                        joinRoom()
+                        joinRoom();
                     }}></button>
                 </div>
             </div>

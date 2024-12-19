@@ -172,6 +172,16 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WebApplication2.Controllers.PlayerController",
+    "Method": "Start",
+    "RelativePath": "api/player/Start",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebApplication2.Controllers.RoomController",
     "Method": "CreateRoom",
     "RelativePath": "api/room",
