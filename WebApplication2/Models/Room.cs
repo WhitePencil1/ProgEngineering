@@ -217,13 +217,13 @@
         }
         public void Stage91()//Заявки на улучшение. 
         {
-            foreach (var player in Players)
-            {
-                foreach (var f in player.actions.FactoriesUpgrade)
-                {
-                    player.UpgradeFactory(f);
-                }
-            }
+            //foreach (var player in Players)
+            //{
+            //    foreach (var f in player.actions.FactoriesUpgrade)
+            //    {
+            //        player.UpgradeFactory(f);
+            //    }
+            //}
             FinalStage();
         }
         public void FinalStage()

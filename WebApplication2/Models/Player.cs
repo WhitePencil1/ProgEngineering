@@ -61,7 +61,7 @@ namespace WebApplication2.Models
             EGP = START_EGP;
             ESM = START_ESM;
         }
-        public (int code, int cost) BuildFactory(int factoryId, bool auto)// -1 - уже построен, 0 - не хватает денег
+        public (int code, int cost) BuildFactory(int factoryId, bool auto)// -2 - уже построен, -1 - не хватает денег
         {
             if (auto && Money > BUILD_COST_AUTO_FACTORY || !auto && Money > BUILD_COST_FACTORY)
             {
@@ -71,20 +71,20 @@ namespace WebApplication2.Models
                     Money -= cost;
                     return (1, cost);
                 }
-                return (-1, 0);
+                return (-2, 0);
             }
-            return (0, 0);
+            return (-1, 0);
         }
-        public (bool success, int cost) UpgradeFactory(int factoryId)
+        public (int code, int cost) UpgradeFactory(int factoryId)// -2 - не может быть улучшена в данный момент, -1 - не хватает денег
         {
             if (Money < UPGRADE_COST_FACTORY)
-                return (false, 0);
+                return (-1, 0);
             if (Factories[factoryId].Upgrade(Room.Turn))
             {
                 Money -= UPGRADE_COST_FACTORY;
-                return (true, UPGRADE_COST_FACTORY);
+                return (1, UPGRADE_COST_FACTORY);
             }
-            return (false, 0);
+            return (-2, 0);
         }
         public int ProcessESM(int factoryId, int ESM)//-3 - не хватает ESM, -2 - не построен, -1 - нет места
         {
