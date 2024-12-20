@@ -86,13 +86,13 @@ export const stages = [
     },
     {
         api: "player/Stage4",
-        stageTime: 9000,
+        stageTime: 900,
         playersAction: "muDistribution"
     },
     {
         api: "player/Stage5",
-        stageTime: 90,
-        playersAction: ""
+        stageTime: 60,
+        playersAction: "sellPu"
     },
     {
         api: "player/Stage6",

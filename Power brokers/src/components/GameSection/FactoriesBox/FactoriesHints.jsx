@@ -10,10 +10,10 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
     async function factoryPutRequest(esmCount) {
         try {
             console.log("Отправка запроса...");
-            await instance.post("player/putEsm", {id: id, esm: esmCount}).then((request) => console.log(request))
+            await instance.post("player/putEsm", {Id: id, Esm: esmCount}).then((request) => console.log(request))
             console.log("Выполнено!");
         } catch(error) {
-            console.error(error)
+            console.log(error.response)
         } finally {
             await instance.get("room/players").then((request) => console.log(request))
         }
@@ -30,7 +30,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
-                            <li>2 month</li>
+                            <li>1 month</li>
                             <li><img className="factory-hint-item" src="/public/img/materialUnitIcon.png" alt="" /></li>
                             <li>1 mu</li>
                         </ul>
@@ -44,7 +44,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
-                            <li>2 month</li>
+                            <li>1 month</li>
                             <li><img className="factory-hint-item" src="/public/img/materialUnitIcon.png" alt="" /></li>
                             <li>1 mu</li>
                         </ul>
@@ -52,9 +52,9 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
-                            <li>2 month</li>
+                            <li>1 month</li>
                             <li><img className="factory-hint-item" src="/public/img/materialUnitIcon.png" alt="" /></li>
-                            <li>1 mu</li>
+                            <li>2 mu</li>
                         </ul>
                     </div>
                 )
