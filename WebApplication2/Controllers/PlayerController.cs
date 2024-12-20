@@ -181,13 +181,13 @@ namespace WebApplication2.Controllers
             return Ok();
         }
         [HttpPost("putEsm")]
-        public IActionResult PutESM([FromBody] (int id, int esm) data)
+        public IActionResult PutESM([FromBody] PutESMData data)
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
             
             // Обработка ЕСМ
-            int result = player.ProcessESM(data.id, data.esm);
+            int result = player.ProcessESM(data.Id, data.Esm);
 
             switch (result)//-4 - не хватает денег, -3 - не хватает ESM, -2 - не построен, -1 - нет места
             {
@@ -329,54 +329,37 @@ namespace WebApplication2.Controllers
             if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
-        //[HttpPost("buildFactory")]
-        //public IActionResult BuildFactory([FromBody] (int id, bool auto) data)
-        //{
-        //    var (player, error) = GetPlayerFromCookies();
-        //    if (error != null) return error;
+        [HttpPost("buildFactory")]
+        public IActionResult BuildFactory([FromBody] BuildData data)
+        {
+            var (player, error) = GetPlayerFromCookies();
+            if (error != null) return error;
 
-        //    var room = player.Room; // Получаем комнату текущего игрока
+            (int result, int cost) = player.BuildFactory(data.Id, data.Auto);
 
-        //    var factory = player.Factories[data.id];
-
-        //    // Обработка ЕСМ
-        //    int result = player.ProcessESM(data.id, data.esm);
-
-        //    switch (result)//-4 - не хватает денег, -3 - не хватает ESM, -2 - не построен, -1 - нет места
-        //    {
-        //        case -4:
-        //            return StatusCode(-4, new
-        //            {
-        //                ErrorCode = "FailMoney",
-        //                Message = "Не хватает денег."
-        //            });
-        //        case -3:
-        //            return StatusCode(-3, new
-        //            {
-        //                ErrorCode = "FailESM",
-        //                Message = "Не хватает ESM."
-        //            });
-        //        case -2:
-        //            return StatusCode(-2, new
-        //            {
-        //                ErrorCode = "NotBuild",
-        //                Message = "Завод не построен."
-        //            });
-        //        case -1:
-        //            return StatusCode(-1, new
-        //            {
-        //                ErrorCode = "AlreadyFull",
-        //                Message = "Завод уже заполнен."
-        //            });
-        //        default:
-        //            return Ok(new
-        //            {
-        //                Message = "ЕСМ добавлены."
-        //            });
-        //    }
-        //}
+            switch (result)//-2 - не хватает денег, -1 - уже построен
+            {
+                case -2:
+                    return StatusCode(-2, new
+                    {
+                        ErrorCode = "FailMoney",
+                        Message = "Не хватает денег."
+                    });
+                case -1:
+                    return StatusCode(-1, new
+                    {
+                        ErrorCode = "AlreadyBuild",
+                        Message = "Завод уже построен."
+                    });
+                default:
+                    return Ok(new
+                    {
+                        Message = "Завод начал строительство."
+                    });
+            }
+        }
         [HttpPost("Stage90")]
-        public async Task<IActionResult> Stage90([FromBody] List<(int, bool)> data)
+        public async Task<IActionResult> Stage90()
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
@@ -398,14 +381,14 @@ namespace WebApplication2.Controllers
             return Ok();
         }
         [HttpPost("Stage91")]
-        public async Task<IActionResult> Stage91([FromBody] List<int> data)
+        public async Task<IActionResult> Stage91()//[FromBody] UpgradeData data
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
 
             var room = GetPlayerFromCookies().player.Room; // Получаем комнату текущего игрока
 
-            player.actions.FactoriesUpgrade = data;
+            //player.actions.FactoriesUpgrade = data;
 
             // Отмечаем, что игрок завершил стадию
             player.IsStageCompleted = true;
@@ -457,5 +440,19 @@ namespace WebApplication2.Controllers
     {
         public int Count { get; set; }
         public int Price { get; set; }
+    }
+    public class PutESMData
+    {
+        public int Id { get; set; }
+        public int Esm { get; set; }
+    }
+    public class BuildData
+    {
+        public int Id { get; set; }
+        public bool Auto { get; set; }
+    }
+    public class UpgradeData
+    {
+        public int Id { get; set; }
     }
 }
