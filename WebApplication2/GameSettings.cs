@@ -24,6 +24,10 @@ namespace WebApplication2
         public const int FACTORY_BUILD_TIME = 5;
         public const int FACTORY_AUTO_BUILD_TIME = 9;
 
+        //
+        public const int COST_PROCESS_ESM = 200;
+        public const int COST_AUTO_PROCESS_ESM = 300;
+
         public const int FACTORY_UPGRADE_TIME = 3;
     }
 }

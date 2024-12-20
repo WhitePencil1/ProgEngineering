@@ -170,13 +170,15 @@
         }
         public void Stage4()//Производство продукции.
         {
-            foreach (var player in Players)
-            {
-                foreach (var f in player.actions.FactoriesProcess)
-                {
-                    player.ProcessESM(f.id, f.esm);
-                }
-            }
+            //только для синхры таймера
+
+            //foreach (var player in Players)
+            //{
+            //    foreach (var f in player.actions.FactoriesProcess)
+            //    {
+            //        player.ProcessESM(f.id, f.esm);
+            //    }
+            //}
         }
         public void Stage5()//Продажа продукции.
         {
@@ -213,7 +215,7 @@
                 }
             }
         }
-        public void Stage91()//Заявки на строительство. 
+        public void Stage91()//Заявки на улучшение. 
         {
             foreach (var player in Players)
             {

@@ -75,13 +75,34 @@ namespace WebApplication2.Models
             }
             return false;
         }
-        public int ProcessESM(int ESM)
+        public int ProcessESM(int ESM)//-2 - не построен, -1 - нет места
         {
-            if (Level < 2) this.ESM = 0;
-            if (ESM > 1 && Level == 4) this.ESM = 2;
-            else this.ESM = 1;
+            switch (Level)
+            {
+                case 2:
+                    if ((this.ESM == 0) && (ESM >= 0) && (ESM <= 1))
+                    {
+                        this.ESM += ESM;
+                        return ESM;
+                    }
+                    return -1;
+                case 4:
+                    if ((2 - this.ESM >= ESM) && (ESM >= 0) && (ESM <= 2))
+                    {
+                        this.ESM += ESM;
+                        return ESM;
+                    }
+                    return -1;
+                default:
+                    return -2;
+            }
+            //if (Level < 2) this.ESM = 0;
 
-            return this.ESM;
+            //if (ESM > 1 && Level == 4) this.ESM = 2;
+
+            //else this.ESM = 1;
+
+            //return this.ESM;
         }
         public int GetEGP()
         {

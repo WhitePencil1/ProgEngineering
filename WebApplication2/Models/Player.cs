@@ -85,9 +85,27 @@ namespace WebApplication2.Models
             }
             return (false, 0);
         }
-        public void ProcessESM(int factoryId, int ESM)
+        public int ProcessESM(int factoryId, int ESM)//-3 - не хватает ESM, -2 - не построен, -1 - нет места
         {
-            this.ESM -= Factories[factoryId].ProcessESM(ESM);
+            if (ESM > this.ESM) return -3;
+            int temp = Factories[factoryId].ProcessESM(ESM);
+            this.ESM -= temp;
+
+            switch (temp)
+            {
+                case 1:
+                    if (Money < ESM * COST_PROCESS_ESM) return -4;
+                    Money -= ESM * COST_PROCESS_ESM;
+                    break;
+                case 2:
+                    if (Money < this.ESM * COST_AUTO_PROCESS_ESM) return -4;
+                    Money -= ESM * COST_AUTO_PROCESS_ESM;
+                    break;
+                default:
+                    break;
+            }
+
+            return temp;
         }
         public (int esm, int egp, int factory, int total, bool defaulter) PayTheCosts()
         {
