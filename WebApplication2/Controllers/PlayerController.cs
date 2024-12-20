@@ -337,16 +337,16 @@ namespace WebApplication2.Controllers
 
             (int result, int cost) = player.BuildFactory(data.Id, data.Auto);
 
-            switch (result)//-2 - не хватает денег, -1 - уже построен
+            switch (result)//-1 - не хватает денег, -2 - уже построен
             {
-                case -2:
-                    return StatusCode(-2, new
+                case -1:
+                    return StatusCode(-1, new
                     {
                         ErrorCode = "FailMoney",
                         Message = "Не хватает денег."
                     });
-                case -1:
-                    return StatusCode(-1, new
+                case -2:
+                    return StatusCode(-2, new
                     {
                         ErrorCode = "AlreadyBuild",
                         Message = "Завод уже построен."
@@ -379,6 +379,35 @@ namespace WebApplication2.Controllers
 
             if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
+        }
+        [HttpPost("upgradeFactory")]
+        public IActionResult UpgradeFactory([FromBody] UpgradeData data)
+        {
+            var (player, error) = GetPlayerFromCookies();
+            if (error != null) return error;
+
+            (int result, int cost) = player.UpgradeFactory(data.Id);
+
+            switch (result)// -2 - не может быть улучшена в данный момент, -1 - не хватает денег
+            {
+                case -1:
+                    return StatusCode(-1, new
+                    {
+                        ErrorCode = "FailMoney",
+                        Message = "Не хватает денег."
+                    });
+                case -2:
+                    return StatusCode(-2, new
+                    {
+                        ErrorCode = "AlreadyBuild",
+                        Message = "Не может быть улучшена в данный момент."
+                    });
+                default:
+                    return Ok(new
+                    {
+                        Message = "Завод начал строительство."
+                    });
+            }
         }
         [HttpPost("Stage91")]
         public async Task<IActionResult> Stage91()//[FromBody] UpgradeData data
