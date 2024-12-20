@@ -207,13 +207,13 @@
         }
         public void Stage90()//Заявки на строительство. 
         {
-            foreach (var player in Players)
-            {
-                foreach (var f in player.actions.FactoriesBuild)
-                {
-                    player.BuildFactory(f.id, f.auto);
-                }
-            }
+            //foreach (var player in Players)
+            //{
+            //    foreach (var f in player.actions.FactoriesBuild)
+            //    {
+            //        player.BuildFactory(f.id, f.auto);
+            //    }
+            //}
         }
         public void Stage91()//Заявки на улучшение. 
         {

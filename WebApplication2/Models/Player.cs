@@ -61,7 +61,7 @@ namespace WebApplication2.Models
             EGP = START_EGP;
             ESM = START_ESM;
         }
-        public (bool success, int cost) BuildFactory(int factoryId, bool auto)
+        public (int code, int cost) BuildFactory(int factoryId, bool auto)// -1 - уже построен, 0 - не хватает денег
         {
             if (auto && Money > BUILD_COST_AUTO_FACTORY || !auto && Money > BUILD_COST_FACTORY)
             {
@@ -69,10 +69,11 @@ namespace WebApplication2.Models
                 {
                     int cost = auto ? BUILD_COST_AUTO_FACTORY : BUILD_COST_FACTORY;
                     Money -= cost;
-                    return (true, cost);
+                    return (1, cost);
                 }
+                return (-1, 0);
             }
-            return (false, 0);
+            return (0, 0);
         }
         public (bool success, int cost) UpgradeFactory(int factoryId)
         {
