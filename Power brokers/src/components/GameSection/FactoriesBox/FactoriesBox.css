@@ -48,13 +48,29 @@ ul.another-player-factories-box {
 
 .factory-hints-container {
     display: flex;
-    justify-content: center;
-    margin-bottom: 15px;
-    user-select: none
     
+    margin-bottom: 15px;
+    user-select: none;
+    position: absolute;
 }
 
 .factory-hint-item {
     width: 35px;
+}
+
+
+
+
+.factories-status {
+    display: flex;
+    flex-direction: column;
+    
+    
+}
+
+.factories-status li {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
 }
 

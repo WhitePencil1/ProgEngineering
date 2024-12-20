@@ -1,14 +1,22 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react"
+import { instance } from "../../../utils/axios";
 import "./FactoriesBox.css"
 
 export default function FactoriesHints({factories, id, curStage, isHidden, factoryRequest, setFactoryRequest}) {
 
     const [isBlocked, setIsBlocked] = useState(false);
 
-    function addFactoryRequest(esm) {
-        setFactoryRequest([].concat([{id: id, esm: esm}], factoryRequest))
-        factories[id].esm == 0 ? setIsBlocked(false) : setIsBlocked(true);
+    async function factoryPutRequest(esmCount) {
+        try {
+            console.log("Отправка запроса...");
+            await instance.post("player/putEsm", {id: id, esm: esmCount}).then((request) => console.log(request))
+            console.log("Выполнено!");
+        } catch(error) {
+            console.error(error)
+        } finally {
+            await instance.get("room/players").then((request) => console.log(request))
+        }
     }
     
 
@@ -18,7 +26,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
             if(factories[id].level === 2) {
                 return(
                     <div className={"factory-hints-container " + (isHidden !== id || isBlocked ? "hide" : "")}>
-                        <ul className="factory-hint" onClick={() => addFactoryRequest(1)}>
+                        <ul className="factory-hint" onClick={() => factoryPutRequest(1)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
@@ -32,7 +40,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
             else {
                 return(
                     <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
-                        <ul className="factory-hint" onClick={() => addFactoryRequest(1)}>
+                        <ul className="factory-hint" onClick={() => factoryPutRequest(1)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
@@ -40,7 +48,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                             <li><img className="factory-hint-item" src="/public/img/materialUnitIcon.png" alt="" /></li>
                             <li>1 mu</li>
                         </ul>
-                        <ul className="factory-hint" onClick={() => addFactoryRequest(2)}>
+                        <ul className="factory-hint" onClick={() => factoryPutRequest(2)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>

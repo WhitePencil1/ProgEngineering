@@ -3,6 +3,7 @@ import "./FactoriesBox.css"
 import { stages } from "../../../data";
 import FactoriesHints from "./FactoriesHints";
 import { useState } from "react";
+import FactoriesStatusHints from "./FactoriesStatusHints";
 
 // eslint-disable-next-line react/prop-types
 export default function FactoriesBox({isMainPlayer, factories, curStage, factoryRequest, setFactoryRequest}) {
@@ -30,8 +31,11 @@ export default function FactoriesBox({isMainPlayer, factories, curStage, factory
         return (
             <ul className="player-factories-box">
                 <li onMouseOver={() => setShowHintId(0)} onMouseOut={() => setShowHintId(-1)}>
+                    <FactoriesStatusHints />
                     <FactoriesHints factories={factories} id={0} curStage={curStage} isHidden={showHintId} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>
+                    
                     <img className={classes} src={factoriesByLevels[factories[0].level]} alt="factory"/>
+                    
                 </li>
 
                 <li onMouseOver={() => setShowHintId(1)} onMouseOut={() => setShowHintId(-1)}>
