@@ -103,7 +103,7 @@ namespace WebApplication2.Models
 
             foreach (Player player in Room.Players)
             {
-                if ((player.actions.RequestedESM.count > ESMCount) || (player.actions.RequestedESM.price >= ESMPrice) || (player.actions.RequestedESM.price * player.actions.RequestedESM.count > player.Money))
+                if ((player.actions.RequestedESM.count > ESMCount) || (player.actions.RequestedESM.price < ESMPrice) || (player.actions.RequestedESM.price * player.actions.RequestedESM.count > player.Money))
                 {
                     continue;
                 }
@@ -113,7 +113,7 @@ namespace WebApplication2.Models
                 if (receiveCount > 0)
                 {
                     player.ESM += receiveCount;
-                    player.Money -= receiveCount * player.actions.RequestedESM.price;
+                    resPrice = receiveCount * player.actions.RequestedESM.price;
                     player.Money -= resPrice;
                     eSMCount -= receiveCount;
                 }

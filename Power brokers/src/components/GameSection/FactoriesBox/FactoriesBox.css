@@ -32,3 +32,29 @@ ul.another-player-factories-box {
     
 }
 
+.factory-hint {
+    background-image: url("/public/img/factoryESMHintContainer.png");
+    background-repeat: no-repeat;
+    object-fit: fill;
+    width: 120px;
+    height: 115px;
+    padding: 8px;
+    
+    display: grid;
+    grid-template-columns: 0.7fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.factory-hints-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    user-select: none
+    
+}
+
+.factory-hint-item {
+    width: 35px;
+}
+

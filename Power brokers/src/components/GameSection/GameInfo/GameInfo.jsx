@@ -9,11 +9,14 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
     
     const [count, setCount] = useState(0);
     const [price, setPrice] = useState(0);
+    const [isSubmit, setIsSubmit] = useState(false);
+
     instance.defaults.timeout = 0;
 
     async function submitHandle() {
-        console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
+        console.log("Запрос " + stages[curStage].api + "Count=count&Price=price" + " отправлен");
         await instance.post(stages[curStage].api, {Count: count, Price: price}).then(response => console.log(response));
+        setIsSubmit(true);
         console.log("Запрос выполнен");        
     }
  
@@ -23,13 +26,13 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                     <li>Bank buy {bankData.egpCount} pu for {bankData.egpPrice}</li>
                     <li>Bank sell {bankData.esmCount} mu for {bankData.esmPrice}</li>
                     <li>Upgrade your factory</li>
-                    <Timer initialTime={stageTime} curStage={curStage} setCurStage={setCurStage}></Timer>
+                    <Timer initialTime={stageTime} curStage={curStage} setCurStage={setCurStage} isSubmit={isSubmit} setIsSubmit={setIsSubmit}></Timer>
                 </ul>
                 
                 <div className="player-requests-input-box">
                         <div className="player-request-input-container">
                             <div className="">
-                                <label htmlFor="resources-number">You sell:</label>
+                                <label htmlFor="resources-number">You buy:</label>
                                 <input type="number" required id="resources-number" name="resources-number" onChange={(evt) => setCount(evt.target.value)} value={count}/>
                                 <span>mu</span>
                             </div>

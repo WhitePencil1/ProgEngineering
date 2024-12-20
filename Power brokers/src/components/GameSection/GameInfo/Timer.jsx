@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { instance } from "../../../utils/axios";
 import { stages } from "../../../data";
 
-export default function Timer ({ curStage, setCurStage}) {
+export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) {
     
     instance.defaults.timeout = 0;
 
@@ -22,12 +22,18 @@ export default function Timer ({ curStage, setCurStage}) {
 
                 //Покупка ЕСМ
                 case 2:
+                    // if(!isSubmit) {
+                    //     console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
+                    //     await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
+                    //     console.log("Запрос выполнен");
+                    //     break;
+                    // }
+                    // setIsSubmit(false);
+                    // break;
                     console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
                     await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
                     console.log("Запрос выполнен");
                     break;
-                
-
             }
         } catch(error) {
             console.error(error);

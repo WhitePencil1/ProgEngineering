@@ -71,26 +71,55 @@ const playersAction = ["none", "upgrade", "build", "getLoan", "buyMu", "sellPu",
 export const stages = [
     {
         api: "player/Stage1",
-        stageTime: 10,
-        playersAction: playersAction[0]
+        stageTime: 1,
+        playersAction: "none"
     },
     {
         api: "player/Stage2",
-        stageTime: 10,
-        playersAction: playersAction[0]
+        stageTime: 1,
+        playersAction: "none"
     },
     {
         api: "player/Stage3",
-        stageTime: 30,
-        playersAction: playersAction[6]
+        stageTime: 1,
+        playersAction: "buyMu"
     },
-    "player/Stage4",
-    "player/Stage5",
-    "player/Stage6",
-    "player/Stage7",
-    "player/Stage8",
-    "player/Stage90",
-    "player/Stage91"
+    {
+        api: "player/Stage4",
+        stageTime: 9000,
+        playersAction: "muDistribution"
+    },
+    {
+        api: "player/Stage5",
+        stageTime: 90,
+        playersAction: ""
+    },
+    {
+        api: "player/Stage6",
+        stageTime: 90,
+        playersAction: ""
+    },
+    {
+        api: "player/Stage7",
+        stageTime: 90,
+        playersAction: ""
+    },
+    {
+        api: "player/Stage8",
+        stageTime: 90,
+        playersAction: ""
+    },
+    {
+        api: "player/Stage90",
+        stageTime: 90,
+        playersAction: ""
+    },
+    {
+        api: "player/Stage91",
+        stageTime: 90,
+        playersAction: ""
+    },
+    
 ]
 
 

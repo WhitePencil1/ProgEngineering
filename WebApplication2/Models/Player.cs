@@ -33,7 +33,7 @@ namespace WebApplication2.Models
         public List<Factory> Factories { get; set; }
         public List<(Factory factory, int sum, int turn)> Credits { get; set; }
         public bool Defaulter { get; set; }
-        public Actions actions;
+        public Actions actions = new Actions();
         public Player(string name, int avatar, int id, Room room)//ну типо
         {
             Id = id;
@@ -54,7 +54,8 @@ namespace WebApplication2.Models
             }
             for (int i = 0; i < START_MAX_FACTORIES - START_FACTORIES; i++)
             {
-                Factories.Add(new Factory());
+                //ПОТОМ УБРАТЬ ПАРАМЕТР
+                Factories.Add(new Factory(4));
             }
             Money = START_MONEY;
             EGP = START_EGP;

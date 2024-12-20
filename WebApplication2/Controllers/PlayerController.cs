@@ -181,7 +181,7 @@ namespace WebApplication2.Controllers
             return Ok();
         }
         [HttpPost("Stage4")]
-        public async Task<IActionResult> Stage4([FromBody] List<(int count, int esm)> data)
+        public async Task<IActionResult> Stage4([FromBody] List<(int id, int esm)> data)
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
