@@ -137,7 +137,7 @@ namespace WebApplication2.Models
 
             foreach (Player player in Room.Players)
             {
-                if ((player.actions.RequestedEGP.count > EGPCount) || (player.actions.RequestedEGP.price > EGPPrice))
+                if ((player.actions.RequestedEGP.count > player.EGP) || (player.actions.RequestedEGP.count > EGPCount) || (player.actions.RequestedEGP.price > EGPPrice))
                 {
                     continue;
                 }

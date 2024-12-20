@@ -231,6 +231,10 @@
             Turn++;
             foreach (var player in Players)
             {
+                foreach (var factory in player.Factories)
+                {
+                    player.EGP += factory.GetEGP();
+                }
                 player.actions.ClearActions();
             }
         }
