@@ -1,14 +1,17 @@
 .game-info-box {
     grid-column: span 2;
+    
+    
 }
 
 
 .game-info {
-    justify-self: end;
+    
     background-image: url("./img/gameInfoBackground.png");
     background-repeat: no-repeat;
     background-size: contain;
 
+    margin-left: auto;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     justify-content: center;

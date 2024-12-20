@@ -34,6 +34,20 @@ export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) 
                     await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
                     console.log("Запрос выполнен");
                     break;
+
+                case 3:
+                    console.log("Время распределения ЕСМ вышло! Переключаю на этап продажи...")
+                    await instance.post(stages[curStage].api).then(response => console.log(response));
+                    console.log("Этап изменен");
+                    break;
+
+                case 4:
+                    console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
+                    await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
+                    console.log("Запрос выполнен");
+                    break;
+
+
             }
         } catch(error) {
             console.error(error);

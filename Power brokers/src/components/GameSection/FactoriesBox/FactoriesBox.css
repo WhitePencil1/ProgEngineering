@@ -48,7 +48,6 @@ ul.another-player-factories-box {
 
 .factory-hints-container {
     display: flex;
-    
     margin-bottom: 15px;
     user-select: none;
     position: absolute;
@@ -59,18 +58,18 @@ ul.another-player-factories-box {
 }
 
 
-
-
 .factories-status {
     display: flex;
     flex-direction: column;
-    
+    margin-left: 30px;
     
 }
 
 .factories-status li {
     display: flex;
+    
     align-items: center;
     column-gap: 10px;
+    width: auto;
 }
 

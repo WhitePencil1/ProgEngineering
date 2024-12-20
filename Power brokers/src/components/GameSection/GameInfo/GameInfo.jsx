@@ -32,9 +32,9 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                 <div className="player-requests-input-box">
                         <div className="player-request-input-container">
                             <div className="">
-                                <label htmlFor="resources-number">You buy:</label>
+                                <label htmlFor="resources-number">You {curStage === 2 ? "buy" : "sell"}:</label>
                                 <input type="number" required id="resources-number" name="resources-number" onChange={(evt) => setCount(evt.target.value)} value={count}/>
-                                <span>mu</span>
+                                <span>{curStage === 2 ? "mu" : "pu"}</span>
                             </div>
                             <button className="request-stage-info-btn" onClick={() => console.log("Click!")}/>
                         </div>
