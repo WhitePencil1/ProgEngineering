@@ -196,6 +196,22 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "WebApplication2.Controllers.PlayerController",
+    "Method": "UpgradeFactory",
+    "RelativePath": "api/player/upgradeFactory",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "WebApplication2.Controllers.UpgradeData",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebApplication2.Controllers.RoomController",
     "Method": "CreateRoom",
     "RelativePath": "api/room",

@@ -25,7 +25,7 @@ export const avatarsWays = [
 // }
 
 
-const playersAction = ["none", "upgrade", "build", "getLoan", "buyMu", "sellPu", "muDistribution"];
+const playersAction = ["none", "upgrade", "build", "getLoan", "buyMu", "sellPu", "muDistribution", "paymentOfInterest"];
 
 
 // const stageObject = {
@@ -72,42 +72,42 @@ export const stages = [
     {
         api: "player/Stage1",
         stageTime: 1,
-        playersAction: "none"
+        playersAction: "Pay the costs"
     },
     {
         api: "player/Stage2",
         stageTime: 1,
-        playersAction: "none"
+        playersAction: "Study the market situation"
     },
     {
         api: "player/Stage3",
         stageTime: 1,
-        playersAction: "buyMu"
+        playersAction: "Buy mu"
     },
     {
         api: "player/Stage4",
-        stageTime: 900,
-        playersAction: "muDistribution"
+        stageTime: 60,
+        playersAction: "Distribute the mu"
     },
     {
         api: "player/Stage5",
         stageTime: 60,
-        playersAction: "sellPu"
+        playersAction: "Sell pu"
     },
     {
         api: "player/Stage6",
-        stageTime: 90,
-        playersAction: ""
+        stageTime: 10,
+        playersAction: "Describe the loan percentage"
     },
     {
         api: "player/Stage7",
-        stageTime: 90,
-        playersAction: ""
+        stageTime: 90000,
+        playersAction: "Pay off the loan"
     },
     {
         api: "player/Stage8",
-        stageTime: 90,
-        playersAction: ""
+        stageTime: 60,
+        playersAction: "TakeLoan"
     },
     {
         api: "player/Stage90",
