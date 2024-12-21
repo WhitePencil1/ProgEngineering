@@ -8,8 +8,13 @@
     margin-bottom: 1%;
 }
 
+.player-factories-box li {
+    
+}
+
 .factory {
     width: 70%;
+    min-width: 128px;
 }
 
 
@@ -42,9 +47,18 @@ ul.another-player-factories-box {
     padding: 8px;
     
     display: grid;
-    grid-template-columns: 0.7fr 1fr;
-    justify-content: center;
+    grid-template-columns: 0.5fr 1fr;
+    justify-content: left;
     align-items: center;
+    position: absolute;
+}
+
+.factory-hint.left {
+    right: -95px;
+}
+
+.factory-hint.right {
+    left: 95px;
 }
 
 .factory-hints-container {
@@ -55,7 +69,7 @@ ul.another-player-factories-box {
 }
 
 .factory-hint-item {
-    width: 35px;
+    width: 30px;
 }
 
 
@@ -80,3 +94,10 @@ ul.another-player-factories-box {
     width: 30px;
 }
 
+.factory-img {
+    grid-column: span 2;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30px;
+    height: 30px;
+}

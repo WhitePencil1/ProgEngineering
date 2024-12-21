@@ -14,8 +14,6 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
             console.log("Выполнено!");
         } catch(error) {
             console.log(error.response)
-        } finally {
-            await instance.get("room/players").then((request) => console.log(request))
         }
     }
 
@@ -26,9 +24,16 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
             console.log("Выполнено!");
         } catch(error) {
             console.log(error.response)
-        } finally {
-            await instance.get("room/players").then((request) => console.log(request))
-            
+        }
+    }
+
+    async function buildFactory(isAutoFactoryRequest) {
+        try {
+            console.log("Отправка запроса на строительство фабрики...");
+            await instance.post("player/buildFactory", {Id: id, Auto: isAutoFactoryRequest}).then((request) => console.log(request))
+            console.log("Выполнено!");
+        } catch(error) {
+            console.log(error.response)
         }
     }
     
@@ -55,7 +60,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
             else {
                 return(factories[id].esm !== 0 ? <></> :
                     <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
-                        <ul className="factory-hint" onClick={() => factoryPutRequest(1)}>
+                        <ul className="factory-hint left" onClick={() => factoryPutRequest(1)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
@@ -63,7 +68,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                             <li><img className="factory-hint-item" src="/public/img/materialUnitIcon.png" alt="" /></li>
                             <li>1 mu</li>
                         </ul>
-                        <ul className="factory-hint" onClick={() => factoryPutRequest(2)}>
+                        <ul className="factory-hint right" onClick={() => factoryPutRequest(2)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
@@ -100,10 +105,32 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                 )
                 
             }
+        
+        case 8: {
+            //Не построенный завод
+            if(factories[id].level === -1) {
+                return (
+                    <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
+                        <ul className="factory-hint left" onClick={() => buildFactory(false)}>
+                            <img src="/public/img/Factories/simpleFactory.png" alt="" className="factory-img"/>
+                            <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
+                            <li>200 $</li>
+                            <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
+                            <li>6 month</li>
+                        </ul>
+                        <ul className="factory-hint right" onClick={() => buildFactory(true)}>
+                            <img src="/public/img/Factories/improvedFactory.png" alt="" className="factory-img"/>
+                            <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
+                            <li>400 $</li>
+                            <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
+                            <li>13 month</li>
+                        </ul>
+                    </div>
+                );
+            }
             
-
-        default:
-            break;
+        }
+            
 
     }
 }

@@ -86,7 +86,7 @@ export const stages = [
     },
     {
         api: "player/Stage4",
-        stageTime: 5,
+        stageTime: 30,
         playersAction: "Distribute the mu"
     },
     {
@@ -107,17 +107,17 @@ export const stages = [
     {
         api: "player/Stage8",
         stageTime: 10000,
-        playersAction: "TakeLoan"
+        playersAction: "Get a loan"
     },
     {
         api: "player/Stage90",
-        stageTime: 90,
-        playersAction: ""
+        stageTime: 9000000,
+        playersAction: "Build factories"
     },
     {
         api: "player/Stage91",
         stageTime: 90,
-        playersAction: ""
+        playersAction: "Upgrade factories"
     },
     
 ]

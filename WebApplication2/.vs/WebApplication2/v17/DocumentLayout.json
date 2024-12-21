@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:models\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\controllers\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:controllers\\playercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -11,24 +15,20 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:GameService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\gamesettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:gamesettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:models\\factory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:models\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:models\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\controllers\\roomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:controllers\\roomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|solutionrelative:models\\player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E17AE569-71AF-479F-B0D2-5991A6B7A369}|WebApplication2.csproj|d:\\university\\7 term\\progengin\\webapplication2\\models\\bank.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,15 +50,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Factory.cs",
               "DocumentMoniker": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Models\\Factory.cs",
               "RelativeDocumentMoniker": "Models\\Factory.cs",
               "ToolTip": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Models\\Factory.cs",
               "RelativeToolTip": "Models\\Factory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAABOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-20T10:33:20.544Z"
+              "WhenOpened": "2024-12-20T10:33:20.544Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -74,15 +75,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "Player.cs",
               "DocumentMoniker": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Models\\Player.cs",
               "RelativeDocumentMoniker": "Models\\Player.cs",
               "ToolTip": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Models\\Player.cs",
               "RelativeToolTip": "Models\\Player.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAQwDkAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAACwAAAAAAAAAAAAQwDkAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-20T09:57:13.898Z"
+              "WhenOpened": "2024-12-20T09:57:13.898Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -92,13 +94,14 @@
               "RelativeDocumentMoniker": "GameSettings.cs",
               "ToolTip": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\GameSettings.cs",
               "RelativeToolTip": "GameSettings.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T15:18:28.662Z"
+              "WhenOpened": "2024-12-17T15:18:28.662Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "Room.cs",
               "DocumentMoniker": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Models\\Room.cs",
               "RelativeDocumentMoniker": "Models\\Room.cs",
@@ -110,7 +113,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "GameService.cs",
               "DocumentMoniker": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\GameService.cs",
               "RelativeDocumentMoniker": "GameService.cs",
@@ -121,20 +124,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "PlayerController.cs",
               "DocumentMoniker": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Controllers\\PlayerController.cs",
               "RelativeDocumentMoniker": "Controllers\\PlayerController.cs",
               "ToolTip": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Controllers\\PlayerController.cs",
               "RelativeToolTip": "Controllers\\PlayerController.cs",
-              "ViewState": "AgIAAGoBAAAAAAAAAAAuwDYBAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAA+wP0BAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T16:37:49.566Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "RoomController.cs",
               "DocumentMoniker": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Controllers\\RoomController.cs",
               "RelativeDocumentMoniker": "Controllers\\RoomController.cs",

@@ -21,8 +21,8 @@ namespace WebApplication2
         public const int CREDIT_TURNS = 12;
         public const int CREDIT_PROCENT = 10; 
         //factory
-        public const int FACTORY_BUILD_TIME = 5;
-        public const int FACTORY_AUTO_BUILD_TIME = 9;
+        public const int FACTORY_BUILD_TIME = 5; //ТУТ БЫЛА 5
+        public const int FACTORY_AUTO_BUILD_TIME = 9; //ТУТ БЫЛА 9
 
         //
         public const int COST_PROCESS_ESM = 200;

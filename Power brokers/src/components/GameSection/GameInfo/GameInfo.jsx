@@ -25,10 +25,11 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                 <ul className="game-info">
                     <li>Bank buy {bankData.egpCount} pu for {bankData.egpPrice}</li>
                     <li>Bank sell {bankData.esmCount} mu for {bankData.esmPrice}</li>
-                    <li>Upgrade your factory</li>
+                    <li>{stages[curStage].playersAction}</li>
                     <Timer initialTime={stageTime} curStage={curStage} setCurStage={setCurStage} isSubmit={isSubmit} setIsSubmit={setIsSubmit}></Timer>
                 </ul>
                 
+                {curStage === 2 || curStage === 4 ? 
                 <div className="player-requests-input-box">
                         <div className="player-request-input-container">
                             <div className="">
@@ -46,7 +47,9 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                             </div>
                             <input type="submit" id="player-request-submit" value={""} onClick={() => submitHandle()}/>
                         </div>
-                </div>
+                </div> : <></>
+                }
+                
         </div>
     )
 }

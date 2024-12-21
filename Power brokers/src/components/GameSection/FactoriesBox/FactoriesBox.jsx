@@ -21,6 +21,8 @@ export default function FactoriesBox({isMainPlayer, factories, curStage, factory
 
     const factoriesByLevels = {
         "-1": "./img/Factories/emptyFactory.png",
+        0: "./img/Factories/simpleFactoryСonstruction.png",
+        1: "./img/Factories/improvedFactoryСonstruction.png",
         2: "./img/Factories/simpleFactory.png",
         4: "./img/Factories/improvedFactory.png"
     };

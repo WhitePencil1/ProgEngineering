@@ -55,7 +55,7 @@ namespace WebApplication2.Models
             for (int i = 0; i < START_MAX_FACTORIES - START_FACTORIES; i++)
             {
                 //ПОТОМ УБРАТЬ ПАРАМЕТР
-                Factories.Add(new Factory(4));
+                Factories.Add(new Factory());
             }
             Money = START_MONEY;
             EGP = START_EGP;
