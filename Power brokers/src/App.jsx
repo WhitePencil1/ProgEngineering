@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 
 
 function App() {
-  const [stage, setStage] = useState("game")
+  const [stage, setStage] = useState("welcome")
   const [isRegistered, setIsRegistered] = useState(false) /*Кастыль для секции регистрации*/ 
   const [playerRole, setPlayerRole] = useState("create")
 
@@ -24,7 +24,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {stage != "game" ? <Background /> : <GameSection players={players} setPlayers={setPlayers} myId={myId}/>}
+      {stage != "game" ? <Background /> : <GameSection players={players} setPlayers={setPlayers} myId={myId} setGlobalStage={setStage}/>}
 
       {stage == "welcome" && <WelcomeSection setNextStage = {setStage} setRole={setPlayerRole} setPlayers={() => setPlayers([])} setRoomCode={() => setRoomCode()}/>}
 
@@ -33,7 +33,6 @@ function App() {
       {(stage == "roomActivity" && playerRole == "create") && <CreateStage setStage={setStage} players={players} setPlayers={setPlayers} roomCode={roomCode} myId={myId} setMyId={setMyId}/>}
 
       {(stage == "roomActivity" && playerRole == "connect") && <ConnectStage setStage={setStage} setPlayers={setPlayers} players={players} roomCode={roomCode} setRoomCode={setRoomCode} myId={myId} setMyId={setMyId}/>}
-
     </QueryClientProvider>
   )
 }

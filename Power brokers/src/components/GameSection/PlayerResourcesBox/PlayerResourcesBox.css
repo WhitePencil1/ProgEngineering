@@ -1,6 +1,6 @@
 .resources-box {
     grid-column: span 2;
-
+    position: relative;
     background-image: url("./img/resourcesBox.png");
     background-repeat: no-repeat;
     background-size: contain;
@@ -45,3 +45,23 @@
     font-size: 100%;
 }
 
+.exit-btn {
+    background-image: url("/public/img/exitBtn.png");
+}
+
+.buttons-list {
+    display: flex;
+    column-gap: 4px;
+    position: absolute;
+    top: 156px;
+    left: 2px;
+}
+
+.buttons-list img {
+    width: 35px;
+    cursor: pointer;
+}
+
+.buttons-list img:hover {
+    opacity: 0.75;
+}

@@ -7,17 +7,18 @@ import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import BlankPicture from "./BlankPicture/BlankPicture";
 import { stages } from "../../data";
-
+import ModalWindow from "./ModalWindow/ModalWindow";
 
 // const stages = ["Expenses Payment", "Getting a market environment", "Requests for materials", 
 //     "Production of products", "Sale of products", "Payment of loan interest", "Obtaining loans", "Construction of factories"];
 
 
 // eslint-disable-next-line react/prop-types
-export default function GameSection({players, setPlayers}) {
+export default function GameSection({players, setPlayers, setGlobalStage}) {
     const [gameData, setGameData] = useState([]);
-    const [curStage, setCurStage] = useState(0); 
+    const [curStage, setCurStage] = useState(1); 
     const [myId, setMyId] = useState();
+    const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
 
     //ФУНКЦИЯ ПОЛУЧЕНИЯ ДАННЫХ
@@ -27,18 +28,21 @@ export default function GameSection({players, setPlayers}) {
                 const room = await instance.get(`room`);
                 setPlayers(players.data);
                 setGameData(room.data);
-                //console.log(players)
+                console.log(players);
+                console.log(gameData.code);
                 return 0;
             } catch (error) {
               console.error('Ошибка при получении комнаты', error);
             }
     }
+
+
     //ЗАПРОС ДЛЯ ПОЛУЧЕНИЯ АКТУАЛЬНЫХ ДАННЫХ
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
         {
-            refetchInterval: 2000, // Интервал в миллисекундах (например, 5 секунд)
+            refetchInterval: 1000, // Интервал в миллисекундах (например, 5 секунд)
             refetchOnWindowFocus: false, // Опционально: повторный запрос при возврате к вкладке
             keepPreviousData: true
         }
@@ -46,10 +50,25 @@ export default function GameSection({players, setPlayers}) {
 
     useEffect(() => {
         instance.get("player").then(response => setMyId(response.data.id));
+
+        const handleBeforeUnload = async (event) => {
+            event.preventDefault();
+            event.returnValue = ''; // Для браузеров, которые поддерживают обработку
+            //setIsExitModalOpen(true);
+            await instance.delete().then(console.log("Вы вышли из игры"))
+            setGlobalStage("welcome")
+            return '';
+          };
+      
+          window.addEventListener('beforeunload', handleBeforeUnload);
+      
+          // Очистка обработчика при размонтировании
+          return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+          };
     }, [])
 
 
-    
 
 
 
@@ -68,11 +87,49 @@ export default function GameSection({players, setPlayers}) {
     else if(players.length == 2) {
         return (
             <section className="players-box">
-                <CurrentPlayer player={players.find(player => player.id === myId)} gameData={gameData} stageTime={10} curStage={curStage} setCurStage={setCurStage}/>
+                <ModalWindow isOpen={isExitModalOpen} onClose={() => setIsExitModalOpen(false)} onSubmit={async () => {
+                    await instance.delete("player");
+                    setGlobalStage("welcome")
+                }}>
+                    <h2>Желаете покинуть игру ?</h2>
+                    <img className="modal-img" src="/public/img/InGamePictures/notStonks.jpg" alt="" />
+                </ModalWindow>
+                <CurrentPlayer player={players.find(player => player.id === myId)} setIsOpenModal={setIsExitModalOpen} gameData={gameData} stageTime={10} curStage={curStage} setCurStage={setCurStage} />
                 <BlankPicture pictureNum={1}/>
                 <AnotherPlayer player={players.find(player => player.id !== myId)} position={3}/>
                 <BlankPicture pictureNum={1}/>
             </section>
         )
+    }
+
+
+    //Победа / Поражение
+    else if(players.length == 1) {
+        if(players[0].id === myId) {
+            return (
+                <section>
+                    <ModalWindow isOpen={true} onSubmit={async () => {
+                            await instance.delete("player", {code: gameData.code});
+                            setGlobalStage("welcome");
+                        }}>
+
+                        <h2>Поздравляем, вы победили!</h2>
+                        <img className="modal-img" src="/public/img/InGamePictures/stonks.webp" alt="stonks" />
+                    </ModalWindow>
+                    
+                </section>
+            )
+        }
+
+        else {
+            return (
+                <section>
+                    <ModalWindow isOpen={true} onSubmit={() => {setGlobalStage("welcome")}}>
+                        <h2>К сожалению, вы проиграли</h2>
+                        <img className="modal-img" src="/public/img/InGamePictures/notStonks.jpg" alt="not stonks" />
+                    </ModalWindow>
+                </section>
+            )
+        }
     }
 }

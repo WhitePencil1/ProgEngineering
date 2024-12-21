@@ -77,10 +77,12 @@
     border: none;
 
     justify-self: end;
+    cursor: pointer;
     
     width: 20px;
     height: 28px;
 }
+
 
 /* input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -108,6 +110,11 @@ opacity: 1;
     border: none;
     justify-self: end;
     
+    cursor: pointer;
     width: 25px;
     height: 28px;
+}
+
+#player-request-submit:hover ,.request-stage-info-btn:hover {
+    opacity: 0.8;
 }
