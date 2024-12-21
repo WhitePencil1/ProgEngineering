@@ -1,7 +1,7 @@
 .players-box {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 6fr 3fr;
+    grid-template-rows: 2fr 1fr;
     
     
     width: 100%;

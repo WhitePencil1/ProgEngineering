@@ -16,7 +16,7 @@ import { stages } from "../../data";
 // eslint-disable-next-line react/prop-types
 export default function GameSection({players, setPlayers}) {
     const [gameData, setGameData] = useState([]);
-    const [curStage, setCurStage] = useState(6);
+    const [curStage, setCurStage] = useState(3); //Вернуть 6
     const [myId, setMyId] = useState();
 
 

@@ -59,6 +59,11 @@ export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) 
                     console.log("Запрос выполнен");
                     break;
 
+                case 7:
+                    console.log("Запрос окончания этапа ПОЛУЧЕНИЯ ССУДЫ отправлен");
+                    await instance.post(stages[curStage].api).then(response => console.log(response));
+                    console.log("Запрос выполнен");
+                    break;
 
             }
         } catch(error) {

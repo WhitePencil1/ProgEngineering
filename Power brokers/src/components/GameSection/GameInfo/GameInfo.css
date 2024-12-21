@@ -1,6 +1,6 @@
 .game-info-box {
     grid-column: span 2;
-    
+    z-index: 2;
     
 }
 
@@ -10,7 +10,7 @@
     background-image: url("./img/gameInfoBackground.png");
     background-repeat: no-repeat;
     background-size: contain;
-
+    
     margin-left: auto;
     display: grid;
     grid-template-rows: 1fr 1fr 1fr 1fr;
@@ -31,7 +31,7 @@
 
 .player-requests-input-box {
     position: absolute;
-    right: 0px;
+    right: 0;
 
     display: flex;
     flex-direction: column;

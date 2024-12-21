@@ -53,6 +53,22 @@
   },
   {
     "ContainingType": "WebApplication2.Controllers.PlayerController",
+    "Method": "GetCredit",
+    "RelativePath": "api/player/GetCredit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "data",
+        "Type": "WebApplication2.Controllers.FactoryIdData",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplication2.Controllers.PlayerController",
     "Method": "PutESM",
     "RelativePath": "api/player/putEsm",
     "HttpMethod": "POST",
@@ -156,13 +172,7 @@
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
-    "Parameters": [
-      {
-        "Name": "data",
-        "Type": "System.Int32",
-        "IsRequired": true
-      }
-    ],
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -205,7 +215,7 @@
     "Parameters": [
       {
         "Name": "data",
-        "Type": "WebApplication2.Controllers.UpgradeData",
+        "Type": "WebApplication2.Controllers.FactoryIdData",
         "IsRequired": true
       }
     ],

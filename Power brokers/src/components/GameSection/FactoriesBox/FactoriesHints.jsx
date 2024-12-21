@@ -18,14 +18,28 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
             await instance.get("room/players").then((request) => console.log(request))
         }
     }
+
+    async function getFactoryCredit() {
+        try {
+            console.log("Отправка запроса на получение ссуды...");
+            await instance.post("player/GetCredit", {Id: id}).then((request) => console.log(request))
+            console.log("Выполнено!");
+        } catch(error) {
+            console.log(error.response)
+        } finally {
+            await instance.get("room/players").then((request) => console.log(request))
+            
+        }
+    }
     
 
 
     switch(curStage) {
         case 3:
             if(factories[id].level === 2) {
-                return(
-                    <div className={"factory-hints-container " + (isHidden !== id || isBlocked ? "hide" : "")}>
+
+                return (factories[id].esm !== 0 ? <></> :
+                    <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
                         <ul className="factory-hint" onClick={() => factoryPutRequest(1)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
                             <li>200 $</li>
@@ -37,8 +51,9 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                     </div>
                 )
             }
+
             else {
-                return(
+                return(factories[id].esm !== 0 ? <></> :
                     <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
                         <ul className="factory-hint" onClick={() => factoryPutRequest(1)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
@@ -60,7 +75,35 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                 )
             }
             
+        
+
+
+        case 7:
+            if(factories[id].level === 2) {
+                return(factories[id].isCredit ? <></> :
+                    <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
+                        <ul className="factory-hint" onClick={() => getFactoryCredit()}>
+                            <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
+                            <li>1000 $</li>
+                        </ul>
+                    </div>
+                )
+            }
+            else {
+                return(factories[id].isCredit ? <></> :
+                    <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
+                        <ul className="factory-hint" onClick={() => getFactoryCredit()}>
+                            <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
+                            <li>2000 $</li>
+                        </ul>
+                    </div>
+                )
+                
+            }
+            
+
         default:
             break;
+
     }
 }
