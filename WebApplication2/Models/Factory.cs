@@ -11,6 +11,7 @@ namespace WebApplication2.Models
                                                //  4 - улучшенный завод.
 
         public int TurnForNext { get; private set; }  // Ход, на котором завод получит новый уровень
+        public int TurnForCredit { get; set; }
         public int ESM { get; private set; }
         public bool IsCredit { get; set; } // под залогом?
         public int Cost => Level switch
