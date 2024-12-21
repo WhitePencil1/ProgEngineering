@@ -234,6 +234,7 @@
                 foreach (var factory in player.Factories)
                 {
                     player.EGP += factory.GetEGP();
+                    factory.CheckLevel(Turn);
                 }
                 player.actions.ClearActions();
             }

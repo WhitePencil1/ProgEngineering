@@ -156,6 +156,7 @@ namespace WebApplication2.Models
             if (Capital / 2 < Factories[factoryId].Cost) return (-1, "капитал слишком маленький");
             if (Factories[factoryId].IsCredit) return (-2, "фабрика уже заложена");
             Factories[factoryId].IsCredit = true;
+            Factories[factoryId].TurnForCredit = CREDIT_TURNS;
             Money += Factories[factoryId].Cost;
             Credits.Add((Factories[factoryId], Factories[factoryId].Cost, Room.Turn + CREDIT_TURNS));
             return (1, "кредит успешно взят");
@@ -165,6 +166,7 @@ namespace WebApplication2.Models
             int sum = 0;
             foreach (var credit in Credits)
             {
+                credit.factory.TurnForCredit--;
                 if (credit.turn == Room.Turn)
                 {
                     sum += credit.sum;
