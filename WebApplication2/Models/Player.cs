@@ -151,14 +151,14 @@ namespace WebApplication2.Models
             Defaulter = true;
             return (true, $"игрок {Name} сдался");
         }
-        public (bool success, string message) GetCredit(int factoryId)
+        public (int code, string message) GetCredit(int factoryId)
         {
-            if (Capital / 2 < Factories[factoryId].Cost) return (false, "недостаточно средств для заёмов");
-            if (Factories[factoryId].IsCredit) return (false, "фабрика уже заложена");
+            if (Capital / 2 < Factories[factoryId].Cost) return (-1, "капитал слишком маленький");
+            if (Factories[factoryId].IsCredit) return (-2, "фабрика уже заложена");
             Factories[factoryId].IsCredit = true;
             Money += Factories[factoryId].Cost;
             Credits.Add((Factories[factoryId], Factories[factoryId].Cost, Room.Turn + CREDIT_TURNS));
-            return (true, "кредит успешно взят");
+            return (1, "кредит успешно взят");
         }
         public (bool success, int sum) PayCredits()//сейчас при невыплате - сразу поражение
         {

@@ -200,10 +200,10 @@
         }
         public void Stage8()//Получение ссуд.
         {
-            foreach (var player in Players)
-            {
-                player.GetCredit(player.actions.FactoryCredit);
-            }
+            //foreach (var player in Players)
+            //{
+            //    player.GetCredit(player.actions.FactoryCredit);
+            //}
         }
         public void Stage90()//Заявки на строительство. 
         {

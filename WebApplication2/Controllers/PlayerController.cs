@@ -307,16 +307,45 @@ namespace WebApplication2.Controllers
             if (resetLock) room.ResetStage(); // Подготовка к следующей стадии
             return Ok();
         }
+        [HttpPost("GetCredit")]
+        public IActionResult GetCredit([FromBody] FactoryIdData data)
+        {
+            var (player, error) = GetPlayerFromCookies();
+            if (error != null) return error;
+
+            // Обработка ЕСМ
+            
+            (int result, string message)= player.GetCredit(data.Id);
+
+            switch (result)//-2 - не построен, -1 - нет места
+            {
+                case -1:
+                    return StatusCode(-1, new
+                    {
+                        ErrorCode = "NotCapital",
+                        Message = "Капитала для обеспечения кредита недостаточно."
+                    });
+                case -2:
+                    return StatusCode(-2, new
+                    {
+                        ErrorCode = "AlreadyCredit",
+                        Message = "Завод уже заложен."
+                    });
+                default:
+                    return Ok(new
+                    {
+                        Message = "Кредит взят."
+                    });
+            }
+        }
         [HttpPost("Stage8")]
-        public async Task<IActionResult> Stage8([FromBody] int data)
+        public async Task<IActionResult> Stage8()
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
 
             var room = GetPlayerFromCookies().player.Room; // Получаем комнату текущего игрока
-
-            player.actions.FactoryCredit = data;
-
+            
             // Отмечаем, что игрок завершил стадию
             player.IsStageCompleted = true;
 
@@ -381,7 +410,7 @@ namespace WebApplication2.Controllers
             return Ok();
         }
         [HttpPost("upgradeFactory")]
-        public IActionResult UpgradeFactory([FromBody] UpgradeData data)
+        public IActionResult UpgradeFactory([FromBody] FactoryIdData data)
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
@@ -480,7 +509,7 @@ namespace WebApplication2.Controllers
         public int Id { get; set; }
         public bool Auto { get; set; }
     }
-    public class UpgradeData
+    public class FactoryIdData
     {
         public int Id { get; set; }
     }
