@@ -4,7 +4,6 @@ import { instance } from "../../../utils/axios";
 import { stages } from "../../../data";
 
 export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) {
-    
     instance.defaults.timeout = 0;
 
 
@@ -65,12 +64,30 @@ export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) 
                     console.log("Запрос выполнен");
                     break;
 
+                case 8:
+                    console.log("Запрос окончания этапа СТРОИТЕЛЬСТВО ФАБРИК отправлен");
+                    await instance.post(stages[curStage].api).then(response => console.log(response));
+                    console.log("Запрос выполнен");
+                    break;
+
+                case 9:
+                    console.log("Запрос окончания этапа УЛУЧШЕНИЯ ФАБРИК отправлен");
+                    await instance.post(stages[curStage].api).then(response => console.log(response));
+                    console.log("Запрос выполнен");
+                    console.log("ЗАПУСК НОВОГО КРУГА...")
+                    break;
             }
         } catch(error) {
             console.error(error);
         } finally {
-            setCurStage(curStage + 1)
-            setTime(stages[curStage+1].stageTime); // Сбрасываем таймер
+            if(curStage !== 9) {
+                setCurStage(curStage + 1);
+                setTime(stages[curStage + 1].stageTime);
+            }
+            else {
+                setCurStage(0);
+                setTime(stages[0].stageTime);
+            }
         }
 
 

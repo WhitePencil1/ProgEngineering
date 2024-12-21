@@ -24,6 +24,7 @@ export default function FactoriesBox({isMainPlayer, factories, curStage, factory
         0: "./img/Factories/simpleFactoryСonstruction.png",
         1: "./img/Factories/improvedFactoryСonstruction.png",
         2: "./img/Factories/simpleFactory.png",
+        3: "./img/Factories/improvedFactoryСonstruction.png",
         4: "./img/Factories/improvedFactory.png"
     };
 

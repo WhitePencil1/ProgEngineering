@@ -71,17 +71,17 @@ const playersAction = ["none", "upgrade", "build", "getLoan", "buyMu", "sellPu",
 export const stages = [
     {
         api: "player/Stage1",
-        stageTime: 1,
+        stageTime: 10,
         playersAction: "Pay the costs"
     },
     {
         api: "player/Stage2",
-        stageTime: 1,
-        playersAction: "Study the market situation"
+        stageTime: 10,
+        playersAction: "Price determination"
     },
     {
         api: "player/Stage3",
-        stageTime: 1,
+        stageTime: 60,
         playersAction: "Buy mu"
     },
     {
@@ -96,27 +96,27 @@ export const stages = [
     },
     {
         api: "player/Stage6",
-        stageTime: 10,
-        playersAction: "Describe the loan percentage"
+        stageTime: 5,
+        playersAction: "Payment of interest"
     },
     {
         api: "player/Stage7",
-        stageTime: 10,
+        stageTime: 5,
         playersAction: "Pay off the loan"
     },
     {
         api: "player/Stage8",
-        stageTime: 10000,
+        stageTime: 20,
         playersAction: "Get a loan"
     },
     {
         api: "player/Stage90",
-        stageTime: 9000000,
+        stageTime: 20,
         playersAction: "Build factories"
     },
     {
         api: "player/Stage91",
-        stageTime: 90,
+        stageTime: 20,
         playersAction: "Upgrade factories"
     },
     

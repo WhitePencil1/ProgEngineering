@@ -16,7 +16,7 @@ import { stages } from "../../data";
 // eslint-disable-next-line react/prop-types
 export default function GameSection({players, setPlayers}) {
     const [gameData, setGameData] = useState([]);
-    const [curStage, setCurStage] = useState(8); //Вернуть 6
+    const [curStage, setCurStage] = useState(0); 
     const [myId, setMyId] = useState();
 
 
@@ -27,7 +27,7 @@ export default function GameSection({players, setPlayers}) {
                 const room = await instance.get(`room`);
                 setPlayers(players.data);
                 setGameData(room.data);
-                console.log(players)
+                //console.log(players)
                 return 0;
             } catch (error) {
               console.error('Ошибка при получении комнаты', error);

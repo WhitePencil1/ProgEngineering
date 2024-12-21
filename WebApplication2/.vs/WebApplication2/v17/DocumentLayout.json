@@ -56,7 +56,7 @@
               "RelativeDocumentMoniker": "Models\\Factory.cs",
               "ToolTip": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Models\\Factory.cs",
               "RelativeToolTip": "Models\\Factory.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAYAAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-20T10:33:20.544Z",
               "EditorCaption": ""
@@ -83,8 +83,7 @@
               "RelativeToolTip": "Models\\Player.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAQwDkAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-20T09:57:13.898Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-20T09:57:13.898Z"
             },
             {
               "$type": "Document",
@@ -96,8 +95,7 @@
               "RelativeToolTip": "GameSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T15:18:28.662Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-17T15:18:28.662Z"
             },
             {
               "$type": "Document",
@@ -130,7 +128,7 @@
               "RelativeDocumentMoniker": "Controllers\\PlayerController.cs",
               "ToolTip": "D:\\University\\7 term\\ProgEngin\\WebApplication2\\Controllers\\PlayerController.cs",
               "RelativeToolTip": "Controllers\\PlayerController.cs",
-              "ViewState": "AgIAAE8AAAAAAAAAAAA+wP0BAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAIgBAAAAAAAAAAAIwJsBAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-15T16:37:49.566Z",
               "EditorCaption": ""
