@@ -37,13 +37,16 @@ namespace WebApplication2.Models
         }
         public bool CheckLevel(int currentTurn)
         {
-            if (TurnForNext == currentTurn) switch (Level)
+            TurnForNext--;
+            if (TurnForNext == 0) switch (Level)
                 {
                     case 0:
                         Level = 2;
+                        TurnForNext = -1;
                         return true;
                     case 1 or 3:
                         Level = 4;
+                        TurnForNext = -1;
                         return true;
                     default:
                         break;
@@ -57,8 +60,10 @@ namespace WebApplication2.Models
                 {
                     case false:
                         Level = 0;
+                        TurnForNext = FACTORY_BUILD_TIME;
                         return true;
                     case true:
+                        TurnForNext = FACTORY_AUTO_BUILD_TIME;
                         Level = 1;
                         return true;
                 }
@@ -70,6 +75,7 @@ namespace WebApplication2.Models
             {
                 case 2:
                     Level = 3;
+                    TurnForNext = FACTORY_UPGRADE_TIME;
                     return true;
                 default:
                     break;
