@@ -40,18 +40,27 @@ namespace WebApplication2.Controllers
             if (Request.Cookies.TryGetValue("roomCode", out var roomCode) &&
                 Request.Cookies.TryGetValue("playerId", out var playerId))
             {
-                var (player, error) = GetPlayerFromCookies();
                 if (_game.DeletePlayerFromRoom(roomCode, Convert.ToInt32(playerId)))
                 {
-                    Response.Cookies.Delete("roomCode");
-                    Response.Cookies.Delete("playerId");
-                    return NoContent();
+                    Response.Cookies.Delete("roomCode", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        SameSite = SameSiteMode.None, // Разрешает кросс-доменные запросы
+                        Secure = true, // Требуется для SameSite.None
+                        Expires = DateTimeOffset.Now.AddHours(1)
+                    });
+                    Response.Cookies.Delete("playerId", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        SameSite = SameSiteMode.None, // Разрешает кросс-доменные запросы
+                        Secure = true, // Требуется для SameSite.None
+                        Expires = DateTimeOffset.Now.AddHours(1)
+                    });
+                    return Ok("Пользователь удалён");
                 }
                 return NotFound();
             }
             return BadRequest("Куки не найдены или неверные данные");
-
-
         }
         [HttpGet] public IActionResult GetPlayer()
         {
@@ -332,14 +341,14 @@ namespace WebApplication2.Controllers
                         Message = "Капитала для обеспечения кредита недостаточно."
                     });
                 case -2:
-                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
+                    player.Room.AddLog($"{logMes} Завод уже заложен.");
                     return StatusCode(-2, new
                     {
                         ErrorCode = "AlreadyCredit",
                         Message = "Завод уже заложен."
                     });
                 default:
-                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
+                    player.Room.AddLog($"{logMes} Кредит взят.");
                     return Ok(new
                     {
                         Message = "Кредит взят."

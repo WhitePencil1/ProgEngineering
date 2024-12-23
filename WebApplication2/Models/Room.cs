@@ -9,7 +9,7 @@ namespace WebApplication2.Models
         public string Code { get; set; }
         public List<Player> Players = new();
         public Bank Bank { get; set; }
-        public int MainPlayerId { get { return (Turn % Players.Count); } }
+        public int MainPlayerId { get { if (Players.Count != 0) return (Turn % Players.Count); else return -1; } }
         public int Turn { get; set; }
         public List<string> Log { get; private set; } = new List<string>();
         public void AddLog(string message)
@@ -237,8 +237,8 @@ namespace WebApplication2.Models
             foreach (var player in Players)
             {
                 (bool success, int sum) = player.PayProcent();
-                if (success) AddLog($"{player} успешно выплатил проценты по кредиту на сумму {sum}$.");
-                else AddLog($"{player} не смог выплатить проценты по кредиту на сумму {sum}$.");
+                if (success) AddLog($"{player.Name} успешно выплатил проценты по кредиту на сумму {sum}$.");
+                else AddLog($"{player.Name} не смог выплатить проценты по кредиту на сумму {sum}$.");
             }
         }
         public void Stage7()//Погашение ссуд.
@@ -247,8 +247,8 @@ namespace WebApplication2.Models
             foreach (var player in Players)
             {
                 (bool success, int sum) = player.PayCredits();
-                if (success) AddLog($"{player} успешно выплатил кредит на сумму {sum}$.");
-                else AddLog($"{player} не смог выплатить кредит на сумму {sum}$.");
+                if (success) AddLog($"{player.Name} успешно выплатил кредит на сумму {sum}$.");
+                else AddLog($"{player.Name} не смог выплатить кредит на сумму {sum}$.");
             }
             AddLog("Стадия 8: Получение кредитов.");
         }
