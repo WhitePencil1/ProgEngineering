@@ -9,11 +9,8 @@ import BlankPicture from "./BlankPicture/BlankPicture";
 import { stages } from "../../data";
 import ModalWindow from "./ModalWindow/ModalWindow";
 
-// const stages = ["Expenses Payment", "Getting a market environment", "Requests for materials", 
-//     "Production of products", "Sale of products", "Payment of loan interest", "Obtaining loans", "Construction of factories"];
 
 
-// eslint-disable-next-line react/prop-types
 export default function GameSection({players, setPlayers, setGlobalStage}) {
     const [gameData, setGameData] = useState([]);
     const [curStage, setCurStage] = useState(1); 
@@ -67,9 +64,6 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
             window.removeEventListener('beforeunload', handleBeforeUnload);
           };
     }, [])
-
-
-
 
 
 
