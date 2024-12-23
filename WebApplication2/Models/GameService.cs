@@ -19,13 +19,13 @@
             }
             else return (false, $"комната {roomCode} не найдена", -1);
         }
-        public (bool success, string message) DeletePlayerFromRoom(string roomCode, int playerId)
+        public bool DeletePlayerFromRoom(string roomCode, int playerId)
         {
             if (Rooms.ContainsKey(roomCode))
             {
                 return Rooms[roomCode].Leave(playerId);
             }
-            else return (false, $"комната {roomCode} не найдена");
+            else return false;
         }
         public Room GetRoom(string roomCode)
         {

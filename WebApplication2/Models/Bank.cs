@@ -99,7 +99,7 @@ namespace WebApplication2.Models
             SortPlayers(Room.Players, Room.MainPlayerId, x => x.actions.RequestedESM.price);
 
             // Обрабатываем заявки на ESM
-            Dictionary<Player, (int, int)> result = new Dictionary<Player, (int, int)>();
+            Dictionary<Player, (int count, int price)> result = new Dictionary<Player, (int, int)>();
 
             foreach (Player player in Room.Players)
             {
@@ -133,7 +133,7 @@ namespace WebApplication2.Models
             SortPlayers(Room.Players, Room.MainPlayerId, x => x.actions.RequestedEGP.price);
 
             // Обрабатываем заявки на ESM
-            Dictionary<Player, (int, int)> result = new Dictionary<Player, (int, int)>();
+            Dictionary<Player, (int count, int price)> result = new Dictionary<Player, (int, int)>();
 
             foreach (Player player in Room.Players)
             {
