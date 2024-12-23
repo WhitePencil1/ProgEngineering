@@ -17,8 +17,8 @@ export default function ModalWindow({isOpen, onClose, onSubmit, children}) {
             className={"modal-content"}>
 
             {onClose && <button className="modal-close-btn" onClick={() => onClose()}>X</button>}
-
             {children}
+            
             
             <button className="modal-submit-btn" onClick={() => onSubmit()}>Подтвердить</button>
         </Modal>

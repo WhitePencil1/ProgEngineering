@@ -16,7 +16,7 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
     async function submitHandle() {
         console.log("Запрос " + stages[curStage].api + "Count=count&Price=price" + " отправлен");
         await instance.post(stages[curStage].api, {Count: count, Price: price}).then(response => console.log(response));
-        setIsSubmit(true);
+        setIsSubmit(true)
         console.log("Запрос выполнен");        
     }
  

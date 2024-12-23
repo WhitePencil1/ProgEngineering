@@ -27,7 +27,7 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
         {
-            refetchInterval: 2000, // Интервал в миллисекундах (например, 5 секунд)
+            refetchInterval: 1000, // Интервал в миллисекундах (например, 5 секунд)
             refetchOnWindowFocus: true, // Опционально: повторный запрос при возврате к вкладке,
             keepPreviousData: false
         }

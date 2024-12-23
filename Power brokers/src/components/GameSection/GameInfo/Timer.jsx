@@ -29,9 +29,12 @@ export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) 
                     // }
                     // setIsSubmit(false);
                     // break;
-                    console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
-                    await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
-                    console.log("Запрос выполнен");
+                    if(!isSubmit) {
+                        console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
+                        await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
+                        console.log("Запрос выполнен");
+                    }
+                    
                     break;
 
                 case 3:
@@ -41,9 +44,11 @@ export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) 
                     break;
 
                 case 4:
-                    console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
-                    await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
-                    console.log("Запрос выполнен");
+                    if(!isSubmit) {
+                        console.log("Запрос " + stages[curStage].api + "Count=0&Price=0" + " отправлен");
+                        await instance.post(stages[curStage].api, {Count: 0, Price: 0}).then(response => console.log(response));
+                        console.log("Запрос выполнен");
+                    }
                     break;
 
                 case 5:
@@ -113,6 +118,12 @@ export default function Timer ({ curStage, setCurStage, isSubmit, setIsSubmit}) 
             changeStage()
             return; // Прекращаем выполнение, чтобы не запускать таймер
         }
+
+        if(isSubmit) {
+            changeStage()
+            setIsSubmit(false);
+        }
+
         // Запускаем таймер
         const timerId = setInterval(() => {
             setTime((prevTime) => prevTime - 1);
