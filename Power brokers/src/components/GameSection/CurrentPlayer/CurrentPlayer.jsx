@@ -7,7 +7,6 @@ import GameInfo from "../GameInfo/GameInfo"
 import { useEffect, useState } from "react"
 
 
-// eslint-disable-next-line react/prop-types
 export default function CurrentPlayer({player, gameData, stageTime, curStage, setCurStage, setIsOpenModal}) {
     const [factoryRequest, setFactoryRequest] = useState([]);
 
