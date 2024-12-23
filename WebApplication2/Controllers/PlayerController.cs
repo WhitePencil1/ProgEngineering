@@ -341,14 +341,14 @@ namespace WebApplication2.Controllers
                         Message = "Капитала для обеспечения кредита недостаточно."
                     });
                 case -2:
-                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
+                    player.Room.AddLog($"{logMes} Завод уже заложен.");
                     return StatusCode(-2, new
                     {
                         ErrorCode = "AlreadyCredit",
                         Message = "Завод уже заложен."
                     });
                 default:
-                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
+                    player.Room.AddLog($"{logMes} Кредит взят.");
                     return Ok(new
                     {
                         Message = "Кредит взят."
