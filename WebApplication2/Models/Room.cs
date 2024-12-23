@@ -1,4 +1,7 @@
-﻿namespace WebApplication2.Models
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Numerics;
+
+namespace WebApplication2.Models
 {
     public class Room
     {
@@ -8,6 +11,11 @@
         public Bank Bank { get; set; }
         public int MainPlayerId { get { return (Turn % Players.Count); } }
         public int Turn { get; set; }
+        public List<string> Log { get; private set; } = new List<string>();
+        public void AddLog(string message)
+        {
+            Log.Add($"[{DateTime.Now:HH:mm:ss}] {message}");
+        }
         public Room(string code)
         {
             Code = code;
@@ -19,17 +27,33 @@
             int newId = _nextPlayerId++;
             Player player = new(playerName, avatar, newId, this);
             Players.Add(player);
+            AddLog($"{player.Name} присоединился к комнате.");
             return (true, $"Игрок {playerName} добавлен", player.Id);
         }
-        public (bool success, string message) Leave(int playerId)
+        public bool Leave(int playerId)
         {
             Player? player = Players.Find(item => item.Id == playerId);
-            return player != null
-                ? Players.Remove(player)
-                    ? (true, $"игрок {playerId} удалён")
-                    : (false, $"ошибка удаления игрока {playerId}")
-                : (false, $"игрок {playerId} не найден");
+
+            if (player != null)
+            {
+                if (Players.Remove(player))
+                {
+                    AddLog($"игрок id = {playerId} ({player.Name}) удалён");
+                    return true;
+                }
+                else
+                {
+                    AddLog($"ошибка удаления игрока id = {playerId}");
+                    return false;
+                }
+            }
+            else
+            {
+                AddLog($"игрок id = {playerId} не найден");
+                return false;
+            }
         }
+
         public Player GetPlayer(int playerId)
         {
             Player? player = Players.Find(item => item.Id == playerId);
@@ -151,22 +175,39 @@
 
         public void Start()
         {
+            AddLog("Игра началась");
+            AddLog($"Ход № {Turn} начался:");
+            AddLog($"{Players[MainPlayerId].Name} - старший игрок на этот ход.");
             //логика начала игры
         }
         public void Stage1()//Постоянные издержки.
         {
+            AddLog($"Ход № {Turn} начался:");
+            AddLog("Стадия 1: Выплата издержек.");
             foreach (var player in Players)
             {
-                player.PayTheCosts();
+                (int esm, int egp, int factory, int total, bool defaulter) = player.PayTheCosts();
+                AddLog($"{player.Name} заплатил издержек на {total}$. Из них {esm}$ за ЕСМ, {egp}$ за ЕГП, {factory}$ за фабрики.");
             }
         }
         public void Stage2()//Определение обстановки на рынке.
         {
             Bank.NewPriceLevel();
+            AddLog("Стадия 2: Определение обстановки на рынке.");
+            AddLog($"Банк определил новый уровень цен - {Bank.Level}.");
+            AddLog($"Стоимость ЕСМ: {Bank.ESMPrice}$, Количество ЕСМ: {Bank.ESMCount}.");
+            AddLog($"Стоимость ЕГП: {Bank.EGPPrice}$, Количество ЕГП: {Bank.EGPCount}.");
+            AddLog("Стадия 3: Обработка заявок на сырьё и материалы");
         }
         public void Stage3()//Заявки на сырье и материалы.
         {
-            Bank.ProcessESMRequests();
+            Dictionary<Player, (int count, int price)> result = Bank.ProcessESMRequests();
+            foreach (var player in result.Keys)
+            {
+                AddLog($"Заявка {player.Name}: {player.actions.RequestedESM.count} ЕСМ за {player.actions.RequestedESM.price}$.");
+                AddLog($"{player.Name} приобрёл {result[player].count} ЕСМ за {result[player].price}$.");
+            }
+            AddLog("Стадия 4: Производство продукции.");
         }
         public void Stage4()//Производство продукции.
         {
@@ -179,24 +220,37 @@
             //        player.ProcessESM(f.id, f.esm);
             //    }
             //}
+            AddLog("Стадия 5: Продажа продукции.");
         }
         public void Stage5()//Продажа продукции.
         {
-            Bank.ProcessEGPRequests();
+            Dictionary<Player, (int count, int price)> result = Bank.ProcessEGPRequests();
+            foreach (var player in result.Keys)
+            {
+                AddLog($"Заявка {player.Name}: {player.actions.RequestedESM.count} ЕГП за {player.actions.RequestedESM.price}$.");
+                AddLog($"{player.Name} продал {result[player].count} ЕГП за {result[player].price}$.");
+            }
         }
         public void Stage6()//Выплата ссудного процента. 
         {
+            AddLog("Стадия 6: Выплата ссудного процента.");
             foreach (var player in Players)
             {
-                player.PayProcent();
+                (bool success, int sum) = player.PayProcent();
+                if (success) AddLog($"{player} успешно выплатил проценты по кредиту на сумму {sum}$.");
+                else AddLog($"{player} не смог выплатить проценты по кредиту на сумму {sum}$.");
             }
         }
         public void Stage7()//Погашение ссуд.
         {
+            AddLog("Стадия 6: Выплата ссудного процента.");
             foreach (var player in Players)
             {
-                player.PayCredits();
+                (bool success, int sum) = player.PayCredits();
+                if (success) AddLog($"{player} успешно выплатил кредит на сумму {sum}$.");
+                else AddLog($"{player} не смог выплатить кредит на сумму {sum}$.");
             }
+            AddLog("Стадия 8: Получение кредитов.");
         }
         public void Stage8()//Получение ссуд.
         {
@@ -204,6 +258,7 @@
             //{
             //    player.GetCredit(player.actions.FactoryCredit);
             //}
+            AddLog("Стадия 9: Заявки на строительство и улучшение завода.");
         }
         public void Stage90()//Заявки на строительство. 
         {
@@ -228,6 +283,7 @@
         }
         public void FinalStage()
         {
+            AddLog($"Ход № {Turn} окончен.");
             Turn++;
             foreach (var player in Players)
             {

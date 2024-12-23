@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 using WebApplication2.Models;
 using static WebApplication2.Models.Room;
 
@@ -26,7 +28,7 @@ namespace WebApplication2.Controllers
             {
                 // Сохраняем куки с ID комнаты и игрока
                 SetRoomCookies(data.RoomCode, result.playerId);
-
+                var (player, error) = GetPlayerFromCookies();
                 return Ok(result.message);
             }
 
@@ -38,22 +40,19 @@ namespace WebApplication2.Controllers
             if (Request.Cookies.TryGetValue("roomCode", out var roomCode) &&
                 Request.Cookies.TryGetValue("playerId", out var playerId))
             {
-                var result = _game.DeletePlayerFromRoom(roomCode, Convert.ToInt32(playerId));
-                if (result.success)
+                var (player, error) = GetPlayerFromCookies();
+                if (_game.DeletePlayerFromRoom(roomCode, Convert.ToInt32(playerId)))
                 {
                     Response.Cookies.Delete("roomCode");
                     Response.Cookies.Delete("playerId");
                     return NoContent();
                 }
-
-                return NotFound(result.message);
+                return NotFound();
             }
-
             return BadRequest("Куки не найдены или неверные данные");
 
 
         }
-
         [HttpGet] public IActionResult GetPlayer()
         {
             // Попытка получить значения roomId и playerId из куки
@@ -185,37 +184,41 @@ namespace WebApplication2.Controllers
         {
             var (player, error) = GetPlayerFromCookies();
             if (error != null) return error;
-            
+            string logMes = $"{ player.Name } хочет обработать { data.Esm} ЕСМ на фабрике №{ data.Id}.";
             // Обработка ЕСМ
             int result = player.ProcessESM(data.Id, data.Esm);
-
             switch (result)//-4 - не хватает денег, -3 - не хватает ESM, -2 - не построен, -1 - нет места
             {
                 case -4:
+                    player.Room.AddLog($"{logMes} Не хватает денег.");
                     return StatusCode(-4, new
                     {
                         ErrorCode = "FailMoney",
                         Message = "Не хватает денег."
                     });
                 case -3:
+                    player.Room.AddLog($"{logMes} Не хватает ESM.");
                     return StatusCode(-3, new
                     {
                         ErrorCode = "FailESM",
                         Message = "Не хватает ESM."
                     });
                 case -2:
+                    player.Room.AddLog($"{logMes} Завод не построен.");
                     return StatusCode(-2, new
                     {
                         ErrorCode = "NotBuild",
                         Message = "Завод не построен."
                     });
                 case -1:
+                    player.Room.AddLog($"{logMes} Завод уже заполнен.");
                     return StatusCode(-1, new
                     {
                         ErrorCode = "AlreadyFull",
                         Message = "Завод уже заполнен."
                     });
                 default:
+                    player.Room.AddLog($"{logMes} ЕСМ успешно добавлены.");
                     return Ok(new
                     {
                         Message = "ЕСМ добавлены."
@@ -317,21 +320,26 @@ namespace WebApplication2.Controllers
             
             (int result, string message)= player.GetCredit(data.Id);
 
+            string logMes = $"{player.Name} хочет взять кредит под фабрику №{data.Id}.";
+
             switch (result)//-2 - не построен, -1 - нет места
             {
                 case -1:
+                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
                     return StatusCode(-1, new
                     {
                         ErrorCode = "NotCapital",
                         Message = "Капитала для обеспечения кредита недостаточно."
                     });
                 case -2:
+                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
                     return StatusCode(-2, new
                     {
                         ErrorCode = "AlreadyCredit",
                         Message = "Завод уже заложен."
                     });
                 default:
+                    player.Room.AddLog($"{logMes} Капитала для обеспечения кредита недостаточно.");
                     return Ok(new
                     {
                         Message = "Кредит взят."
@@ -365,22 +373,27 @@ namespace WebApplication2.Controllers
             if (error != null) return error;
 
             (int result, int cost) = player.BuildFactory(data.Id, data.Auto);
+            string auto = data.Auto ? "автоматическую" : "обычную";
+            string logMes = $"Игрок {player.Name} хочет построить {auto} фабрику на месте №{data.Id}.";
 
             switch (result)//-1 - не хватает денег, -2 - уже построен
             {
                 case -1:
+                    player.Room.AddLog($"{logMes} Не хватает денег.");
                     return StatusCode(-1, new
                     {
                         ErrorCode = "FailMoney",
                         Message = "Не хватает денег."
                     });
                 case -2:
+                    player.Room.AddLog($"{logMes} Завод уже построен.");
                     return StatusCode(-2, new
                     {
                         ErrorCode = "AlreadyBuild",
                         Message = "Завод уже построен."
                     });
                 default:
+                    player.Room.AddLog($"{logMes} Завод начал строительство.");
                     return Ok(new
                     {
                         Message = "Завод начал строительство."
@@ -417,24 +430,29 @@ namespace WebApplication2.Controllers
 
             (int result, int cost) = player.UpgradeFactory(data.Id);
 
+            string logMes = $"Игрок {player.Name} хочет улучшить фабрику №{data.Id}.";
+
             switch (result)// -2 - не может быть улучшена в данный момент, -1 - не хватает денег
             {
                 case -1:
+                    player.Room.AddLog($"{logMes} Не хватает денег.");
                     return StatusCode(-1, new
                     {
                         ErrorCode = "FailMoney",
                         Message = "Не хватает денег."
                     });
                 case -2:
+                    player.Room.AddLog($"{logMes} Не может быть улучшена в данный момент.");
                     return StatusCode(-2, new
                     {
                         ErrorCode = "AlreadyBuild",
                         Message = "Не может быть улучшена в данный момент."
                     });
                 default:
+                    player.Room.AddLog($"{logMes} Завод начал улучшение.");
                     return Ok(new
                     {
-                        Message = "Завод начал строительство."
+                        Message = "Завод начал улучшение."
                     });
             }
         }

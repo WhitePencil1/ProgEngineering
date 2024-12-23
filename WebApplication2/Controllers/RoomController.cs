@@ -73,6 +73,20 @@ namespace WebApplication2.Controllers
 
             return BadRequest("Куки не найдены или неверные данные");
         }
+        [HttpGet("log")]
+        public IActionResult Log()
+        {
+            if (Request.Cookies.TryGetValue("roomCode", out var roomCode))
+            {
+                var room = _game.GetRoom(roomCode);
+                if (room == null)
+                {
+                    return NotFound("Комната не найдена");
+                }
+                return Ok(room.Log);
+            }
+            return BadRequest("Куки не найдены или неверные данные");
+        }
 
         [HttpDelete("{code}")]
         public IActionResult DeleteRoom(string code)
