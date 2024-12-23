@@ -40,18 +40,27 @@ namespace WebApplication2.Controllers
             if (Request.Cookies.TryGetValue("roomCode", out var roomCode) &&
                 Request.Cookies.TryGetValue("playerId", out var playerId))
             {
-                var (player, error) = GetPlayerFromCookies();
                 if (_game.DeletePlayerFromRoom(roomCode, Convert.ToInt32(playerId)))
                 {
-                    Response.Cookies.Delete("roomCode");
-                    Response.Cookies.Delete("playerId");
-                    return NoContent();
+                    Response.Cookies.Delete("roomCode", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        SameSite = SameSiteMode.None, // Разрешает кросс-доменные запросы
+                        Secure = true, // Требуется для SameSite.None
+                        Expires = DateTimeOffset.Now.AddHours(1)
+                    });
+                    Response.Cookies.Delete("playerId", new CookieOptions
+                    {
+                        HttpOnly = true,
+                        SameSite = SameSiteMode.None, // Разрешает кросс-доменные запросы
+                        Secure = true, // Требуется для SameSite.None
+                        Expires = DateTimeOffset.Now.AddHours(1)
+                    });
+                    return Ok("Пользователь удалён");
                 }
                 return NotFound();
             }
             return BadRequest("Куки не найдены или неверные данные");
-
-
         }
         [HttpGet] public IActionResult GetPlayer()
         {

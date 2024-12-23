@@ -20,7 +20,7 @@ internal class Program
                 policy.WithOrigins("http://localhost:5173") // Разрешаем доступ только с этого источника
                       .AllowAnyMethod() // Разрешаем любые методы (GET, POST и т. д.)
                       .AllowAnyHeader() // Разрешаем любые заголовки
-                      .AllowCredentials(); // Если тебе нужны куки (по желанию)
+                      .AllowCredentials(); // Разрешаем куки
             });
         });
 
