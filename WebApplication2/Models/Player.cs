@@ -173,37 +173,28 @@ namespace WebApplication2.Models
                     Money -= credit.sum;
                     if (!Defaulter)
                     {
-                        if (Money >= 0)
-                        {
-
-                            credit.factory.IsCredit = false;
-
-                        }
-                        else
-                        {
-                            Surrend();
-                        }
+                        if (Money >= 0) credit.factory.IsCredit = false;
+                        else Surrend();
                     }
                 }
             }
-
             return (!Defaulter, sum);
         }
         public (bool success, int procent) PayProcent()//сейчас при невыплате - сразу поражение
         {
-            int sum = 0;
+            double sum = 0;
             foreach (var credit in Credits)
             {
                 sum += credit.sum;
             }
             sum = sum * (CREDIT_PROCENT / 100);
-            Money -= sum;
+            Money -= Convert.ToInt32(sum);
             if (Money < 0)
             {
                 Surrend();
-                return (false, sum);
+                return (false, Convert.ToInt32(sum));
             }
-            return (true, sum);
+            return (true, Convert.ToInt32(sum));
         }
         public bool IsStageCompleted { get; set; } = false; // Флаг завершения стадии
 
