@@ -275,6 +275,16 @@
   },
   {
     "ContainingType": "WebApplication2.Controllers.RoomController",
+    "Method": "Log",
+    "RelativePath": "api/room/log",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "WebApplication2.Controllers.RoomController",
     "Method": "GetPlayers",
     "RelativePath": "api/room/players",
     "HttpMethod": "GET",

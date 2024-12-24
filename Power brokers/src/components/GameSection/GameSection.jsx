@@ -6,7 +6,6 @@ import { instance } from "../../utils/axios";
 import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import BlankPicture from "./BlankPicture/BlankPicture";
-import { stages } from "../../data";
 import ModalWindow from "./ModalWindow/ModalWindow";
 
 
@@ -25,8 +24,9 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
                 const room = await instance.get(`room`);
                 setPlayers(players.data);
                 setGameData(room.data);
-                console.log(players);
-                console.log(gameData.code);
+                
+                //console.log(players);
+                
                 return 0;
             } catch (error) {
               console.error('Ошибка при получении комнаты', error);
@@ -70,7 +70,7 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
     if(players.length == 4) {
         return (
             <section className="players-box">
-                <CurrentPlayer player={players[0]} gameData={gameData} setGameStage={() => instance.get(stages.Stage1)}/>
+                <CurrentPlayer  player={players.find(player => player.id === myId)} setIsOpenModal={setIsExitModalOpen} gameData={gameData} stageTime={10} curStage={curStage} setCurStage={setCurStage}/>
                 <AnotherPlayer player={players[1]} position={2}/>
                 <AnotherPlayer player={players[2]} position={3}/>
                 <AnotherPlayer player={players[3]} position={4}/>

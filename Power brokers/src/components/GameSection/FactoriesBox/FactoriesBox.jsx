@@ -81,7 +81,7 @@ export default function FactoriesBox({isMainPlayer, factories, curStage, factory
 
         return (
             <ul className="player-factories-box another-player-factories-box">
-                <li><img className={classes} src="./img/Factories/simpleFactory.png" alt="" /><div className="factory-counter">X{getFactoryCounter(2)}</div></li>
+                <li><img className={classes} src="./img/Factories/simpleFactory.png" alt="" /><div className="factory-counter">X{getFactoryCounter(2) + getFactoryCounter(3)}</div></li>
                 <li><img className={classes} src="./img/Factories/improvedFactory.png" alt="" /><div className="factory-counter">X{getFactoryCounter(4)}</div></li>
             </ul>
         )

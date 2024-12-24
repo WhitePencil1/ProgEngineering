@@ -9,7 +9,7 @@ export default function FactoriesStatusHints({factoryData}) {
         <ul className="factories-status">
             {factoryData.esm != 0 && <li><img src="/public/img/inProduction.png" alt="" />{factoryData.esm} mu</li>}
             {factoryData.turnForNext > 0 && <li><img src="/public/img/underConstruction.png" alt="" />{factoryData.turnForNext} month</li>}
-            {factoryData.isCredit && <li><img src="/public/img/isCredit.png" alt="credit" /></li>}
+            {factoryData.isCredit && <li><img src="/public/img/isCredit.png" alt="credit" />{factoryData.turnForCredit} month</li>}
         </ul>
     )
 }
