@@ -29,5 +29,7 @@ namespace WebApplication2
         public const int COST_AUTO_PROCESS_ESM = 300;
 
         public const int FACTORY_UPGRADE_TIME = 3;
+
+        public const int FINAL_TURN = 12;
     }
 }

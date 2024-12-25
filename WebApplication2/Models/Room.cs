@@ -1,5 +1,6 @@
 ﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Numerics;
+using static WebApplication2.GameSettings;
 
 namespace WebApplication2.Models
 {
@@ -9,7 +10,11 @@ namespace WebApplication2.Models
         public string Code { get; set; }
         public List<Player> Players = new();
         public Bank Bank { get; set; }
+<<<<<<< HEAD
         public int MainPlayerId { get { if (Players.Count != 0) return ((Turn-1) % Players.Count); else return -1; } }
+=======
+        public int MainPlayerId { get { if (Players.Count != 0) return ((Turn -1)% Players.Count); else return -1; } }
+>>>>>>> b96b3d99a8ffc95471ac120e9025092a2b38e077
         public int Turn { get; set; }
         public List<string> Log { get; private set; } = new List<string>();
         public void AddLog(string message)
@@ -237,7 +242,13 @@ namespace WebApplication2.Models
             foreach (var player in Players)
             {
                 (bool success, int sum) = player.PayProcent();
-                if (success) AddLog($"{player.Name} успешно выплатил проценты по кредиту на сумму {sum}$.");
+                if (success)
+                {
+                    if (sum != 0)
+                    {
+                        AddLog($"{player.Name} успешно выплатил проценты по кредиту на сумму {sum}$.");
+                    }
+                }
                 else AddLog($"{player.Name} не смог выплатить проценты по кредиту на сумму {sum}$.");
             }
         }
@@ -291,6 +302,23 @@ namespace WebApplication2.Models
         public void FinalStage()
         {
             AddLog($"Ход № {Turn} окончен.");
+
+            if (Turn == FINAL_TURN)
+            {
+                var maxCapitalPlayer = Players.OrderByDescending(p => p.Capital).FirstOrDefault();
+
+                if (maxCapitalPlayer != null)
+                {
+                    foreach (var player in Players)
+                    {
+                        if (player != maxCapitalPlayer)
+                        {
+                            player.Defaulter = true;
+                        }
+                    }
+                }
+            }
+
             Turn++;
             foreach (var player in Players)
             {
