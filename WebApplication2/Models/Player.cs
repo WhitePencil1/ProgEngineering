@@ -159,7 +159,7 @@ namespace WebApplication2.Models
             if (Factories[factoryId].IsCredit) return (-2, "фабрика уже заложена");
             Factories[factoryId].IsCredit = true;
             Factories[factoryId].TurnForCredit = CREDIT_TURNS;
-            Money += Factories[factoryId].Cost;
+            Money += Factories[factoryId].BCost;
             Credits.Add((Factories[factoryId], Factories[factoryId].Cost, Room.Turn + CREDIT_TURNS));
             return (1, "кредит успешно взят");
         }

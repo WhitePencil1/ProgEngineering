@@ -21,6 +21,13 @@ namespace WebApplication2.Models
             4 => COST_AUTO_FACTORY,
             _ => throw new NotImplementedException()
         };
+        public int BCost => Level switch
+        {
+            -1 => 0,
+            0 or 1 or 2 or 3 => BUILD_COST_FACTORY,
+            4 => BUILD_COST_AUTO_FACTORY,
+            _ => throw new NotImplementedException()
+        };
         public Factory()
         {
             Level = -1;

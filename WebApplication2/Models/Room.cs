@@ -10,11 +10,7 @@ namespace WebApplication2.Models
         public string Code { get; set; }
         public List<Player> Players = new();
         public Bank Bank { get; set; }
-<<<<<<< HEAD
-        public int MainPlayerId { get { if (Players.Count != 0) return ((Turn-1) % Players.Count); else return -1; } }
-=======
         public int MainPlayerId { get { if (Players.Count != 0) return ((Turn -1)% Players.Count); else return -1; } }
->>>>>>> b96b3d99a8ffc95471ac120e9025092a2b38e077
         public int Turn { get; set; }
         public List<string> Log { get; private set; } = new List<string>();
         public void AddLog(string message)
