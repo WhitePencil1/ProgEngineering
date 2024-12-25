@@ -5,6 +5,7 @@ namespace WebApplication2.Models
 {
     public class Player
     {
+
         public int Avatar { get; set; }
         public int Id { get; private set; }
         public string Name { get; set; }
@@ -30,6 +31,7 @@ namespace WebApplication2.Models
         public int EGP { get; set; }
         public int Money { get; set; }
         [JsonIgnore] public Room Room { get; set; }
+        public bool IsMainPlayer { get { if (Room.MainPlayerId == Id) return true; else return false; } }
         public List<Factory> Factories { get; set; }
         public List<(Factory factory, int sum, int turn)> Credits { get; set; }
         public bool Defaulter { get; set; }
