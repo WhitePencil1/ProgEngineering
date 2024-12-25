@@ -95,7 +95,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
 
 
         case 7:
-            if(factories[id].level === 2) {
+            if(factories[id].level === 2 || factories[id].level === 3) {
                 return(factories[id].isCredit ? <></> :
                     <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
                         <ul className="factory-hint" onClick={() => getFactoryCredit()}>

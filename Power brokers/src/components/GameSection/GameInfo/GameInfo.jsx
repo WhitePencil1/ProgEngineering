@@ -19,15 +19,36 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
         setIsVisible(false)
         await instance.post(stages[curStage].api, {Count: count, Price: price}).then(response => console.log(response));
         setIsSubmit(true);
+        setIsVisible(true);
         console.log("Запрос выполнен");        
     }
+
+
+    function getAction() {
+        if(curStage === 2 || curStage === 4) {
+            if(isVisible) {
+                return <li>{stages[curStage].playersAction}</li>
+            }
+            else {
+                <li>Waiting for the players</li>
+            }
+        }
+    }
+
  
     return(
         <div className="game-info-box">
                 <ul className="game-info">
                     <li>Bank buy {bankData.egpCount} pu for {bankData.egpPrice}</li>
                     <li>Bank sell {bankData.esmCount} mu for {bankData.esmPrice}</li>
-                    <li>{stages[curStage].playersAction}</li>
+                    
+
+                    {
+                        isVisible ? <li>{stages[curStage].playersAction}</li> : <li>Waiting for the players</li>
+                    }
+
+
+
                     <Timer initialTime={stageTime} curStage={curStage} setCurStage={setCurStage} isSubmit={isSubmit} setIsSubmit={setIsSubmit}></Timer>
                 </ul>
                 
