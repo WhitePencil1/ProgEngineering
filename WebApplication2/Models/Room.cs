@@ -56,16 +56,11 @@ namespace WebApplication2.Models
                 return false;
             }
         }
-
         public Player GetPlayer(int playerId)
         {
             Player? player = Players.Find(item => item.Id == playerId);
             return player;
         }
-
-
-
-
         public enum Stage
         {
             Start,
@@ -246,6 +241,7 @@ namespace WebApplication2.Models
                     {
                         AddLog($"{player.Name} успешно выплатил проценты по кредиту на сумму {sum}$.");
                     }
+                    else AddLog($"{player.Name} не имеет кредитов.");
                 }
                 else AddLog($"{player.Name} не смог выплатить проценты по кредиту на сумму {sum}$.");
             }

@@ -95,18 +95,26 @@ namespace WebApplication2.Models
         {
             int eSMCount = ESMCount;
 
-            // Сортируем игроков по ESMDesired.count
-            SortPlayers(Room.Players, Room.MainPlayerId, x => x.actions.RequestedESM.price);
+            var sortedPlayers = Room.Players
+            .OrderByDescending(p => p.actions.RequestedESM.price) // Сортируем по цене
+            .ThenByDescending(p => p.IsMainPlayer) // Главный игрок выше при одинаковой цене
+            .ToList();
 
             // Обрабатываем заявки на ESM
             Dictionary<Player, (int count, int price)> result = new Dictionary<Player, (int, int)>();
 
-            foreach (Player player in Room.Players)
+            foreach (Player player in sortedPlayers)
             {
+                if ((player.actions.RequestedESM.count < 0) || (player.actions.RequestedESM.price < 0))
+                {
+                    player.actions.RequestedESM = (0, 0);
+                }
+
                 if ((player.actions.RequestedESM.count > ESMCount) || (player.actions.RequestedESM.price < ESMPrice) || (player.actions.RequestedESM.price * player.actions.RequestedESM.count > player.Money))
                 {
-                    continue;
+                    player.actions.RequestedESM = (0, 0);
                 }
+
                 int receiveCount = Math.Min(player.actions.RequestedESM.count, eSMCount);
                 int resPrice = 0;
 
@@ -129,17 +137,24 @@ namespace WebApplication2.Models
         {
             int eGPCount = EGPCount;
 
-            // Сортируем игроков по ESMDesired.count
-            SortPlayers(Room.Players, Room.MainPlayerId, x => x.actions.RequestedEGP.price);
+            var sortedPlayers = Room.Players
+            .OrderBy(p => p.actions.RequestedEGP.price) // Сортируем по цене
+            .ThenByDescending(p => p.IsMainPlayer) // Главный игрок выше при одинаковой цене
+            .ToList();
 
             // Обрабатываем заявки на ESM
             Dictionary<Player, (int count, int price)> result = new Dictionary<Player, (int, int)>();
 
-            foreach (Player player in Room.Players)
+            foreach (Player player in sortedPlayers)
             {
+                if ((player.actions.RequestedEGP.count < 0) || (player.actions.RequestedEGP.price < 0))
+                {
+                    player.actions.RequestedEGP = (0, 0);
+                }
+
                 if ((player.actions.RequestedEGP.count > player.EGP) || (player.actions.RequestedEGP.count > EGPCount) || (player.actions.RequestedEGP.price > EGPPrice))
                 {
-                    continue;
+                    player.actions.RequestedEGP = (0, 0);
                 }
                 int receiveCount = Math.Min(player.actions.RequestedEGP.count, eGPCount);
                 int resPrice = 0;
@@ -159,30 +174,5 @@ namespace WebApplication2.Models
 
             return result;
         }
-        private void SortPlayers(List<Player> players, int mainPlayerId, Func<Player, int> keySelector)
-        {
-            Random random = new Random();
-            players.Sort((x, y) =>
-            {
-                int result = keySelector(x).CompareTo(keySelector(y));
-
-                if (result == 0)
-                {
-                    if (x.Id == mainPlayerId && y.Id != mainPlayerId)
-                    {
-                        return -1;
-                    }
-                    if (y.Id == mainPlayerId && x.Id != mainPlayerId)
-                    {
-                        return 1;
-                    }
-
-                    return random.Next(-1, 2);
-                }
-
-                return result;
-            });
-        }
-
     }
 }

@@ -86,7 +86,7 @@ namespace WebApplication2.Models
         {
             switch (Level)
             {
-                case 2:
+                case 2 or 3:
                     if ((this.ESM == 0) && (ESM >= 0) && (ESM <= 1))
                     {
                         this.ESM += ESM;
