@@ -1,5 +1,6 @@
 ﻿using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Numerics;
+using static WebApplication2.GameSettings;
 
 namespace WebApplication2.Models
 {
@@ -9,7 +10,7 @@ namespace WebApplication2.Models
         public string Code { get; set; }
         public List<Player> Players = new();
         public Bank Bank { get; set; }
-        public int MainPlayerId { get { if (Players.Count != 0) return (Turn % Players.Count); else return -1; } }
+        public int MainPlayerId { get { if (Players.Count != 0) return ((Turn -1)% Players.Count); else return -1; } }
         public int Turn { get; set; }
         public List<string> Log { get; private set; } = new List<string>();
         public void AddLog(string message)
@@ -291,6 +292,23 @@ namespace WebApplication2.Models
         public void FinalStage()
         {
             AddLog($"Ход № {Turn} окончен.");
+
+            if (Turn == FINAL_TURN)
+            {
+                var maxCapitalPlayer = Players.OrderByDescending(p => p.Capital).FirstOrDefault();
+
+                if (maxCapitalPlayer != null)
+                {
+                    foreach (var player in Players)
+                    {
+                        if (player != maxCapitalPlayer)
+                        {
+                            player.Defaulter = true;
+                        }
+                    }
+                }
+            }
+
             Turn++;
             foreach (var player in Players)
             {
