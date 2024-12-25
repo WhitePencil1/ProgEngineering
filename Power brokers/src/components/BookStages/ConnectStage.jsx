@@ -4,12 +4,14 @@ import BookHeader from "./BookHeader"
 import PlayersList from "./PlayersList"
 import { instance } from "../../utils/axios"
 import { useQuery } from '@tanstack/react-query';
+import Tooltip from "../Tooltip/Tooltip";
 import "./GameLoader.css"
 
 
 export default function ConnectStage({setStage, players, setPlayers, roomCode, setRoomCode, myId, setMyId}) {
     instance.defaults.timeout = 0;
     const [connectStage, setConnectStage] = useState("Search");
+    const [isVisible, setIsVisible] = useState(false);
 
     const getRoom = async () => {
         try {
@@ -55,11 +57,10 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
             const response = await instance.post(`player`, roomData).then(getRoom());
             setConnectStage("Waiting");
             console.log(response);
+            startGame()
         } catch (error) {
             console.error('Ошибка при присоединении к комнате:', error);
-        }
-        finally {
-            startGame()
+            setIsVisible(true);
         }
     };
 
@@ -77,7 +78,13 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
             <div className="book-background">
                 <div className="book-page">
                     <BookHeader>Enter room key</BookHeader>
-                    <input type="text" id="room-key-input" className="player-nickname" maxLength={5} onChange={(evt) => setRoomCode(evt.target.value)}/>
+
+                    
+
+                    <Tooltip isVisible={isVisible} text={"Команта с таким кодом не найдена"}>
+                        <input type="text" id="room-key-input" className="player-nickname" maxLength={5} onChange={(evt) => setRoomCode(evt.target.value)}/>
+                    </Tooltip>
+
                     <button className="book-btn book-back-btn" onClick={() => {setStage("registration"); instance.delete("player")}}></button>
                 </div>
                 <div className="book-page">
