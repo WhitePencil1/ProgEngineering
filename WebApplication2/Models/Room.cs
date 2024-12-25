@@ -238,7 +238,13 @@ namespace WebApplication2.Models
             foreach (var player in Players)
             {
                 (bool success, int sum) = player.PayProcent();
-                if (success) AddLog($"{player.Name} успешно выплатил проценты по кредиту на сумму {sum}$.");
+                if (success)
+                {
+                    if (sum != 0)
+                    {
+                        AddLog($"{player.Name} успешно выплатил проценты по кредиту на сумму {sum}$.");
+                    }
+                }
                 else AddLog($"{player.Name} не смог выплатить проценты по кредиту на сумму {sum}$.");
             }
         }
