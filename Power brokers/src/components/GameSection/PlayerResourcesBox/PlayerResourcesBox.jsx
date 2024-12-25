@@ -32,7 +32,6 @@ export default function PlayerResourcesBox({isMainPlayer, resources, setIsOpenMo
                 </ul>
             </ModalWindow>
 
-
             {resources &&
             <ul className="resources-list">
                 <li><img src="./img/moneyIcon.png" alt="money" /> - {resources.money}$</li>
