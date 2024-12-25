@@ -80,7 +80,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                         </ul>
                         <ul className="factory-hint right" onClick={() => factoryPutRequest(2)}>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
-                            <li>200 $</li>
+                            <li>300 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
                             <li>1 month</li>
                             <li><img className="factory-hint-item" src="/public/img/materialUnitIcon.png" alt="" /></li>
@@ -95,7 +95,7 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
 
 
         case 7:
-            if(factories[id].level === 2) {
+            if(factories[id].level === 2 || factories[id].level === 3) {
                 return(factories[id].isCredit ? <></> :
                     <div className={"factory-hints-container " + (isHidden !== id ? "hide" : "")}>
                         <ul className="factory-hint" onClick={() => getFactoryCredit()}>
@@ -126,16 +126,16 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                         <ul className="factory-hint left" onClick={() => buildFactory(false)}>
                             <img src="/public/img/Factories/simpleFactory.png" alt="" className="factory-img"/>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
-                            <li>200 $</li>
+                            <li>6000 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
-                            <li>6 month</li>
+                            <li>5 month</li>
                         </ul>
                         <ul className="factory-hint right" onClick={() => buildFactory(true)}>
                             <img src="/public/img/Factories/improvedFactory.png" alt="" className="factory-img"/>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
-                            <li>400 $</li>
+                            <li>4000 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
-                            <li>13 month</li>
+                            <li>9 month</li>
                         </ul>
                     </div>
                 );
@@ -150,9 +150,9 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                         <ul className="factory-hint" onClick={() => upgradeFactory()}>
                             <img src="/public/img/Factories/improvedFactory.png" alt="" className="factory-img"/>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
-                            <li>400 $</li>
+                            <li>4000 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
-                            <li>13 month</li>
+                            <li>5 month</li>
                         </ul>
                     </div>
                 )

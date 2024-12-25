@@ -11,6 +11,7 @@ namespace WebApplication2.Models
         public List<Player> Players = new();
         public Bank Bank { get; set; }
         public int MainPlayerId { get { if (Players.Count != 0) return ((Turn -1)% Players.Count); else return -1; } }
+
         public int Turn { get; set; }
         public List<string> Log { get; private set; } = new List<string>();
         public void AddLog(string message)

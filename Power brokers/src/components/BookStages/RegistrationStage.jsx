@@ -87,7 +87,7 @@ export default function RegistrationStage({setStage, isRegistered, setIsRegister
                         <div className="book-content">
                             <p>As of today, my business is being placed in the hands of the most reliable and suitable person I know. I believe this is just the beginning of your journey,</p>
                             <Tooltip text={"Введите ник игрока"} isVisible={nickname == "" && showTooltip}>
-                                <input type="text" id="nickname" className="player-nickname" maxLength={12} placeholder="Your name" onChange={(evt) => setNickname(evt.target.value)}/>
+                                <input type="text" id="nickname" className="player-nickname" maxLength={10} placeholder="Your name" onChange={(evt) => setNickname(evt.target.value)}/>
                             </Tooltip>
                             
                         </div>
