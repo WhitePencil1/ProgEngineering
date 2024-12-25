@@ -7,6 +7,7 @@
 
     display: flex;
     align-items: center;
+    position: relative;
     
     padding: 10px;
     padding-top: 0px;
@@ -65,3 +66,4 @@
 .buttons-list img:hover {
     opacity: 0.75;
 }
+

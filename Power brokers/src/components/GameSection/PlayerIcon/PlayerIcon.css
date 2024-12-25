@@ -2,7 +2,7 @@
     grid-column: span 1;
     justify-self: start;
     align-self:end;
-
+    position: relative;
     background-image: url("./img/playerAvatarContainer.png");
     background-repeat: no-repeat;
     background-size: contain;
@@ -16,7 +16,9 @@
 }
 
 .player-icon img {
-    width: 90%;
+    width: 68px;
+    height: 53px;
+    object-fit: fill;
 }
 
 /*ANOTHER PLAYER OPTIONS */
@@ -38,4 +40,30 @@
 .player-icon.another-player-icon img {
     width: 58px;
     height: 45px;
+}
+
+.main-player {
+    background-image: url("./img/mainPlayerAvatarContainer.png");
+}
+
+.cur-player-nickname, .another-player-nickname {
+    position: absolute;
+    width: auto;
+    border: none;
+    font-size: 20px;
+    font: 28px "Caveat", sans-serif;
+    transform: translate(-50%, -50%);
+
+   
+}
+
+.cur-player-nickname {
+    top: -16px;
+    left: 50%;
+    /* коррекция положения элемента */
+}
+
+.another-player-nickname {
+    bottom: -35px;
+    left: 50%;
 }

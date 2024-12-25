@@ -19,7 +19,7 @@ export default function CurrentPlayer({player, gameData, stageTime, curStage, se
             <PlayerResourcesBox isMainPlayer={true} resources={player} setIsOpenModal={setIsOpenModal}/>
             <div className="game-turn">{gameData.turn} month</div>
             <GameInfo bankData={gameData.bank} stageTime={stageTime} curStage={curStage} setCurStage={setCurStage}/>
-            <PlayerIcon isMainPlayer={true} avatar={player == null ? null : player.avatar}/>
+            <PlayerIcon isCurrentPlayer={true} isMainPlayer={player == null ? null : player.isMainPlayer} avatar={player == null ? null : player.avatar} nickname={player == null ? null : player.name}/>
             {player && <FactoriesBox isMainPlayer={true} factories={player.factories} curStage={curStage} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>}
         </div>
     )
