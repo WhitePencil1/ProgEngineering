@@ -43,7 +43,7 @@ export default function PlayerResourcesBox({isMainPlayer, resources, setIsOpenMo
             <ul className="buttons-list">
                 <li><img src="/public/img/exitBtn.png" alt="exit" onClick={() => setIsOpenModal(true)}/></li>
                 <li><img src="/public/img/logBtn.png" alt="log" onClick={() => getLog()}/></li>
-                
+                <li><img src="/public/img/infoBtn.png" className="cringe" alt="info" onClick={() => window.open("/src/help.html", "_blank", "noopener,noreferrer")}/></li>
             </ul>}
             
         </div>

@@ -52,15 +52,25 @@
 
 .buttons-list {
     display: flex;
-    column-gap: 4px;
+    
     position: absolute;
     top: 156px;
     left: 2px;
 }
 
+.buttons-list li {
+    
+    
+}
+
 .buttons-list img {
-    width: 35px;
+    width: 40px;
+    object-fit: cover;
     cursor: pointer;
+}
+
+.cringe {
+    height: 44px;
 }
 
 .buttons-list img:hover {

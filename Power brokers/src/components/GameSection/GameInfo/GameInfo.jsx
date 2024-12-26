@@ -60,7 +60,7 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                                 <input type="number" min={0} max={10} required id="resources-number" name="resources-number" onChange={(evt) => setCount(evt.target.value)} value={count}/>
                                 <span>{curStage === 2 ? "mu" : "pu"}</span>
                             </div>
-                            <button className="request-stage-info-btn" onClick={() => console.log("Click!")}/>
+                            {/* <button className="request-stage-info-btn" onClick={() => console.log("Click!")}/> */}
                         </div>
                         <div className="player-request-input-container">
                             <div className="">
