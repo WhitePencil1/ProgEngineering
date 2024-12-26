@@ -16,6 +16,8 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
     const [myId, setMyId] = useState();
     const [isExitModalOpen, setIsExitModalOpen] = useState(false);
 
+    const [isLoser, setIsLoser] = useState(false);
+
 
     //ФУНКЦИЯ ПОЛУЧЕНИЯ ДАННЫХ
     const getRoom = async () => {
@@ -38,9 +40,10 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
     //Проверка на банкроствоство
     useEffect(() => {
         const deleteDefaulters = async () => {
-            if(players[myId].money <= 0) {
-                console.log("Я банкрот");
+            if(players[myId].money < 0) {
+                
                 await instance.delete("player");
+                setIsLoser(true);
                 
             }
             // if(players[myId]) {
@@ -85,6 +88,17 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
     }, [])
 
 
+    if(isLoser) {
+        return (
+            <section>
+                <ModalWindow isOpen={true} onSubmit={() => {setGlobalStage("welcome")}}>
+                    <h2>К сожалению, вы проиграли</h2>
+                    <img className="modal-img" src="/public/img/InGamePictures/notStonks.jpg" alt="not stonks" />
+                </ModalWindow>
+            </section>
+        )
+    }
+
 
     if(players.length == 4) {
         return (
@@ -97,7 +111,7 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
         )
     }
 
-    
+
 
     else if(players.length == 2) {
         return (
@@ -117,6 +131,8 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
         )
     }
 
+    
+    
 
     //Победа / Поражение
     else if(players.length == 1) {
@@ -135,6 +151,8 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
                 </section>
             )
         }
+
+        
 
         else {
             return (
