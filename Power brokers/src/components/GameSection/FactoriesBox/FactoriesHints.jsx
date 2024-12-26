@@ -126,14 +126,14 @@ export default function FactoriesHints({factories, id, curStage, isHidden, facto
                         <ul className="factory-hint left" onClick={() => buildFactory(false)}>
                             <img src="/public/img/Factories/simpleFactory.png" alt="" className="factory-img"/>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
-                            <li>6000 $</li>
+                            <li>4000 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
                             <li>5 month</li>
                         </ul>
                         <ul className="factory-hint right" onClick={() => buildFactory(true)}>
                             <img src="/public/img/Factories/improvedFactory.png" alt="" className="factory-img"/>
                             <li><img className="factory-hint-item" src="/public/img/moneyIcon.png" alt="" /></li>
-                            <li>4000 $</li>
+                            <li>6000 $</li>
                             <li><img className="factory-hint-item" src="/public/img/time.png" alt="" /></li>
                             <li>9 month</li>
                         </ul>

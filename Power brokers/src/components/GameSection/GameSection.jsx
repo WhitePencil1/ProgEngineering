@@ -33,11 +33,30 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
             }
     }
 
+    
+    
+    //Проверка на банкроствоство
+    useEffect(() => {
+        const deleteDefaulters = async () => {
+            if(players[myId].money <= 0) {
+                console.log("Я банкрот");
+                await instance.delete("player");
+                
+            }
+            // if(players[myId]) {
+            //     console.log("Я банкрот");
+            // }
+        }
+        deleteDefaulters();
+    }, [curStage])
+
+
 
     //ЗАПРОС ДЛЯ ПОЛУЧЕНИЯ АКТУАЛЬНЫХ ДАННЫХ
     useQuery(
         ['room/players'], // Ключ для кэширования
         getRoom, // Функция для получения данных
+
         {
             refetchInterval: 1000, // Интервал в миллисекундах (например, 5 секунд)
             refetchOnWindowFocus: false, // Опционально: повторный запрос при возврате к вкладке
@@ -77,6 +96,8 @@ export default function GameSection({players, setPlayers, setGlobalStage}) {
             </section>
         )
     }
+
+    
 
     else if(players.length == 2) {
         return (
