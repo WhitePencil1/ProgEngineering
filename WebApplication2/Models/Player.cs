@@ -90,19 +90,21 @@ namespace WebApplication2.Models
         }
         public int ProcessESM(int factoryId, int ESM)//-3 - не хватает ESM, -2 - не построен, -1 - нет места
         {
-            if (ESM > this.ESM) return -3;
-            int temp = Factories[factoryId].ProcessESM(ESM);
-            this.ESM -= temp;
-
-            switch (temp)
+            if ((ESM > this.ESM) || (ESM > 2)) return -3;
+            int temp = 0;
+            switch (ESM)
             {
                 case 1:
                     if (Money < ESM * COST_PROCESS_ESM) return -4;
                     Money -= ESM * COST_PROCESS_ESM;
+                    temp = Factories[factoryId].ProcessESM(ESM);
+                    this.ESM -= temp;
                     break;
                 case 2:
                     if (Money < this.ESM * COST_AUTO_PROCESS_ESM) return -4;
                     Money -= ESM * COST_AUTO_PROCESS_ESM;
+                    temp = Factories[factoryId].ProcessESM(ESM);
+                    this.ESM -= temp;
                     break;
                 default:
                     break;
@@ -160,7 +162,7 @@ namespace WebApplication2.Models
             Factories[factoryId].IsCredit = true;
             Factories[factoryId].TurnForCredit = CREDIT_TURNS;
             Money += Factories[factoryId].BCost;
-            Credits.Add((Factories[factoryId], Factories[factoryId].Cost, Room.Turn + CREDIT_TURNS));
+            Credits.Add((Factories[factoryId], Factories[factoryId].BCost, Room.Turn + CREDIT_TURNS));
             return (1, "кредит успешно взят");
         }
         public (bool success, int sum) PayCredits()//сейчас при невыплате - сразу поражение
@@ -189,7 +191,7 @@ namespace WebApplication2.Models
             {
                 sum += credit.sum;
             }
-            sum = sum * (CREDIT_PROCENT / 100);
+            sum = sum * CREDIT_PROCENT;
             Money -= Convert.ToInt32(sum);
             if (Money < 0)
             {
