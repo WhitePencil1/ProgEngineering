@@ -4,6 +4,7 @@ import { stages } from "../../../data"
 import "./GameInfo.css"
 import Timer from "./Timer"
 import { instance } from "../../../utils/axios"
+import Tooltip from "../../Tooltip/Tooltip"
 
 export default function GameInfo({bankData = {}, stageTime, curStage, setCurStage}) {
     
@@ -52,6 +53,7 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                     <Timer initialTime={stageTime} curStage={curStage} setCurStage={setCurStage} isSubmit={isSubmit} setIsSubmit={setIsSubmit}></Timer>
                 </ul>
                 
+
                 {(curStage === 2 || curStage === 4) && isVisible ? 
                 <div className="player-requests-input-box">
                         <div className="player-request-input-container">
@@ -60,7 +62,7 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                                 <input type="number" min={0} max={10} required id="resources-number" name="resources-number" onChange={(evt) => setCount(evt.target.value)} value={count}/>
                                 <span>{curStage === 2 ? "mu" : "pu"}</span>
                             </div>
-                            {/* <button className="request-stage-info-btn" onClick={() => console.log("Click!")}/> */}
+                            <button className="request-stage-info-btn" onClick={() => console.log("Click!")}/>
                         </div>
                         <div className="player-request-input-container">
                             <div className="">
@@ -70,8 +72,7 @@ export default function GameInfo({bankData = {}, stageTime, curStage, setCurStag
                             </div>
                             <input type="submit" id="player-request-submit" value={""} onClick={() => submitHandle()}/>
                         </div>
-                </div> : <></>
-                }
+                </div> : <></>}
                 
         </div>
     )

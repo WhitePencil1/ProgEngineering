@@ -93,6 +93,7 @@ export default function ConnectStage({setStage, players, setPlayers, roomCode, s
                         <p className="book-content">Competitors {players.length} of 4</p>
                     </div>
                     <PlayersList playersData={players}/>
+                    
                     <button className= {
                         connectStage === "Waiting" ? "book-btn book-next-btn hide" : "book-btn book-next-btn"
                     } onClick={() => {

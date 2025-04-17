@@ -4,6 +4,7 @@ import { stages } from "../../../data";
 import FactoriesHints from "./FactoriesHints";
 import { useState } from "react";
 import FactoriesStatusHints from "./FactoriesStatusHints";
+import Tooltip from "../../Tooltip/Tooltip";
 
 // eslint-disable-next-line react/prop-types
 export default function FactoriesBox({isMainPlayer, factories, curStage, factoryRequest, setFactoryRequest}) {
@@ -33,17 +34,27 @@ export default function FactoriesBox({isMainPlayer, factories, curStage, factory
     if (isMainPlayer) {
         return (
             <ul className="player-factories-box">
+                {/* <li onMouseOver={() => setShowHintId(0)} onMouseOut={() => setShowHintId(-1)}>
+                    <FactoriesStatusHints factoryData={factories[0]}/>
+                    <FactoriesHints factories={factories} id={0} curStage={curStage} isHidden={showHintId} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>
+                    <img className={classes} src={factoriesByLevels[factories[0].level]} alt="factory"/>
+                </li> */}
                 <li onMouseOver={() => setShowHintId(0)} onMouseOut={() => setShowHintId(-1)}>
                     <FactoriesStatusHints factoryData={factories[0]}/>
                     <FactoriesHints factories={factories} id={0} curStage={curStage} isHidden={showHintId} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>
                     <img className={classes} src={factoriesByLevels[factories[0].level]} alt="factory"/>
                 </li>
 
-                <li onMouseOver={() => setShowHintId(1)} onMouseOut={() => setShowHintId(-1)}>
-                    <FactoriesStatusHints factoryData={factories[1]}/>
-                    <FactoriesHints factories={factories} id={1} curStage={curStage} isHidden={showHintId} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>
-                    <img className={classes} src={factoriesByLevels[factories[1].level]} alt="factory"/>
-                </li>
+                
+                    <li onMouseOver={() => setShowHintId(1)} onMouseOut={() => setShowHintId(-1)}>
+                        <FactoriesStatusHints factoryData={factories[1]}/>
+                        <FactoriesHints factories={factories} id={1} curStage={curStage} isHidden={showHintId} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>
+                        <img className={classes} src={factoriesByLevels[factories[1].level]} alt="factory"/>
+                    </li>
+                
+                
+
+                
 
                 <li onMouseOver={() => setShowHintId(2)} onMouseOut={() => setShowHintId(-1)}>
                     <FactoriesStatusHints factoryData={factories[2]}/>
@@ -55,6 +66,7 @@ export default function FactoriesBox({isMainPlayer, factories, curStage, factory
                     <FactoriesStatusHints factoryData={factories[3]}/>
                     <FactoriesHints factories={factories} id={3} curStage={curStage} isHidden={showHintId} factoryRequest={factoryRequest} setFactoryRequest={setFactoryRequest}/>
                     <img className={classes} src={factoriesByLevels[factories[3].level]} alt="factory" />
+                    
                 </li>
 
                 <li onMouseOver={() => setShowHintId(4)} onMouseOut={() => setShowHintId(-1)}>
